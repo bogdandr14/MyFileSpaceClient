@@ -3,7 +3,16 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  baseApiUrl: 'http://localhost:48889',
+  defaultLanguage: 'en',
+  appSettings: {
+    version: '',
+    languages: [
+      { translationKey: "languageEN", iso: "en-US", languageKey: "en" },
+      { translationKey: "languageRO", iso: "ro-RO", languageKey: "ro" }
+    ]
+  },
 };
 
 /*
