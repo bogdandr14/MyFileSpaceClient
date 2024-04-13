@@ -32,6 +32,10 @@
  * the entire app.
  */
 
+ ion-menu-button {
+  color: var(--ion-color-primary);
+}
+
 .errors {
   --min-height: 20px;
   margin: 0px;

@@ -1,0 +1,56 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{'_pages.settings' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row
+      [ngClass]="(authService.isLoggedIn$ | async) ? '' : 'absolute-center'"
+    >
+      <ion-col size-sm="8" offset-sm="2">
+        <ion-card>
+          <ion-card-content>
+            <app-accessibility-settings> </app-accessibility-settings>
+            <ion-list *ngIf="authService.isLoggedIn$ | async">
+              <ion-list-header>
+                <h1>{{'account' | translate}}</h1>
+              </ion-list-header>
+              <ion-button
+                id="open-change-password"
+                expand="block"
+                fill="clear"
+                color="warning"
+              >
+                <ion-icon slot="start" name="hammer"></ion-icon>
+                {{ "_password.change" | translate }}
+              </ion-button>
+              <ion-modal trigger="open-change-password">
+                <ng-template>
+                  <app-change-password></app-change-password>
+                </ng-template>
+              </ion-modal>
+              <ion-button
+                *ngIf="authService.isLoggedIn$ | async"
+                expand="block"
+                fill="clear"
+                color="danger"
+                (click)="onLogout()"
+              >
+                <ion-icon slot="start" name="log-out"></ion-icon>
+
+                {{ "logout" | translate }}
+              </ion-button>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-footer no-border transparent class="ion-text-center" hidden>
+</ion-footer>

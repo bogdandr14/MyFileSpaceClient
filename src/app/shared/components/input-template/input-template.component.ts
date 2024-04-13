@@ -1,4 +1,4 @@
-import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -13,7 +13,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
-export class InputTemplateComponent implements OnInit {
+export class InputTemplateComponent  {
   @Input() name: string;
   @Input() isRequired: boolean = false;
   @Input() minLength: number = 0;
@@ -30,5 +30,4 @@ export class InputTemplateComponent implements OnInit {
   private _field: boolean;
   constructor() { }
 
-  ngOnInit() { }
 }

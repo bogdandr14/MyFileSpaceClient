@@ -11,10 +11,14 @@ import { PaginatorComponent } from './components/paginator/paginator.component';
 import { SelectTemplateComponent } from './components/select-template/select-template.component';
 import { ValidationErrorsComponent } from './components/validation-errors/validation-errors.component';
 import { HoverClassDirective } from './directives/hover-class.directive';
+import { MatchPasswordDirective } from './directives/matchPassword.directive';
+import { PasswordPatternDirective } from './directives/passwordPattern.directive';
 
 @NgModule({
   declarations: [
     HoverClassDirective,
+    MatchPasswordDirective,
+    PasswordPatternDirective,
     PaginatorComponent,
     LanguageSelectComponent,
     InputTemplateComponent,
@@ -37,6 +41,8 @@ import { HoverClassDirective } from './directives/hover-class.directive';
     TranslateModule,
     IonicModule,
     HoverClassDirective,
+    MatchPasswordDirective,
+    PasswordPatternDirective,
     PaginatorComponent,
     LanguageSelectComponent,
     InputTemplateComponent,
