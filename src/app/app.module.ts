@@ -11,7 +11,6 @@ import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 import { Drivers } from '@ionic/storage';
 import { CoreModule } from './core/core.module';
 
-
 @NgModule({
   declarations: [AppComponent],
   imports: [

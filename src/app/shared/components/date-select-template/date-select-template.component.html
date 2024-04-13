@@ -1,0 +1,43 @@
+<ion-item-group [id]="name">
+  <ion-item
+    color="transparent"
+    button="true"
+    [id]="'open-date-input' + name + id"
+  >
+    <ion-label for="date" position="fixed" text-wrap>
+      <b text-wrap>
+        {{ name | translate }}
+        <span *ngIf="isRequired" class="required"> *</span>
+      </b>
+    </ion-label>
+    <ion-input
+      name="date"
+      #date="ngModel"
+      [(ngModel)]="selectedDate"
+      [readonly]="true"
+      [value]="selectedDate"
+      placeholder="dd/mm/yyyy"
+      slot="end"
+      [required]="isRequired"
+    >
+    </ion-input>
+    <ion-popover
+      [trigger]="'open-date-input' + name + id"
+      side="top"
+      alignment="center"
+    >
+      <ng-template>
+        <ion-datetime
+          [locale]="localeService.currentLocale"
+          #popoverDate
+          showDefaultButtons
+          (ionChange)="setDate(popoverDate.value)"
+          min="1800"
+          presentation="date"
+        >
+        </ion-datetime>
+      </ng-template>
+    </ion-popover>
+  </ion-item>
+  <app-validation-errors [model]="date"></app-validation-errors>
+</ion-item-group>
