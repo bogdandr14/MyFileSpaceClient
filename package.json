@@ -1,7 +1,8 @@
 {
   "name": "MyFileSpaceClient",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
+  "version": "1.0.1",
+  "description": "An Ionic - Angular project",
+  "author": "Draghici Bogdan",
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
@@ -59,6 +60,5 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.2.2"
-  },
-  "description": "An Ionic project"
+  }
 }
