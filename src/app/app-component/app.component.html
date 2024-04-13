@@ -1,24 +1,68 @@
-<ion-app>
+<ion-app
+  [class.dark-theme]="dataService.darkTheme$ | async"
+  [class.invert-colors]="dataService.invertColor$ | async"
+  [class.grayscale]="dataService.grayscale$ | async"
+  [class.highlight-links]="dataService.linkHighlight$ | async"
+>
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
+      <ion-header>
+        <ion-toolbar translucent>
+          <ion-title>
+            <ion-label>
+              <img
+                width="24"
+                alt="MyFileSpace Logo"
+                src="../../../../../assets/icon/logo-38x32.png"
+              />
+            </ion-label>
+            {{ "menu" | translate }}
+          </ion-title>
+        </ion-toolbar>
+      </ion-header>
       <ion-content>
-        <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>hi&#64;ionicframework.com</ion-note>
+        <ion-list lines="none">
+          <ion-list-header> MyFileSpace </ion-list-header>
+          <ng-container *ngIf="authService.isLoggedIn$ | async">
+            <ion-note>TAG_NAME</ion-note>
+            <app-navigation-link
+              *ngFor="let link of connectedUserLinks; let i = index"
+              [link]="link"
+            >
+            </app-navigation-link>
+          </ng-container>
 
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-            <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
-              <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
-            </ion-item>
-          </ion-menu-toggle>
+          <ng-container *ngIf="(authService.isLoggedIn$ | async) === false">
+            <app-navigation-link
+              *ngFor="let link of freeUserLinks; let i = index"
+              [link]="link"
+            >
+            </app-navigation-link>
+          </ng-container>
+
+          <app-navigation-link
+            *ngFor="let link of otherLinks; let i = index"
+            [link]="link"
+          >
+          </app-navigation-link>
+
+          <app-navigation-link
+            *ngFor="let link of appPages; let i = index"
+            [link]="link"
+          >
+          </app-navigation-link>
         </ion-list>
 
         <ion-list id="labels-list">
           <ion-list-header>Labels</ion-list-header>
 
           <ion-item *ngFor="let label of labels" lines="none">
-            <ion-icon aria-hidden="true" slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
+            <ion-icon
+              aria-hidden="true"
+              slot="start"
+              ios="bookmark-outline"
+              md="bookmark-sharp"
+            ></ion-icon>
             <ion-label>{{ label }}</ion-label>
           </ion-item>
         </ion-list>

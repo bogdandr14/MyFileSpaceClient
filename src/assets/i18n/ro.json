@@ -1,0 +1,151 @@
+{
+  "welcomeText": "Bine ai venit la MyFileSpace versiunea { key }",
+  "appearance": "Aspect",
+  "darkMode": "Mod întunecat",
+  "invertColors": "Inversează culorile",
+  "grayscale": "Alb-negru",
+  "linkHighlight": "Evidențiază acțiuni",
+  "language": "Limba",
+  "_languages": {
+    "languageEN": "Engleză",
+    "languageRO": "Română"
+  },
+  "menu": "Meniu",
+  "preferences": "Preferinţe",
+  "register": "Înregistrare",
+  "login": "Autentificare",
+  "logout": "Deconectare",
+  "username": "Nume utilizator",
+  "password": "Parolă",
+  "_password": {
+    "confirm": "Confirmă parola",
+    "current": "Parola curentă",
+    "new": "Noua parolă",
+    "change": "Schimbă parola"
+  },
+  "account": "Cont",
+  "accountInfo": "Informații cont",
+  "_user": {
+    "email": "E-Mail",
+    "emailAddress": "Adresă de e-Mail",
+    "tagName": "Nume unic"
+  },
+  "_updates": {
+    "markAsChecked": "Marchează ca văzut",
+    "fileCreated": "A fost creat un nou fişier: { fileName }",
+    "fileModified": "Fişierul { fileName } a fost modificat",
+    "folderCreated": "Un nou folder { folderName } a fost creat",
+    "folderModified": "Folderul { folderName } a fost modificat"
+  },
+  "_pages": {
+    "home": "Acasă",
+    "profile": "Profil",
+    "otherProfile": "Profilul lui { name }",
+    "settings": "Setări",
+    "login": "Logare",
+    "register": "Înregistrare"
+  },
+  "_links": {
+    "backToLogin": "Înapoi la autentificare",
+    "registerHere": "Înregistrează-te aici"
+  },
+  "_common": {
+    "you": "Profilul tău",
+    "details": "Detalii",
+    "add": "Adaugă",
+    "edit": "Editează",
+    "delete": "Şterge",
+    "save": "Salvează",
+    "submit": "Trimite",
+    "confirm": "Confirmă",
+    "cancel": "Anulează",
+    "back": "Înapoi",
+    "unknown": "Necunoscut",
+    "at": "la",
+    "present": "prezent",
+    "select": "Selectează",
+    "deselect": "Deselectează",
+    "skip": "Sari peste",
+    "continue": "Continuă",
+    "next": "Următorul",
+    "list": "Listă",
+    "search": "Caută",
+    "today": "Azi",
+    "accept": "Acceptă",
+    "decline": "Refuză",
+    "understood": "Am înţeles"
+  },
+  "_details": {
+    "user": "Utilizator",
+    "file": "Detalii fişier",
+    "folder": "Detalii folder"
+  },
+  "_add": {
+    "file": "Adaugă fişier",
+    "folder": "Adaugă folder"
+  },
+  "_edit": {
+    "user": "Editează profil",
+    "file": "Editează fişier",
+    "folder": "Editează folder"
+  },
+  "_delete": {
+    "warning": "Această acţiune e permanentă. Eşti sigur(ă) că vrei să ştergi",
+    "file": "Şterge fişierul",
+    "fileMessage": "Eşti sigur(ă) că vrei să ştergi fişierul { fileName } din { folderName }?",
+    "folder": "Şterge folderul",
+    "folderMessage": "Eşti sigur(ă) că vrei să ştergi folderul { occupationName } şi tot conţinutul lui?",
+    "confirm": "Confirmă ştergerea"
+  },
+  "changePicture": "Schimbă poza",
+  "_image": {
+    "toUpload": "Poza de încărcat",
+    "choose": "Alege imaginea",
+    "change": "Schimbă imaginea"
+  },
+  "_validation": {
+    "required": "Câmpul este obligatoriu",
+    "minlength": "Câmpul trebuie să aibă cel puțin { number } caractere.",
+    "maxlength": "Câmpul trebuie să aibă cel mult { number } caractere.",
+    "minValue": "Trebuie să fie cel puţin { number }.",
+    "maxValue": "Trebuie să fie cel mult { number }.",
+    "pattern": "Format invalid",
+    "invalidEmail": "Format de email invalid.",
+    "emailTaken": "E-mailul este deja folosit.",
+    "usernameTaken": "Utilizatorul este deja folosit.",
+    "invalidPassword": "Parola trebuie să aibă minimum 8 caractere, cel puțin o majusculă, 1 minusculă și 1 număr",
+    "passwordMismatch": "Parolele trebuie să se potrtivească",
+    "invalidImage": "Fişierul selectat nu este o imagine",
+    "maxSizeExceeded": "Fişierul depăşeste dimensiunea maximă admisă de { number } MB"
+  },
+  "_paginator": {
+    "itemsPerPage": "Articole pe pagină",
+    "currentPage": "Pagina { currentPage } din { numberOfPages }"
+  },
+  "_message": {
+    "loading": "Se încarcă...",
+    "information": "Informare",
+    "_information": {
+      "tagNameCopied": "Numărul de telefon a fost copiat în clipboard",
+      "emailCopied": "Adresa de e-mail a fost copiată în clipboard",
+      "accessKeyCopied": "Cheia de acces a fost copiada în clipboard"
+    },
+    "success": "Succes",
+    "_success": {
+      "register": "Contul a fost creat cu success! Logează-te pentru a accesa contul",
+      "login": "Bine ai revenit!",
+      "changePassword": "Parola a fost schimbată cu succes!",
+      "preferencesSaved": "Preferințele au fost salvate cu succes!"
+    },
+    "warning": "Avertisment",
+    "_warning": {
+      "unsavedPreferences": "Nu ți-ai salvat preferințele!"
+    },
+    "error": "Eroare",
+    "_error": {
+      "wrongCredentials": "Credențialele sunt invalide, te rog incearcă din nou",
+      "wrongPassword": "Parola introdusă este incorectă. Încearcă din nou."
+    }
+  },
+  "others": "Altele"
+}

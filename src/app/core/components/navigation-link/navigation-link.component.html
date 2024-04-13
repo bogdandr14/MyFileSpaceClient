@@ -1,0 +1,20 @@
+<ion-menu-toggle autoHide="false">
+  <ion-item
+    [routerLink]="link.path"
+    [queryParams]="link.queryParams"
+    routerLinkActive="selected"
+    routerDirection="root"
+    detail="false"
+    lines="none"
+  >
+    <ion-icon aria-hidden="true" slot="start" [name]="link.icon" [ios]="link.icon + '-outline'" [md]="link.icon + '-sharp'"> </ion-icon>
+    <ion-label>
+      {{ link.title | translate }}
+      <ion-badge
+        *ngIf="link.counter > 0"
+        color="danger"
+        >{{ link.counter }}</ion-badge
+      >
+    </ion-label>
+  </ion-item>
+</ion-menu-toggle>
