@@ -39,6 +39,7 @@
   },
   "_pages": {
     "home": "Home",
+    "browse": "Browse files",
     "profile": "Profile",
     "otherProfile": "{ name }'s profile",
     "settings": "Settings",
