@@ -5,17 +5,17 @@ import { AppError } from '../models/errors/app-error';
 @Injectable({ providedIn: 'root' })
 export class AlertService {
   private successSound = new Audio(
-    '../../../../assets/audio/mixkit-software-interface.wav'
+    '../../../assets/audio/mixkit-software-interface.wav'
   );
   private infoSound = new Audio(
-    '../../../../assets/audio/mixkit-game-balloon-or-bubble-pop.wav'
+    '../../../assets/audio/mixkit-game-balloon-or-bubble-pop.wav'
   );
 
   private warnSound = new Audio(
-    '../../../../assets/audio/mixkit-on-or-off-light-switch-tap.wav'
+    '../../../assets/audio/mixkit-on-or-off-light-switch-tap.wav'
   );
   private errorSound = new Audio(
-    '../../../../assets/audio/mixkit-tech-break-fail.wav'
+    '../../../assets/audio/mixkit-tech-break-fail.wav'
   );
 
   constructor(
