@@ -9,6 +9,7 @@ import { RegisterModel } from '../models/auth/register.model';
 
 import { BaseService } from './base.service';
 import { DataService } from './data.service';
+import { TokenModel } from '../models/auth/token.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService extends BaseService {
@@ -21,7 +22,7 @@ export class AuthService extends BaseService {
     private router: Router,
     private dataService: DataService
   ) {
-    super(http, 'api/auth');
+    super(http, 'api/user');
     this.loadToken();
   }
 
@@ -34,13 +35,13 @@ export class AuthService extends BaseService {
     });
   }
 
-  public login(userCredentials: LoginModel): Observable<string> {
-    return super.add<string>(userCredentials, 'login').pipe(
-      tap((token) => {
-        this.dataService.setToken(token);
-        this.setUserInfo(token);
+  public login(userCredentials: LoginModel): Observable<TokenModel> {
+    return super.add<TokenModel>(userCredentials, 'login').pipe(
+      tap((response) => {
+        this.dataService.setToken(response.token);
+        this.setUserInfo(response.token);
         this.isLoggedIn.next(true);
-        this.router.navigate(['genealogy', 'tree']);
+        this.router.navigate(['folder', 'inbox']);
       })
     );
   }

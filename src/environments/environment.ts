@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseApiUrl: 'http://localhost:48889',
+  baseApiUrl: 'https://localhost:44344',
   defaultLanguage: 'en',
   appSettings: {
     version: '',

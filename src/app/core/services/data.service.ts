@@ -2,7 +2,7 @@ import { filter, switchMap, take } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, forkJoin, from, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { CurrentUserModel } from '../models/current-user.model';
+import { CurrentUserModel } from '../models/auth/current-user.model';
 import { Storage } from '@ionic/storage-angular';
 import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 import { DARK_THEME_KEY, GRAYSCALE_KEY, HIGHLIGHT_KEY, INVERT_COLOR_KEY, LANG_KEY, TOKEN_KEY, USER_KEY } from '../models/data-keys.constants';

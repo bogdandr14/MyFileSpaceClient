@@ -16,7 +16,6 @@ import { AppErrorHandler } from './app-error-handler';
 import { LocaleProvider } from './locale.provider';
 import { IonicModule } from '@ionic/angular';
 
-
 // AoT requires an exported function for factories
 export function createTranslateLoader(httpClient: HttpClient): TranslateLoader {
   return new TranslateHttpLoader(httpClient, 'assets/i18n/', '.json');
@@ -42,9 +41,13 @@ export function createTranslateLoader(httpClient: HttpClient): TranslateLoader {
       useDefaultLang: true,
     }),
     RouterModule,
-    CommonModule
+    CommonModule,
   ],
-  exports: [TranslateModule, ReactiveFormsModule, NavigationLinkComponent],
+  exports: [
+    TranslateModule,
+    ReactiveFormsModule,
+    NavigationLinkComponent
+  ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
@@ -54,7 +57,6 @@ export function createTranslateLoader(httpClient: HttpClient): TranslateLoader {
     LocaleProvider
   ],
 })
-
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     if (parentModule) {

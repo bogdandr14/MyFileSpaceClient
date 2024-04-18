@@ -16,13 +16,14 @@
                 src="../../../../../assets/icon/favicon-32x32.png"
               />
             </ion-label>
-            {{ "menu" | translate }}
+            &nbsp;
+            <strong>MyFileSpace</strong>
           </ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-content>
+      <ion-content class="menu">
         <ion-list lines="none">
-          <ion-list-header> MyFileSpace </ion-list-header>
+          <ion-list-header> {{ "menu" | translate }} </ion-list-header>
           <ng-container *ngIf="authService.isLoggedIn$ | async">
             <ion-note>TAG_NAME</ion-note>
             <app-navigation-link
