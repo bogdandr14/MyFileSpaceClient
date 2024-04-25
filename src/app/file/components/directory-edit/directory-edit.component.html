@@ -1,0 +1,47 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>
+      {{ isUpdate ? "_edit.directory" : ("_add.directory" | translate) }}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        {{ "_common.cancel" | translate }}
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row class="custom-margin-bottom">
+      <ion-col>
+        <ion-card>
+          <ion-card-content>
+            <form #form="ngForm" (ngSubmit)="onSubmit()">
+              <app-input-template
+                [isRequired]="true"
+                id="directory-name"
+                [(field)]="name"
+                name="_directory"
+              ></app-input-template>
+              <app-select-access-level
+              id="access-level"
+              [(field)]="accessLevel"
+              name="_accessLevel"
+              ></app-select-access-level>
+
+              <ion-button
+                color="success"
+                type="submit"
+                class="submit-button"
+                expand="block"
+                [disabled]="!name ||(isUpdate && !accessLevel)"
+              >
+                {{ "_common.save" | translate }}
+              </ion-button>
+            </form>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

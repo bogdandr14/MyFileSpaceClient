@@ -1,0 +1,22 @@
+
+
+.ripple-parent {
+  position: relative;
+  overflow: hidden;
+}
+
+
+.rounded-rectangle {
+  width: 128px;
+  height: 128px;
+  border-radius: 8px;
+}
+
+.file-icon {
+  width: 96px;
+  height: 96px;
+}
+
+#ion-chip{
+  max-width: fit-content;
+}

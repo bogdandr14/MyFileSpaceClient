@@ -35,7 +35,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
     const successMessage = config?.successMessage ?? '';
     const showSuccessMessage = config?.showSuccessMessage;
     const request = req.clone(
-      (req.url.includes('photo/') || req.url.includes('.png'))
+      req.url.includes('upload/')
         ? {
           ...req,
           headers: req.headers.delete('Content-Type').set('Access-Control-Allow-Origin', 'http://localhost:8100'),

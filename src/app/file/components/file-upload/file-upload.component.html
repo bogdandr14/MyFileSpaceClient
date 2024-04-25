@@ -1,0 +1,86 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-title>
+      {{ "_file.upload" | translate }}
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        {{ "_common.cancel" | translate }}
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="custom-margin-ends">
+  <ion-card>
+    <ion-card-content>
+      <form #form="ngForm" (ngSubmit)="submitPhoto()">
+        <ion-item-group id="changePhoto">
+          <ion-item color="transparent">
+            <ion-label for="file" position="stacked">
+              <b>
+                {{ "_file.toUpload" | translate }}
+                <span class="required"> *</span>
+              </b>
+            </ion-label>
+            <input
+              type="file"
+              name="file"
+              #file="ngModel"
+              ngModel
+              class="file-input"
+              (change)="onFileChange($event)"
+              #fileUpload
+              required
+            />
+            <ion-button
+              name="photoButton"
+              [color]="originalImgFile ? 'primary' : 'secondary'"
+              fill="clear"
+              expand="block"
+              (click)="fileUpload.click()"
+            >
+              {{
+                (originalImgFile ? "_file.change" : "_file.choose")
+                  | translate
+              }}
+              <ion-icon name="document" slot="end"></ion-icon>
+            </ion-button>
+            <div
+              *ngIf="file.control.value"
+              class="file-info align-items-center"
+            >
+              <p class="small">
+                {{ originalImgFile?.name }}
+                {{ originalImgFile?.type }}
+              </p>
+
+              <p>
+                File size:
+                <span>
+                  {{ originalImgFile?.size / 1024 | number: "1.2-2" }}&nbsp;kB
+                </span>
+              </p>
+            </div>
+          </ion-item>
+          <app-validation-errors
+            [model]="file"
+            [number]="maxSizeMb"
+          ></app-validation-errors>
+        </ion-item-group>
+
+        <ion-button
+          type="submit"
+          class="submit-button"
+          color="success"
+          fill="clear"
+          expand="block"
+          [disabled]="form.invalid || form.pristine"
+        >
+          <ion-icon name="save" slot="start"></ion-icon>
+          {{ "_common.confirm" | translate }}
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

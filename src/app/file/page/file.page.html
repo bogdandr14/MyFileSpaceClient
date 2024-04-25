@@ -1,0 +1,73 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-breadcrumbs>
+        <ion-breadcrumb>
+          {{'_pages.files' | translate }}
+          <ion-icon slot="separator" name="chevron-forward"></ion-icon>
+        </ion-breadcrumb>
+        <ion-breadcrumb>
+          <ion-chip button color="primary">
+            <ion-icon name="home"></ion-icon>
+            <ion-label> {{'_pages.home'| translate}} </ion-label>
+          </ion-chip>
+        </ion-breadcrumb>
+        <ng-container
+          *ngIf="directoryDetails && directoryDetails.name !=='$USER_ROOT'"
+        >
+          <ion-breadcrumb>
+            <ion-chip button> .. </ion-chip>
+            <ion-icon slot="separator" name="chevron-forward"></ion-icon>
+          </ion-breadcrumb>
+          <ion-breadcrumb>
+            <ion-chip> {{directoryDetails.name}} </ion-chip>
+          </ion-breadcrumb>
+        </ng-container>
+      </ion-breadcrumbs>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="directoryDetails">
+  <ion-fab slot="fixed" vertical="top" horizontal="end" [edge]="true">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="bottom">
+      <ion-fab-button id="open-file-upload" color="tertiary">
+        <ion-icon name="document"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button id="open-directory-add" color="tertiary">
+        <ion-icon name="folder"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="tertiary">
+        <ion-icon name="link"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="tertiary">
+        <ion-icon name="settings"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+  <app-file-explorer [directoryDetails]="directoryDetails"></app-file-explorer>
+
+  <ion-modal trigger="open-file-upload">
+    <ng-template>
+      <app-file-upload
+        *ngIf="!!directoryDetails"
+        [directoryId]="directoryDetails.id"
+      ></app-file-upload>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal trigger="open-directory-add">
+    <ng-template>
+      <app-directory-edit
+        *ngIf="directoryDetails"
+        [parentDirectoryId]="directoryDetails.id"
+      ></app-directory-edit>
+    </ng-template>
+  </ion-modal>
+</ion-content>

@@ -1,5 +1,10 @@
 import { Guid } from 'guid-typescript';
-import { HttpClient } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpParams,
+  HttpParamsOptions,
+} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpInterceptorParams } from '../models/http-interceptor-params.model';
@@ -33,17 +38,20 @@ export abstract class BaseService {
       Object.entries(filter).forEach(([key, value], index) => {
         urlFilter += index === 0 ? '?' : '&';
         urlFilter += `${key}=${value}`;
-      })
+      });
     }
     return urlFilter;
   }
 
   private getOne<T>(
     url: string,
-    params?: HttpInterceptorConfig
+    params?: { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean> },
+    config?: HttpInterceptorConfig,
+    headers?: HttpHeaders | { [header: string]: string | string[] }
   ): Observable<T> {
     const options = {
-      params: new HttpInterceptorParams(params),
+      params: new HttpInterceptorParams(config, params),
+      headers
     };
     return this.http.get<T>(url, options);
   }
@@ -51,45 +59,57 @@ export abstract class BaseService {
   public getOneById<T>(
     id: number | Guid | string,
     path?: string,
-    params?: HttpInterceptorConfig
+    params?: { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean> },
+    config?: HttpInterceptorConfig,
+    headers?: HttpHeaders | { [header: string]: string | string[] }
   ): Observable<T> {
     const url = path ? `${this.url}/${path}/${id}` : `${this.url}/${id}`;
-    return this.getOne<T>(url, params);
+    return this.getOne<T>(url, params, config, headers);
   }
 
   public getOneByPath<T>(
     path: string,
-    params?: HttpInterceptorConfig
-  ): Observable<T> {
+    params?: { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean> },
+    config?: HttpInterceptorConfig,
+    headers?: HttpHeaders | { [header: string]: string | string[] }  ): Observable<T> {
     const url = `${this.url}/${path}`;
-    return this.getOne<T>(url, params);
+    return this.getOne<T>(url, params, config, headers);
   }
 
   public getMany<T>(
     path?: string,
-    params?: HttpInterceptorConfig
+    params?: { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean> },
+    config?: HttpInterceptorConfig,
+    headers?: HttpHeaders | { [header: string]: string | string[] }
   ): Observable<T[]> {
     const url = path ? `${this.url}/${path}` : `${this.url}`;
     const options = {
-      params: new HttpInterceptorParams(params),
+      params: new HttpInterceptorParams(config, params),
+      headers
     };
 
     return this.http.get<T[]>(url, options);
   }
 
-  public getAll<T>(params?: HttpInterceptorConfig): Observable<T[]> {
-    return this.getMany<T>('', params);
+  public getAll<T>(
+    params?: { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean> },
+    config?: HttpInterceptorConfig,
+    headers?: HttpHeaders | { [header: string]: string | string[] }): Observable<T[]> {
+    return this.getMany<T>('', params, config, headers);
   }
 
   public update<T>(
     data: any,
     path?: string,
-    params?: HttpInterceptorConfig
+    params?: { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean> },
+    config?: HttpInterceptorConfig,
+    headers?: HttpHeaders | { [header: string]: string | string[] }
   ): Observable<T> {
     const body = data ? JSON.stringify(data) : {};
     const url = path ? `${this.url}/${path}` : `${this.url}`;
     const options = {
-      params: new HttpInterceptorParams(params),
+      params: new HttpInterceptorParams(config, params),
+      headers
     };
     return this.http.put<T>(url, body, options);
   }
@@ -98,21 +118,26 @@ export abstract class BaseService {
     id: number | Guid,
     data: any,
     path?: string,
-    params?: HttpInterceptorConfig
+    params?: { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean> },
+    config?: HttpInterceptorConfig,
+    headers?: HttpHeaders | { [header: string]: string | string[] }
   ): Observable<T> {
     const url = path ? `${path}/${id}` : `${id}`;
-    return this.update<T>(data, url, params);
+    return this.update<T>(data, url, params, config, headers);
   }
 
   public updateMultiple<T>(
     array: any[],
     path?: string,
-    params?: HttpInterceptorConfig
+    params?: { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean> },
+    config?: HttpInterceptorConfig,
+    headers?: HttpHeaders | { [header: string]: string | string[] }
   ): Observable<T> {
     const body = JSON.stringify(array);
     const url = path ? `${this.url}/${path}` : `${this.url}`;
     const options = {
-      params: new HttpInterceptorParams(params),
+      params: new HttpInterceptorParams(config, params),
+      headers
     };
 
     return this.http.put<T>(url, body, options);
@@ -121,12 +146,15 @@ export abstract class BaseService {
   public add<T>(
     data: any,
     path?: string,
-    params?: HttpInterceptorConfig
+    params?: { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean> },
+    config?: HttpInterceptorConfig,
+    headers?: HttpHeaders | { [header: string]: string | string[] }
   ): Observable<T> {
     const body = data ? JSON.stringify(data) : {};
     const url = path ? `${this.url}/${path}` : `${this.url}`;
     const options = {
-      params: new HttpInterceptorParams(params),
+      params: new HttpInterceptorParams(config, params),
+      headers
     };
 
     return this.http.post<T>(url, body, options);
@@ -135,11 +163,14 @@ export abstract class BaseService {
   public remove(
     id: number | Guid,
     path?: string,
-    params?: HttpInterceptorConfig
+    params?: { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean> },
+    config?: HttpInterceptorConfig,
+    headers?: HttpHeaders | { [header: string]: string | string[] }
   ): Observable<any> {
     const url = path ? `${this.url}/${path}/${id}` : `${this.url}/${id}`;
     const options = {
-      params: new HttpInterceptorParams(params),
+      params: new HttpInterceptorParams(config, params),
+      headers,
     };
     return this.http.delete<any>(url, options);
   }
@@ -147,11 +178,17 @@ export abstract class BaseService {
   public removeMultiple(
     ids: number[],
     path?: string,
-    params?: HttpInterceptorConfig
+    params?: { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean> },
+    config?: HttpInterceptorConfig,
+    headers?: HttpHeaders | { [header: string]: string | string[] }
   ): Observable<any> {
     const body = JSON.stringify(ids);
     const url = path ? `${this.url}/${path}` : `${this.url}`;
-    const options = { params: new HttpInterceptorParams(params), body };
+    const options = {
+      params: new HttpInterceptorParams(config, params),
+      headers,
+      body
+    };
     return this.http.delete<any>(url, options);
   }
 
@@ -160,12 +197,14 @@ export abstract class BaseService {
     itemsNumber: number,
     searchKey: string,
     apiPath?: string,
-    params?: HttpInterceptorConfig
+    params?: { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean> },
+    config?: HttpInterceptorConfig,
+    headers?: HttpHeaders | { [header: string]: string | string[] }
   ): Observable<PaginatedResultModel<T>> {
     let path = apiPath ? `paginated/${apiPath}` : 'paginated';
     path = `${path}?pageIndex=${pageIndex}&itemsNumber=${itemsNumber}&key=${searchKey}`;
 
-    return this.add<PaginatedResultModel<T>>({}, path, params);
+    return this.add<PaginatedResultModel<T>>({}, path, params, config, headers);
   }
 
   /*
@@ -178,7 +217,9 @@ export abstract class BaseService {
     sortField: string,
     sortDirection?: string,
     filter?: V,
-    params?: HttpInterceptorConfig
+    params?: { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean> },
+    config?: HttpInterceptorConfig,
+    headers?: HttpHeaders | { [header: string]: string | string[] }
   ): Observable<PaginatedResultModel<T>> {
     if (!sortField) {
       sortField = '';
@@ -188,6 +229,6 @@ export abstract class BaseService {
     }
     const path = `paginated?pageIndex=${pageIndex}&itemsNumber=${itemsNumber}&sortField=${sortField}&sortDirection=${sortDirection}`;
 
-    return this.add<PaginatedResultModel<T>>(filter, path, params);
+    return this.add<PaginatedResultModel<T>>(filter, path, params, config, headers);
   }
 }

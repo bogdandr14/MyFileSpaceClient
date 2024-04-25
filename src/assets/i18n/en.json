@@ -40,7 +40,10 @@
   "_pages": {
     "home": "Home",
     "browse": "Browse files",
+    "files": "My files",
     "profile": "Profile",
+    "accessible": "Accessibility",
+    "bin": "Bin",
     "otherProfile": "{ name }'s profile",
     "settings": "Settings",
     "login": "Login",
@@ -76,10 +79,15 @@
     "decline": "Decline",
     "understood": "Understood"
   },
+  "_accessLevel": {
+    "private": "Private",
+    "restricted": "Restricted",
+    "public": "Public"
+  },
   "_details": {
     "user": "User",
     "file": "File details",
-	"folder": "Folder details"
+    "folder": "Folder details"
   },
   "_add": {
     "file": "Add file",
@@ -96,13 +104,13 @@
     "fileMessage": "Are you sure you want to delete file { fileName } from { folderName }?",
     "folder": "Delete folder",
     "folderMessage": "Are you sure you want to delete folder { folderName } and all its contents?",
-	"confirm": "Confirm delete"
+    "confirm": "Confirm delete"
   },
-  "changePicture": "Change picture",
-  "_image": {
-    "toUpload": "Image to upload",
-    "choose": "Choose image",
-    "change": "Change image"
+  "_file": {
+    "upload": "Upload file",
+    "toUpload": "File to upload",
+    "choose": "Choose file",
+    "change": "Change file"
   },
   "_validation": {
     "required": "Field is required.",

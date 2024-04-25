@@ -40,7 +40,10 @@
   "_pages": {
     "home": "Acasă",
     "browse": "Caută fişiere",
+    "files": "Fişierele mele",
     "profile": "Profil",
+    "accessible":"Accesibilitate",
+    "bin":"Coş de gunoi",
     "otherProfile": "Profilul lui { name }",
     "settings": "Setări",
     "login": "Logare",
@@ -76,6 +79,11 @@
     "decline": "Refuză",
     "understood": "Am înţeles"
   },
+  "_accessLevel": {
+    "private": "Privat",
+    "restricted": "Restricţionat",
+    "public": "Public"
+  },
   "_details": {
     "user": "Utilizator",
     "file": "Detalii fişier",
@@ -98,11 +106,11 @@
     "folderMessage": "Eşti sigur(ă) că vrei să ştergi folderul { occupationName } şi tot conţinutul lui?",
     "confirm": "Confirmă ştergerea"
   },
-  "changePicture": "Schimbă poza",
-  "_image": {
-    "toUpload": "Poza de încărcat",
-    "choose": "Alege imaginea",
-    "change": "Schimbă imaginea"
+  "_file": {
+    "upload": "Încarcă fişierul",
+    "toUpload": "Fişierul de încărcat",
+    "choose": "Alege fişierul",
+    "change": "Schimbă fişierul"
   },
   "_validation": {
     "required": "Câmpul este obligatoriu",

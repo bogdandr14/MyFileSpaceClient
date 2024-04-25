@@ -1,0 +1,45 @@
+<ion-item-group>
+  <ion-item color="transparent">
+    <ion-label for="model" position="floating">
+      <b>
+        {{ name | translate }}
+        <span *ngIf="isRequired" class="required"> *</span>
+      </b>
+    </ion-label>
+
+    <ion-segment
+      name="model"
+      #model="ngModel"
+      [(ngModel)]="field"
+      [required]="isRequired"
+    >
+      <ion-segment-button
+        layout="icon-start"
+        class="access-private"
+        [value]="1"
+      >
+        <ion-icon name="lock-closed" indicator-background="red"></ion-icon>
+        <ion-label>{{ "_accessLevel.private" | translate }}</ion-label>
+      </ion-segment-button>
+      <ion-segment-button
+        layout="icon-start"
+        class="access-restricted"
+        [value]="2"
+        backgroundcolor="secondary"
+      >
+        <ion-icon name="link"></ion-icon>
+        <ion-label>{{ "_accessLevel.restricted" | translate }}</ion-label>
+      </ion-segment-button>
+      <ion-segment-button
+        layout="icon-start"
+        class="access-public"
+        [value]="3"
+      >
+        <ion-icon name="accessibility"></ion-icon>
+
+        <ion-label>{{ "_accessLevel.public" | translate }}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-item>
+  <app-validation-errors [model]="model"></app-validation-errors>
+</ion-item-group>

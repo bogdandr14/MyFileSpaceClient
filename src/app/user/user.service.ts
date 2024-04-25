@@ -43,13 +43,13 @@ export class UserService extends BaseService {
 
   public checkTagnameTaken(tagName: string): Observable<boolean> {
     return super.getOneByPath<boolean>(
-      `isAvailable/tagname/${tagName}`, BaseService.noLoadingConfig
+      `isAvailable/tagname/${tagName}`, null, BaseService.noLoadingConfig
     );
   }
 
   public checkEmailTaken(email: string): Observable<boolean> {
     return super.getOneByPath<boolean>(
-      `isAvailable/email/${email}`, BaseService.noLoadingConfig
+      `isAvailable/email/${email}`, null, BaseService.noLoadingConfig
     );
   }
 

@@ -23,9 +23,20 @@
       </ion-header>
       <ion-content class="menu">
         <ion-list lines="none">
-          <ion-list-header> {{ "menu" | translate }} </ion-list-header>
+          <ion-list-header>
+            {{ "menu" | translate }}
+            &emsp;
+            <ion-chip *ngIf="authService.isLoggedIn$ | async" color="tertiary">
+              #{{ (dataService.user$ | async).tagName }}
+            </ion-chip>
+          </ion-list-header>
+          <app-navigation-link
+            *ngFor="let link of otherLinks; let i = index"
+            [link]="link"
+          >
+          </app-navigation-link>
+
           <ng-container *ngIf="authService.isLoggedIn$ | async">
-            <ion-note>TAG_NAME</ion-note>
             <app-navigation-link
               *ngFor="let link of connectedUserLinks; let i = index"
               [link]="link"
@@ -33,6 +44,11 @@
             </app-navigation-link>
           </ng-container>
 
+          <app-navigation-link
+            *ngFor="let link of appPages; let i = index"
+            [link]="link"
+          >
+          </app-navigation-link>
           <ng-container *ngIf="(authService.isLoggedIn$ | async) === false">
             <app-navigation-link
               *ngFor="let link of freeUserLinks; let i = index"
@@ -40,21 +56,9 @@
             >
             </app-navigation-link>
           </ng-container>
-
-          <app-navigation-link
-            *ngFor="let link of otherLinks; let i = index"
-            [link]="link"
-          >
-          </app-navigation-link>
-
-          <app-navigation-link
-            *ngFor="let link of appPages; let i = index"
-            [link]="link"
-          >
-          </app-navigation-link>
         </ion-list>
 
-        <ion-list id="labels-list">
+        <ion-list id="labels-list" *ngIf="labels">
           <ion-list-header>Labels</ion-list-header>
 
           <ion-item *ngFor="let label of labels" lines="none">

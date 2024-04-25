@@ -140,3 +140,7 @@ ion-card.selected > * {
 .font-size-9 * {
   font-size: 106%;
 }
+
+ion-popover::part(backdrop) {
+  background-color: rgb(0, 0, 0);
+}

@@ -20,26 +20,19 @@ export const DEFAULT_TITLE = 'MyFileSpace';
 })
 export class AppComponent implements OnInit {
   public appPages: Array<RouteDescriptor> = [
-    { title: 'Inbox', path: '/folder/inbox', icon: 'mail' },
-    { title: 'Outbox', path: '/folder/outbox', icon: 'paper-plane' },
-    { title: 'Favorites', path: '/folder/favorites', icon: 'heart' },
-    { title: 'Archived', path: '/folder/archived', icon: 'archive' },
-    { title: 'Trash', path: '/folder/trash', icon: 'trash' },
-    { title: 'Spam', path: '/folder/spam', icon: 'warning' },
+    { title: 'Favorites', path: '/folder/favorites', icon: 'heart' }
   ];
 
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+  public labels// = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
   fontSize = 'font-size-5';
 
   public connectedUserLinks: Array<RouteDescriptor> = [
     { title: '_pages.profile', path: '/user/profile', icon: 'person' },
-    {
-      title: '_pages.accessible',
-      path: '/folder/accessible',
-      icon: 'paper-plane',
-    },
-    { title: '_pages.favorites', path: '/folder/favorites', icon: 'heart' },
+    { title: '_pages.accessible', path: '/folder/accessible', icon: 'paper-plane'},
+    //{ title: '_pages.favorites', path: '/folder/favorites', icon: 'heart' },
+    { title: '_pages.files', path: '/file', icon: 'folder' },
+
     { title: '_pages.bin', path: '/folder/trash', icon: 'trash' },
   ];
 

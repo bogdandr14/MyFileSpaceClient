@@ -13,6 +13,7 @@ import { ValidationErrorsComponent } from './components/validation-errors/valida
 import { HoverClassDirective } from './directives/hover-class.directive';
 import { MatchPasswordDirective } from './directives/matchPassword.directive';
 import { PasswordPatternDirective } from './directives/passwordPattern.directive';
+import { SelectAccessLevelComponent } from './components/select-access-level/select-access-level.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { PasswordPatternDirective } from './directives/passwordPattern.directive
     SelectTemplateComponent,
     ValidationErrorsComponent,
     DateSelectTemplateComponent,
+    SelectAccessLevelComponent,
   ],
   imports: [
     CommonModule,
@@ -32,7 +34,7 @@ import { PasswordPatternDirective } from './directives/passwordPattern.directive
     TranslateModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
   ],
   exports: [
     CommonModule,
@@ -49,9 +51,8 @@ import { PasswordPatternDirective } from './directives/passwordPattern.directive
     SelectTemplateComponent,
     ValidationErrorsComponent,
     DateSelectTemplateComponent,
+    SelectAccessLevelComponent,
   ],
-  providers: [
-    DatePipe
-  ],
+  providers: [DatePipe],
 })
-export class SharedModule { }
+export class SharedModule {}
