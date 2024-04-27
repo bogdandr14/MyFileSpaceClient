@@ -1,41 +1,25 @@
-<ion-chip class="container">
+<ion-chip button (click)="directoryChange.emit(directory.id)">
   <ion-icon
-    id="{{ file.name }}-trigger"
+    id="{{ directory.name }}-trigger"
     size="large"
     class="file-icon"
-    [name]="fileIcon"
+    name="folder"
     [color]="
-      file.accessLevel === 1
+      directory.accessLevel === 1
         ? 'tertiary'
-        : file.accessLevel === 2
+        : directory.accessLevel === 2
         ? 'secondary'
         : 'success'
     "
+    (click)="directoryChange.emit(directory.id)"
   ></ion-icon>
-  <ion-label id="hover-label-{{ file.name }}-trigger">
-    {{ file.name }}
+  <ion-label (click)="directoryChange.emit(directory.id)">
+    {{ directory.name }}
   </ion-label>
 </ion-chip>
-
 <ion-popover
-  class="transparent-popover"
-  trigger="hover-label-{{ file.name }}-trigger"
-  triggerAction="click"
-  alignment="center"
-  side="bottom"
->
-  <ng-template>
-    <ion-content class="ion-padding">
-      {{ "name" | translate }}: {{ file.name }}
-      <br />
-      {{ "size" | translate }}: {{ size }}
-    </ion-content>
-  </ng-template>
-</ion-popover>
-<ion-popover
-  trigger="{{ file.name }}-trigger"
+  trigger="{{ directory.name }}-trigger"
   triggerAction="context-menu"
-  [dismissOnSelect]="true"
 >
   <ng-template>
     <ion-content>
@@ -55,7 +39,7 @@
         <ion-item button c>
           <ion-label> Rename </ion-label>
         </ion-item>
-        <ion-item button (click)="downloadFile()">
+        <ion-item button>
           <ion-label> Download </ion-label>
         </ion-item>
         <ion-item button>

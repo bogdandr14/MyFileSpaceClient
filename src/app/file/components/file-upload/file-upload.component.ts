@@ -10,7 +10,8 @@ import { ModalController } from '@ionic/angular';
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.scss'],
 })
-export class FileUploadComponent  {
+export class FileUploadComponent {
+  static sizes: Array<string> = ['B', 'KB', 'MB', 'GB', 'TB'];
 
   @Output() fileSave = new EventEmitter<FileModel>();
   @Input() maxSizeMb = 2;
@@ -19,11 +20,10 @@ export class FileUploadComponent  {
   public originalImgFile: File;
   public originalImgUrl: string;
 
-
   constructor(
     public modalCtrl: ModalController,
-    private fileService: FileService,
-  ) { }
+    private fileService: FileService
+  ) {}
 
   onFileChange(event) {
     this.originalImgFile = event.target.files[0];
@@ -40,6 +40,18 @@ export class FileUploadComponent  {
     reader.readAsDataURL(this.originalImgFile);
   }
 
+  public getSize() {
+    if (!this.originalImgFile) {
+      return null;
+    }
+    let size = this.originalImgFile.size;
+    let i = 0;
+    while (size > 1024) {
+      size /= 1024;
+      ++i;
+    }
+    return `${size.toFixed(2)} ${FileUploadComponent.sizes[i]}`;
+  }
 
   // dataURItoBlob(dataURI: string) {
   //   const byteString = window.atob(dataURI);
@@ -54,10 +66,8 @@ export class FileUploadComponent  {
 
   submitPhoto() {
     this.fileService
-      .uploadFile(
-        this.directoryId,
-        this.originalImgFile
-      ).pipe(take(1))
+      .uploadFile(this.directoryId, this.originalImgFile)
+      .pipe(take(1))
       .subscribe((imageFile) => {
         this.fileSave.emit(imageFile);
         this.dismiss();

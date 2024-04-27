@@ -17,6 +17,8 @@
   "logout": "Deconectare",
   "username": "Nume utilizator",
   "password": "Parolă",
+  "name":"Nume",
+  "size":"Dimensiune",
   "_password": {
     "confirm": "Confirmă parola",
     "current": "Parola curentă",
@@ -40,7 +42,7 @@
   "_pages": {
     "home": "Acasă",
     "browse": "Caută fişiere",
-    "files": "Fişierele mele",
+    "file": "Fişierele mele",
     "profile": "Profil",
     "accessible":"Accesibilitate",
     "bin":"Coş de gunoi",

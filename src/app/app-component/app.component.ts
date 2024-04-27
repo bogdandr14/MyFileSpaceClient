@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
     { title: '_pages.profile', path: '/user/profile', icon: 'person' },
     { title: '_pages.accessible', path: '/folder/accessible', icon: 'paper-plane'},
     //{ title: '_pages.favorites', path: '/folder/favorites', icon: 'heart' },
-    { title: '_pages.files', path: '/file', icon: 'folder' },
+    { title: '_pages.file', path: '/file', icon: 'folder' },
 
     { title: '_pages.bin', path: '/folder/trash', icon: 'trash' },
   ];

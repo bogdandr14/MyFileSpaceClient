@@ -17,6 +17,8 @@
   "logout": "Logout",
   "username": "Username",
   "password": "Password",
+  "name": "Name",
+  "size":"Size",
   "_password": {
     "confirm": "Confirm password",
     "current": "Current password",
@@ -40,7 +42,7 @@
   "_pages": {
     "home": "Home",
     "browse": "Browse files",
-    "files": "My files",
+    "file": "My files",
     "profile": "Profile",
     "accessible": "Accessibility",
     "bin": "Bin",

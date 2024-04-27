@@ -12,7 +12,7 @@ import { Guid } from 'guid-typescript';
 })
 export class FilePage implements OnInit {
   public directoryDetails: DirectoryDetailsModel;
-  private directoryId: Guid = Guid.createEmpty();
+  private accessedDirectories: DirectoryDetailsModel[] = [];
   private accessKey: string;
   constructor(
     private directoryService: DirectoryService,
@@ -46,6 +46,24 @@ export class FilePage implements OnInit {
       .pipe(take(1))
       .subscribe((directory) => {
         this.directoryDetails = directory;
+        this.accessedDirectories.push(directory);
+      });
+  }
+
+  loadDirectory(directoryId: Guid) {
+    const accessedDirectory = this.accessedDirectories.find(
+      (x) => x.id === directoryId
+    );
+    if (accessedDirectory) {
+      this.directoryDetails = accessedDirectory;
+      return;
+    }
+    this.directoryService
+      .getDirectoryInfo(directoryId)
+      .pipe(take(1))
+      .subscribe((directory) => {
+        this.directoryDetails = directory;
+        this.accessedDirectories.push(directory);
       });
   }
 

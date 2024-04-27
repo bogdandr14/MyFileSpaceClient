@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DirectoryDetailsModel } from '../../models/directory-details.model';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-file-explorer',
@@ -9,9 +10,13 @@ import { DirectoryDetailsModel } from '../../models/directory-details.model';
 export class FileExplorerComponent implements OnInit {
 
   @Input() directoryDetails: DirectoryDetailsModel;
-  constructor() { }
+  @Output() directoryChange = new EventEmitter();
+
+  constructor(private menuCtrl:MenuController) { }
   ngOnInit() {
     console.log(this.directoryDetails);
   }
-
+  openDetailsMenu(){
+    this.menuCtrl.open('details-menu');
+  }
 }

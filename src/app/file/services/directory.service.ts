@@ -11,7 +11,6 @@ import { DirectoryDetailsModel } from '../models/directory-details.model';
 
 @Injectable({ providedIn: 'root' })
 export class DirectoryService extends BaseService {
-
   constructor(httpClient: HttpClient) {
     super(httpClient, 'api/directory', environment.baseApiUrl);
   }
@@ -24,9 +23,15 @@ export class DirectoryService extends BaseService {
     directoryId: Guid,
     accessKey?: string
   ): Observable<DirectoryDetailsModel> {
-    return super.getOneById<DirectoryDetailsModel>(directoryId, null, {
-      accessKey: accessKey,
-    });
+    return super.getOneById<DirectoryDetailsModel>(
+      directoryId,
+      null,
+      !!accessKey
+        ? {
+            accessKey,
+          }
+        : {}
+    );
   }
 
   public addDirectory(
@@ -41,30 +46,25 @@ export class DirectoryService extends BaseService {
     return super.update<DirectoryModel>(directoryUpdate);
   }
 
-  public moveDirectory(
-    directoryId: Guid,
-    parentDirectoryId: Guid
-  ) {
+  public moveDirectory(directoryId: Guid, parentDirectoryId: Guid) {
     return super.update('move', directoryId.toString(), {
       newParentDirectoryId: parentDirectoryId.toString(),
     });
   }
 
-  public restoreDirectory(
-    directoryId: Guid,
-    parentDirectoryId?: Guid
-  ) {
-    const params = {
-      restore: true,
-      newParentDirectoryId: parentDirectoryId
-        ? parentDirectoryId.toString()
-        : null,
-    };
-
+  public restoreDirectory(directoryId: Guid, parentDirectoryId?: Guid) {
+    const params: any = { restore: true };
+    if (!!parentDirectoryId) {
+      params.newParentDirectoryId = parentDirectoryId.toString();
+    }
     return super.update('move', directoryId.toString(), params);
   }
 
   public deleteDirectory(directoryId: Guid, permanentDelete?: boolean) {
-    return super.remove(directoryId, null, { permanent: permanentDelete });
+    return super.remove(
+      directoryId,
+      null,
+      !!permanentDelete ? { permanent: permanentDelete } : {}
+    );
   }
 }

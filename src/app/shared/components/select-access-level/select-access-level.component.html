@@ -19,7 +19,9 @@
         [value]="1"
       >
         <ion-icon name="lock-closed" indicator-background="red"></ion-icon>
-        <ion-label>{{ "_accessLevel.private" | translate }}</ion-label>
+        <ion-label class="hide-mobile">{{
+          "_accessLevel.private" | translate
+        }}</ion-label>
       </ion-segment-button>
       <ion-segment-button
         layout="icon-start"
@@ -28,16 +30,16 @@
         backgroundcolor="secondary"
       >
         <ion-icon name="link"></ion-icon>
-        <ion-label>{{ "_accessLevel.restricted" | translate }}</ion-label>
+        <ion-label class="hide-mobile">{{
+          "_accessLevel.restricted" | translate
+        }}</ion-label>
       </ion-segment-button>
-      <ion-segment-button
-        layout="icon-start"
-        class="access-public"
-        [value]="3"
-      >
+      <ion-segment-button layout="icon-start" class="access-public" [value]="3">
         <ion-icon name="accessibility"></ion-icon>
 
-        <ion-label>{{ "_accessLevel.public" | translate }}</ion-label>
+        <ion-label class="hide-mobile">{{
+          "_accessLevel.public" | translate
+        }}</ion-label>
       </ion-segment-button>
     </ion-segment>
   </ion-item>

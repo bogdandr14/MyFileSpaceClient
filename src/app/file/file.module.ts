@@ -7,6 +7,7 @@ import { FileExplorerComponent } from './components/file-explorer/file-explorer.
 import { FileItemComponent } from './components/file-item/file-item.component';
 import { SharedModule } from '../shared/shared.module';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { DirectoryItemComponent } from './components/directory-item/directory-item.component';
 
 @NgModule({
   imports: [SharedModule, FilePageRoutingModule],
@@ -16,6 +17,7 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
     FileItemComponent,
     FileUploadComponent,
     DirectoryEditComponent,
+    DirectoryItemComponent
   ],
 })
 export class FilePageModule {}

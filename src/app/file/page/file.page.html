@@ -1,57 +1,61 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
+    <ion-title> {{'_pages.file' | translate }} </ion-title>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>
-      <ion-breadcrumbs>
-        <ion-breadcrumb>
-          {{'_pages.files' | translate }}
-          <ion-icon slot="separator" name="chevron-forward"></ion-icon>
-        </ion-breadcrumb>
-        <ion-breadcrumb>
-          <ion-chip button color="primary">
-            <ion-icon name="home"></ion-icon>
-            <ion-label> {{'_pages.home'| translate}} </ion-label>
-          </ion-chip>
-        </ion-breadcrumb>
-        <ng-container
-          *ngIf="directoryDetails && directoryDetails.name !=='$USER_ROOT'"
-        >
-          <ion-breadcrumb>
-            <ion-chip button> .. </ion-chip>
-            <ion-icon slot="separator" name="chevron-forward"></ion-icon>
-          </ion-breadcrumb>
-          <ion-breadcrumb>
-            <ion-chip> {{directoryDetails.name}} </ion-chip>
-          </ion-breadcrumb>
-        </ng-container>
-      </ion-breadcrumbs>
-    </ion-title>
   </ion-toolbar>
+  <ion-breadcrumbs *ngIf="!!directoryDetails">
+    <ion-breadcrumb *ngIf="directoryDetails.name==='$USER_ROOT'">
+      <ion-chip>
+        <ion-icon name="home"></ion-icon>
+        <ion-label> {{'_pages.home'| translate}} </ion-label>
+      </ion-chip>
+    </ion-breadcrumb>
+    <ng-container *ngIf="directoryDetails.name !=='$USER_ROOT'">
+      <ion-breadcrumb
+        *ngFor="let parentDirectory of directoryDetails.pathParentDirectories"
+      >
+        <ion-chip button color="primary" (click)="loadDirectory(parentDirectory.id)">
+          <ion-icon
+            *ngIf="parentDirectory.name==='$USER_ROOT'"
+            name="home"
+          ></ion-icon>
+          <ion-label>
+            {{ parentDirectory.name==='$USER_ROOT' ? ('_pages.home'| translate)
+            : parentDirectory.name}}
+          </ion-label>
+        </ion-chip>
+        <ion-icon slot="separator" name="chevron-forward"></ion-icon>
+      </ion-breadcrumb>
+      <ion-breadcrumb>
+        <ion-chip> {{directoryDetails.name}} </ion-chip>
+      </ion-breadcrumb>
+    </ng-container>
+  </ion-breadcrumbs>
 </ion-header>
 
-<ion-content *ngIf="directoryDetails">
+<ion-content class="content" *ngIf="directoryDetails">
   <ion-fab slot="fixed" vertical="top" horizontal="end" [edge]="true">
-    <ion-fab-button>
+    <ion-fab-button color="success">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="bottom">
-      <ion-fab-button id="open-file-upload" color="tertiary">
+      <ion-fab-button id="open-file-upload" color="success">
         <ion-icon name="document"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button id="open-directory-add" color="tertiary">
+      <ion-fab-button id="open-directory-add" color="success">
         <ion-icon name="folder"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button color="tertiary">
+      <ion-fab-button
+        *ngIf="directoryDetails.accessLevel !== 1 && directoryDetails.accessKey"
+        color="tertiary"
+      >
         <ion-icon name="link"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="tertiary">
-        <ion-icon name="settings"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
-  <app-file-explorer [directoryDetails]="directoryDetails"></app-file-explorer>
+  <app-file-explorer [directoryDetails]="directoryDetails" (directoryChange)="loadDirectory($event)"></app-file-explorer>
 
   <ion-modal trigger="open-file-upload">
     <ng-template>

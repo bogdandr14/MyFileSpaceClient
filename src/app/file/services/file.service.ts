@@ -10,7 +10,6 @@ import { FileUpdateModel } from '../models/file-update.model';
 
 @Injectable({ providedIn: 'root' })
 export class FileService extends BaseService {
-
   constructor(private httpClient: HttpClient) {
     super(httpClient, 'api/storedfile', environment.baseApiUrl);
   }
@@ -42,45 +41,44 @@ export class FileService extends BaseService {
     return this.httpClient.put<FileModel>(path, formData);
   }
 
-  public updateFile(
-    fileUpdate: FileUpdateModel
-  ): Observable<FileModel> {
+  public updateFile(fileUpdate: FileUpdateModel): Observable<FileModel> {
     return super.update<FileModel>(fileUpdate);
   }
 
-  public downloadFile(
-    fileId: Guid,
-    accessKey?: string
-  ): Observable<FileDetailsModel> {
-    return super.getOneById<FileDetailsModel>(fileId, 'download', {
-      accessKey: accessKey,
-    });
+  public downloadFile(fileId: Guid, accessKey?: string): Observable<any> {
+    const params = !!accessKey
+      ? {
+          accessKey,
+        }
+      : {};
+    return this.http.get(
+      `${environment.baseApiUrl}/api/storedfile/download/${fileId}`,
+      { responseType: 'blob', params: params }
+    );
   }
 
-  public moveFile(
-    fileId: Guid,
-    directoryId: Guid
-  ) {
+  public moveFile(fileId: Guid, directoryId: Guid) {
     return super.update('move', fileId.toString(), {
       directoryId: directoryId.toString(),
     });
   }
 
-  public restoreDirectory(
-    fileId: Guid,
-    directoryId?: Guid
-  ) {
-    const params = {
+  public restoreDirectory(fileId: Guid, directoryId?: Guid) {
+    const params: any = {
       restore: true,
-      newParentDirectoryId: directoryId
-        ? directoryId.toString()
-        : null,
     };
+    if (!!directoryId) {
+      params.newParentDirectoryId = directoryId.toString();
+    }
 
     return super.update('move', fileId.toString(), params);
   }
 
   public deleteFile(fileId: Guid, permanentDelete?: boolean) {
-    return super.remove(fileId, null, { permanent: permanentDelete });
+    return super.remove(
+      fileId,
+      null,
+      !!permanentDelete ? { permanent: permanentDelete } : {}
+    );
   }
 }

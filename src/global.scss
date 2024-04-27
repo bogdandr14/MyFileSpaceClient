@@ -95,8 +95,9 @@ ion-card.selected > * {
 }
 
 .highlight-links * {
-  ion-chip,
+  ion-chip[button],
   ion-button,
+  ion-item[button],
   ion-menu-toggle,
   a {
     text-decoration-line: underline;
