@@ -19,6 +19,7 @@
   "password": "Parolă",
   "name":"Nume",
   "size":"Dimensiune",
+  "contentType":"Tipul conţinutului",
   "_password": {
     "confirm": "Confirmă parola",
     "current": "Parola curentă",
@@ -137,12 +138,15 @@
     "loading": "Se încarcă...",
     "information": "Informare",
     "_information": {
-      "tagNameCopied": "Numărul de telefon a fost copiat în clipboard",
+      "tagNameCopied": "Numele unic a fost copiat în clipboard",
       "emailCopied": "Adresa de e-mail a fost copiată în clipboard",
       "accessKeyCopied": "Cheia de acces a fost copiada în clipboard"
     },
     "success": "Succes",
     "_success": {
+      "fileUpload": "Fişierul a fost încărcat cu succes",
+      "directoryAdd": "Folderul a fost creat cu succes",
+      "directoryEdit": "Folderul a fost actualizat cu succes",
       "register": "Contul a fost creat cu success! Logează-te pentru a accesa contul",
       "login": "Bine ai revenit!",
       "changePassword": "Parola a fost schimbată cu succes!",

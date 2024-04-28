@@ -1,3 +1,4 @@
+import { ObjectChangeModel } from './../models/object-change.model';
 import { filter, switchMap, take } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, forkJoin, from, Observable, of } from 'rxjs';
@@ -31,6 +32,9 @@ export class DataService {
 
   private language = new BehaviorSubject<string>(environment.defaultLanguage);
   public language$ = this.language.asObservable().pipe(filter((value) => value != null));
+
+  private objectChange = new BehaviorSubject<ObjectChangeModel>(null);
+  public objectChange$ = this.objectChange.asObservable().pipe(filter((value) => value != null));
 
   private storageReady = new BehaviorSubject(false);
   constructor(private storage: Storage) {
@@ -145,5 +149,9 @@ export class DataService {
   removeCurrentUser() {
     this.remove(USER_KEY);
     this.user.next(null);
+  }
+
+  triggerObjectChange(objectChange: ObjectChangeModel){
+    this.objectChange.next(objectChange);
   }
 }

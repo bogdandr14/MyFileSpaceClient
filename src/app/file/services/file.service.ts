@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { FileModel } from '../models/file.model';
 import { FileDetailsModel } from '../models/file-details.model';
 import { FileUpdateModel } from '../models/file-update.model';
+import { AccessLevel } from 'src/app/shared/models/access-level.enum';
 
 @Injectable({ providedIn: 'root' })
 export class FileService extends BaseService {
@@ -27,10 +28,11 @@ export class FileService extends BaseService {
     });
   }
 
-  public uploadFile(directoryId: Guid, file: File): Observable<FileModel> {
+  public uploadFile(directoryId: Guid,accessLevel:AccessLevel, file: File): Observable<FileModel> {
     let path = `${this.url}/upload/${directoryId}`;
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('accessLevel', accessLevel.toString());
     return this.httpClient.post<FileModel>(path, formData);
   }
 

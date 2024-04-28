@@ -8,16 +8,19 @@ import { FileItemComponent } from './components/file-item/file-item.component';
 import { SharedModule } from '../shared/shared.module';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { DirectoryItemComponent } from './components/directory-item/directory-item.component';
+import { NgxFileHelpersModule } from 'ngx-file-helpers';
+import { ReadModePipe } from './read-mode.pipe';
 
 @NgModule({
-  imports: [SharedModule, FilePageRoutingModule],
+  imports: [SharedModule, FilePageRoutingModule, NgxFileHelpersModule],
   declarations: [
     FilePage,
     FileExplorerComponent,
     FileItemComponent,
     FileUploadComponent,
     DirectoryEditComponent,
-    DirectoryItemComponent
+    DirectoryItemComponent,
+    ReadModePipe
   ],
 })
 export class FilePageModule {}

@@ -76,7 +76,8 @@ export class AlertService {
     if (error instanceof AppError) {
       toast = await this.createToast(
         '_message.error',
-        error.message,
+        (error.originalErr.error && error.originalErr.error.detail)
+        ? error.originalErr.error.detail : error.message,
         'danger',
         'close-circle',
         error.status
@@ -123,7 +124,7 @@ export class AlertService {
     status?: number
   ) {
     const toast = await this.toastController.create({
-      header: this.translateService.instant(title) + (status ? status : ''),
+      header: this.translateService.instant(title) + ' ' + (status ? status : ''),
       message: this.translateService.instant(message),
       color: color,
       icon: icon,

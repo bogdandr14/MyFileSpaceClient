@@ -8,19 +8,19 @@
 
 
 .access-restricted.segment-button-checked.md::part(native) {
-  color: var(--ion-color-primary);
-}
-
-.access-restricted.ion-segment-button::part(indicator-background) {
-  background: var(--ion-color-primary);
-}
-
-.access-public.segment-button-checked.md::part(native) {
   color: var(--ion-color-secondary);
 }
 
-.access-public.ion-segment-button::part(indicator-background) {
+.access-restricted.ion-segment-button::part(indicator-background) {
   background: var(--ion-color-secondary);
+}
+
+.access-public.segment-button-checked.md::part(native) {
+  color: var(--ion-color-success);
+}
+
+.access-public.ion-segment-button::part(indicator-background) {
+  background: var(--ion-color-success);
 }
 
 

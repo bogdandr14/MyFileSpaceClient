@@ -1,3 +1,4 @@
+import { DataService } from './../../../core/services/data.service';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Guid } from 'guid-typescript';
@@ -7,6 +8,10 @@ import { DirectoryModel } from '../../models/directory.model';
 import { DirectoryService } from '../../services/directory.service';
 import { DirectoryUpdateModel } from '../../models/directory-update.model';
 import { AccessLevel } from 'src/app/shared/models/access-level.enum';
+import { ObjectChangeModel } from 'src/app/core/models/object-change.model';
+import { ActionType } from 'src/app/core/models/action-type.enum';
+import { ObjectType } from 'src/app/core/models/object-type.enum';
+import { AlertService } from 'src/app/core/services/alert.service';
 
 @Component({
   selector: 'app-directory-edit',
@@ -22,14 +27,15 @@ export class DirectoryEditComponent {
     this.name = val.name;
   }
 
-
   private existingDirectoryId: Guid;
-  public accessLevel: AccessLevel;
+  public accessLevel: AccessLevel = AccessLevel.Private;
   public name: string;
 
   constructor(
     public modalCtrl: ModalController,
-    private directoryService: DirectoryService
+    private directoryService: DirectoryService,
+    private dataService: DataService,
+    private alertService: AlertService
   ) {}
 
   onSubmit() {
@@ -53,6 +59,18 @@ export class DirectoryEditComponent {
       .pipe(take(1))
       .subscribe((directory) => {
         this.directorySave.emit(directory);
+
+        this.dataService.triggerObjectChange(
+          new ObjectChangeModel(
+            ObjectType.Directory,
+            this.isUpdate ? ActionType.Edit : ActionType.Add,
+            directory
+          )
+        );
+        this.alertService.showSuccess(
+          '_message._success.directory' + (this.isUpdate ? 'Edit' : 'Add')
+        );
+
         this.dismiss();
       });
   }

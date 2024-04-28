@@ -30,6 +30,9 @@ export class SelectAccessLevelComponent {
     this._field = val;
   }
   get field() {
+    if (!this._field) {
+      this._field = AccessLevel.Private;
+    }
     return this._field;
   }
   private _field: AccessLevel;

@@ -16,7 +16,11 @@
       <ion-breadcrumb
         *ngFor="let parentDirectory of directoryDetails.pathParentDirectories"
       >
-        <ion-chip button color="primary" (click)="loadDirectory(parentDirectory.id)">
+        <ion-chip
+          button
+          [color]="(parentDirectory.accessLevel === 1) ? 'tertiary' : ((parentDirectory.accessLevel === 2) ? 'secondary' : 'success')"
+          (click)="loadDirectory(parentDirectory.id)"
+        >
           <ion-icon
             *ngIf="parentDirectory.name==='$USER_ROOT'"
             name="home"
@@ -55,7 +59,10 @@
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
-  <app-file-explorer [directoryDetails]="directoryDetails" (directoryChange)="loadDirectory($event)"></app-file-explorer>
+  <app-file-explorer
+    [directoryDetails]="directoryDetails"
+    (directoryChange)="loadDirectory($event)"
+  ></app-file-explorer>
 
   <ion-modal trigger="open-file-upload">
     <ng-template>

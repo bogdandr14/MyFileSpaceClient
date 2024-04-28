@@ -19,6 +19,7 @@
   "password": "Password",
   "name": "Name",
   "size":"Size",
+  "contentType":"Content type",
   "_password": {
     "confirm": "Confirm password",
     "current": "Current password",
@@ -143,6 +144,9 @@
     },
     "success": "Success",
     "_success": {
+      "fileUpload": "File was uploaded successfully",
+      "directoryAdd": "Directory was successfully added",
+      "directoryEdit": "Directory was successfully updated",
       "register": "The account was successfuly created! Please login to enter the account",
       "login": "Welcome back!",
       "changePassword": "Password changed successfuly!",

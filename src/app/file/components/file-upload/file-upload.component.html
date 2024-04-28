@@ -23,50 +23,54 @@
                 <span class="required"> *</span>
               </b>
             </ion-label>
-            <input
-              type="file"
-              name="file"
-              #file="ngModel"
-              ngModel
-              class="file-input"
-              (change)="onFileChange($event)"
-              #fileUpload
-              required
-            />
-            <ion-button
-              name="photoButton"
-              [color]="originalImgFile ? 'primary' : 'secondary'"
-              fill="clear"
-              expand="block"
-              (click)="fileUpload.click()"
-            >
-              {{
-                (originalImgFile ? "_file.change" : "_file.choose")
-                  | translate
-              }}
-              <ion-icon name="document" slot="end"></ion-icon>
-            </ion-button>
             <div
-              *ngIf="file.control.value"
-              class="file-info align-items-center"
+              [class]="isMobile ? '' : 'dropzone'"
+              class="file-upload"
+              ngxFileDropzone
+              [readMode]="readMode"
+              (fileDrop)="addFile($event)"
             >
-              <p class="small">
-                {{ originalImgFile?.name }}
-                {{ originalImgFile?.type }}
-              </p>
+              <input
+                type="file"
+                name="file"
+                #file="ngModel"
+                ngModel
+                class="file-input"
+                (change)="onFileChange($event)"
+                #fileUpload
+                [required]="isMobile"
+              />
+              <ion-button
+                name="photoButton"
+                color="tertiary"
+                fill="solid"
+                expand="block"
+                (click)="fileUpload.click()"
+              >
+                {{
+                  (fileToUpload ? "_file.change" : "_file.choose") | translate
+                }}
+                <ion-icon name="document" slot="start"></ion-icon>
+              </ion-button>
+            </div>
 
-              <p>
-                File size:
-                <span>
-                  {{ getSize() }}
-                </span>
+            <div *ngIf="!!fileToUpload" class="file-info">
+              <p class="small">
+                {{ "name" | translate }}: {{ fileToUpload?.name }},
+                {{ "size" | translate }}: {{ size }}
               </p>
             </div>
           </ion-item>
+
           <app-validation-errors
             [model]="file"
             [number]="maxSizeMb"
           ></app-validation-errors>
+          <app-select-access-level
+            id="access-level"
+            [(field)]="accessLevel"
+            name="_accessLevel"
+          ></app-select-access-level>
         </ion-item-group>
 
         <ion-button
@@ -75,9 +79,9 @@
           color="success"
           fill="clear"
           expand="block"
-          [disabled]="form.invalid || form.pristine"
+          [disabled]="form.invalid || !fileToUpload"
         >
-          <ion-icon name="save" slot="start"></ion-icon>
+          <ion-icon name="cloud-upload" slot="start"></ion-icon>
           {{ "_common.confirm" | translate }}
         </ion-button>
       </form>
