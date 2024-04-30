@@ -28,7 +28,11 @@ export class FileService extends BaseService {
     });
   }
 
-  public uploadFile(directoryId: Guid,accessLevel:AccessLevel, file: File): Observable<FileModel> {
+  public uploadFile(
+    directoryId: Guid,
+    accessLevel: AccessLevel,
+    file: File
+  ): Observable<FileModel> {
     let path = `${this.url}/upload/${directoryId}`;
     const formData = new FormData();
     formData.append('file', file);
@@ -60,7 +64,7 @@ export class FileService extends BaseService {
   }
 
   public moveFile(fileId: Guid, directoryId: Guid) {
-    return super.update('move', fileId.toString(), {
+    return super.update(null, `move/${fileId.toString()}`, {
       directoryId: directoryId.toString(),
     });
   }

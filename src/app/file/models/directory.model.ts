@@ -6,4 +6,5 @@ export class DirectoryModel {
   name: string;
   parentDirectoryId: Guid;
   accessLevel: AccessLevel;
+  ownerId: Guid;
 }

@@ -13,6 +13,7 @@ export class AccessibilitySettingsComponent implements OnInit {
   public invertCtrl: FormControl;
   public grayCtrl: FormControl;
   public highlightCtrl: FormControl;
+  public audioCtrl: FormControl;
   public fontSizeCtrl: FormControl;
 
   constructor(private dataService: DataService) {
@@ -20,6 +21,7 @@ export class AccessibilitySettingsComponent implements OnInit {
     this.invertCtrl = new FormControl();
     this.grayCtrl = new FormControl();
     this.highlightCtrl = new FormControl();
+    this.audioCtrl = new FormControl();
     this.fontSizeCtrl = new FormControl();
   }
 
@@ -44,6 +46,11 @@ export class AccessibilitySettingsComponent implements OnInit {
         this.highlightCtrl.setValue(value);
       }
     });
+    this.dataService.audio$.subscribe((value) => {
+      if (this.audioCtrl.value != value) {
+        this.audioCtrl.setValue(value);
+      }
+    });
   }
 
   toggleDarkTheme(darkTheme: boolean) {
@@ -56,6 +63,10 @@ export class AccessibilitySettingsComponent implements OnInit {
 
   toggleGrayscale(grayscale: boolean) {
     this.dataService.setGrayscale(grayscale);
+  }
+
+  toggleAudio(audio: boolean) {
+    this.dataService.setAudio(audio);
   }
 
   toggleLinkHighlight(highlight: boolean) {

@@ -1,4 +1,4 @@
-import { DirectoryEditComponent } from './components/directory-edit/directory-edit.component';
+import { ObjectEditComponent } from './components/object-edit/object-edit.component';
 import { NgModule } from '@angular/core';
 import { FilePageRoutingModule } from './file-routing.module';
 
@@ -18,7 +18,7 @@ import { ReadModePipe } from './read-mode.pipe';
     FileExplorerComponent,
     FileItemComponent,
     FileUploadComponent,
-    DirectoryEditComponent,
+    ObjectEditComponent,
     DirectoryItemComponent,
     ReadModePipe
   ],

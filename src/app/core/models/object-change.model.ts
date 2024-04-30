@@ -1,5 +1,7 @@
+import { DirectoryModel } from '../../file/models/directory.model';
 import { ActionType } from './action-type.enum';
 import { ObjectType } from './object-type.enum';
+import { FileModel } from '../..//file/models/file.model';
 
 export class ObjectChangeModel {
   constructor(type: ObjectType, action: ActionType, object: any) {
@@ -9,5 +11,5 @@ export class ObjectChangeModel {
   }
   type: ObjectType;
   action: ActionType;
-  changedObject: any;
+  changedObject: FileModel | DirectoryModel;
 }

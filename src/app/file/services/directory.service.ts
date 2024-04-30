@@ -47,7 +47,7 @@ export class DirectoryService extends BaseService {
   }
 
   public moveDirectory(directoryId: Guid, parentDirectoryId: Guid) {
-    return super.update('move', directoryId.toString(), {
+    return super.update(null, `move/${directoryId.toString()}`, {
       newParentDirectoryId: parentDirectoryId.toString(),
     });
   }

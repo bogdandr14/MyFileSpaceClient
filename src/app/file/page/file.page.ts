@@ -6,11 +6,13 @@ import { ActivatedRoute } from '@angular/router';
 import { switchMap, iif, take, tap, of } from 'rxjs';
 import { DirectoryDetailsModel } from '../models/directory-details.model';
 import { Guid } from 'guid-typescript';
-import { ObjectType } from 'src/app/core/models/object-type.enum';
-import { ActionType } from 'src/app/core/models/action-type.enum';
+import { ObjectType } from '../../core/models/object-type.enum';
+import { ActionType } from '../../core/models/action-type.enum';
 import { FileModel } from '../models/file.model';
-import { Action } from 'rxjs/internal/scheduler/Action';
 import { DirectoryModel } from '../models/directory.model';
+import { ObjectMoveModel } from '../../core/models/object-move.model';
+import { FileService } from '../services/file.service';
+import { AlertService } from '../../core/services/alert.service';
 
 @Component({
   selector: 'app-file',
@@ -21,10 +23,37 @@ export class FilePage implements OnInit {
   public directoryDetails: DirectoryDetailsModel;
   private accessedDirectories: DirectoryDetailsModel[] = [];
   private accessKey: string;
+  private objectCut: ObjectMoveModel;
+
+  get isObjectCut() {
+    return !!this.objectCut;
+  }
+
+  get objectCutType() {
+    return this.objectCut.type;
+  }
+
+  get canPasteHere() {
+    if (this.objectCut.type == ObjectType.File) {
+      return !this.directoryDetails.files.some(
+        (f) => f.id === this.objectCut.cutObject.id
+      );
+    } else {
+      return (
+        this.directoryDetails.id !== this.objectCut.cutObject.id &&
+        !this.directoryDetails.pathParentDirectories.some(
+          (pd) => pd.id === this.objectCut.cutObject.id
+        )
+      );
+    }
+  }
+
   constructor(
     private directoryService: DirectoryService,
+    private fileService: FileService,
     private dataService: DataService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private alertService: AlertService
   ) {}
 
   ngOnInit() {
@@ -60,6 +89,40 @@ export class FilePage implements OnInit {
     this.dataService.objectChange$.subscribe((objectChange) => {
       this.handleObjectChange(objectChange);
     });
+
+    this.dataService.objectCut$.subscribe((objectCut) => {
+      this.objectCut = objectCut;
+    });
+  }
+
+  pasteHere() {
+    iif(
+      () => this.objectCut.type === ObjectType.File,
+      this.fileService.moveFile(
+        this.objectCut.cutObject.id,
+        this.directoryDetails.id
+      ),
+      this.directoryService.moveDirectory(
+        this.objectCut.cutObject.id,
+        this.directoryDetails.id
+      )
+    )
+      .pipe(take(1))
+      .subscribe((x) => {
+        this.alertService.showSuccess(
+          '_message._success.' +
+            (this.objectCut.type === ObjectType.File ? 'file' : 'directory') +
+            'Move'
+        );
+        this.handleObjectChange(
+          new ObjectChangeModel(
+            this.objectCut.type,
+            ActionType.Move,
+            this.objectCut.cutObject
+          )
+        );
+        this.dataService.triggerObjectCut(null);
+      });
   }
 
   handleObjectChange(objectChange: ObjectChangeModel) {
@@ -105,15 +168,6 @@ export class FilePage implements OnInit {
       }
     }
     this.updateAccessedDirectory();
-  }
-
-  updateAccessedDirectory() {
-    const index = this.accessedDirectories.findIndex(
-      (obj) => obj.id === this.directoryDetails.id
-    );
-    if (index !== -1) {
-      this.accessedDirectories[index] = this.directoryDetails;
-    }
   }
 
   handleDirectoryChange(directoryChange: ObjectChangeModel) {
@@ -162,14 +216,34 @@ export class FilePage implements OnInit {
           )
       );
     } else if (directoryChange.action == ActionType.Move) {
+      const index = this.accessedDirectories.findIndex(
+        (obj) => obj.id === directory.parentDirectoryId
+      );
+      if (index !== -1) {
+        this.accessedDirectories[index].childDirectories =
+          this.accessedDirectories[index].childDirectories.filter(
+            (x) => x.id !== directory.id
+          );
+      }
+
+      directory.parentDirectoryId = this.directoryDetails.id;
       this.directoryDetails.childDirectories.push(directory);
       this.updateAccessedDirectory();
       this.accessedDirectories = this.accessedDirectories.filter(
         (mainObj) =>
           !mainObj.pathParentDirectories.some(
             (subObj) => subObj.id === directory.id
-          )
+          ) && mainObj.id !== directory.id
       );
+    }
+  }
+
+  updateAccessedDirectory() {
+    const index = this.accessedDirectories.findIndex(
+      (obj) => obj.id === this.directoryDetails.id
+    );
+    if (index !== -1) {
+      this.accessedDirectories[index] = this.directoryDetails;
     }
   }
 

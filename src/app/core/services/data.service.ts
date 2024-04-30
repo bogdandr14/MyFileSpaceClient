@@ -6,7 +6,8 @@ import { environment } from 'src/environments/environment';
 import { CurrentUserModel } from '../models/auth/current-user.model';
 import { Storage } from '@ionic/storage-angular';
 import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
-import { DARK_THEME_KEY, GRAYSCALE_KEY, HIGHLIGHT_KEY, INVERT_COLOR_KEY, LANG_KEY, TOKEN_KEY, USER_KEY } from '../models/data-keys.constants';
+import { AUDIO_KEY, DARK_THEME_KEY, GRAYSCALE_KEY, HIGHLIGHT_KEY, INVERT_COLOR_KEY, LANG_KEY, TOKEN_KEY, USER_KEY } from '../models/data-keys.constants';
+import { ObjectMoveModel } from '../models/object-move.model';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,9 @@ export class DataService {
   private linkHighlight = new BehaviorSubject<boolean>(null);
   public linkHighlight$ = this.linkHighlight.asObservable().pipe(filter((value) => value != null));
 
+  private audio = new BehaviorSubject<boolean>(true);
+  public audio$ = this.audio.asObservable().pipe(filter((value) => value != null));
+
   private fontSize = new BehaviorSubject<string>('font-size-5');
   public fontSize$ = this.fontSize.asObservable();
 
@@ -35,6 +39,9 @@ export class DataService {
 
   private objectChange = new BehaviorSubject<ObjectChangeModel>(null);
   public objectChange$ = this.objectChange.asObservable().pipe(filter((value) => value != null));
+
+  private objectCut = new BehaviorSubject<ObjectMoveModel>(null);
+  public objectCut$ = this.objectCut.asObservable();
 
   private storageReady = new BehaviorSubject(false);
   constructor(private storage: Storage) {
@@ -55,14 +62,16 @@ export class DataService {
       this.get<boolean>(INVERT_COLOR_KEY),
       this.get<boolean>(GRAYSCALE_KEY),
       this.get<boolean>(HIGHLIGHT_KEY),
+      this.get<boolean>(AUDIO_KEY),
       this.getLanguage()
     ]).subscribe(
-      ([user, dark, invert, gray, highlight, lang]) => {
+      ([user, dark, invert, gray, highlight, audio, lang]) => {
         this.user.next(user);
         this.darkTheme.next(dark);
         this.invertColor.next(invert);
         this.grayscale.next(gray);
         this.linkHighlight.next(highlight);
+        this.audio.next(audio)
         this.language.next(lang);
       }
     )
@@ -113,6 +122,11 @@ export class DataService {
     this.darkTheme.next(theme);
   }
 
+  setAudio(audio: boolean) {
+    this.set(AUDIO_KEY, audio);
+    this.audio.next(audio);
+  }
+
   setLanguage(language: string) {
     this.set(LANG_KEY, language);
     this.language.next(language);
@@ -153,5 +167,9 @@ export class DataService {
 
   triggerObjectChange(objectChange: ObjectChangeModel){
     this.objectChange.next(objectChange);
+  }
+
+  triggerObjectCut(objectCut: ObjectMoveModel){
+    this.objectCut.next(objectCut);
   }
 }

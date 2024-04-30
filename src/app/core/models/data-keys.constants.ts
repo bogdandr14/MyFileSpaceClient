@@ -5,4 +5,4 @@ export const GRAYSCALE_KEY = 'grayscale';
 export const HIGHLIGHT_KEY = 'highlight_links';
 export const LANG_KEY = 'language';
 export const USER_KEY = 'current_user';
-
+export const AUDIO_KEY = 'audio';

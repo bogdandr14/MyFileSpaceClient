@@ -17,9 +17,7 @@
   "logout": "Deconectare",
   "username": "Nume utilizator",
   "password": "Parolă",
-  "name":"Nume",
-  "size":"Dimensiune",
-  "contentType":"Tipul conţinutului",
+  "contentType": "Tipul conţinutului",
   "_password": {
     "confirm": "Confirmă parola",
     "current": "Parola curentă",
@@ -37,16 +35,16 @@
     "markAsChecked": "Marchează ca văzut",
     "fileCreated": "A fost creat un nou fişier: { fileName }",
     "fileModified": "Fişierul { fileName } a fost modificat",
-    "folderCreated": "Un nou folder { folderName } a fost creat",
-    "folderModified": "Folderul { folderName } a fost modificat"
+    "directoryCreated": "Un nou folder { folderName } a fost creat",
+    "directoryModified": "Folderul { folderName } a fost modificat"
   },
   "_pages": {
     "home": "Acasă",
     "browse": "Caută fişiere",
     "file": "Fişierele mele",
     "profile": "Profil",
-    "accessible":"Accesibilitate",
-    "bin":"Coş de gunoi",
+    "accessible": "Accesibilitate",
+    "bin": "Coş de gunoi",
     "otherProfile": "Profilul lui { name }",
     "settings": "Setări",
     "login": "Logare",
@@ -80,7 +78,11 @@
     "today": "Azi",
     "accept": "Acceptă",
     "decline": "Refuză",
-    "understood": "Am înţeles"
+    "understood": "Am înţeles",
+    "name": "Nume",
+    "size": "Dimensiune",
+    "cut": "Mută",
+    "sound": "Sunet"
   },
   "_accessLevel": {
     "private": "Privat",
@@ -90,30 +92,35 @@
   "_details": {
     "user": "Utilizator",
     "file": "Detalii fişier",
-    "folder": "Detalii folder"
+    "directory": "Detalii folder"
   },
   "_add": {
     "file": "Adaugă fişier",
-    "folder": "Adaugă folder"
+    "directory": "Adaugă folder"
   },
   "_edit": {
     "user": "Editează profil",
     "file": "Editează fişier",
-    "folder": "Editează folder"
+    "directory": "Editează folder"
   },
   "_delete": {
     "warning": "Această acţiune e permanentă. Eşti sigur(ă) că vrei să ştergi",
     "file": "Şterge fişierul",
     "fileMessage": "Eşti sigur(ă) că vrei să ştergi fişierul { fileName } din { folderName }?",
-    "folder": "Şterge folderul",
+    "directory": "Şterge folderul",
     "folderMessage": "Eşti sigur(ă) că vrei să ştergi folderul { occupationName } şi tot conţinutul lui?",
     "confirm": "Confirmă ştergerea"
   },
   "_file": {
+    "name": "Numele fişierului",
     "upload": "Încarcă fişierul",
     "toUpload": "Fişierul de încărcat",
+    "download": "Descarcă fişierul",
     "choose": "Alege fişierul",
     "change": "Schimbă fişierul"
+  },
+  "_directory": {
+    "name": "Numele folder-ului"
   },
   "_validation": {
     "required": "Câmpul este obligatoriu",
@@ -145,8 +152,11 @@
     "success": "Succes",
     "_success": {
       "fileUpload": "Fişierul a fost încărcat cu succes",
+      "fileEdit": "Fişierul a fost actualizat cu succes",
+      "fileMove": "Fişierul a fost mutat cu succes",
       "directoryAdd": "Folderul a fost creat cu succes",
       "directoryEdit": "Folderul a fost actualizat cu succes",
+      "directoryMove": "Folderul a fost mutat cu succes",
       "register": "Contul a fost creat cu success! Logează-te pentru a accesa contul",
       "login": "Bine ai revenit!",
       "changePassword": "Parola a fost schimbată cu succes!",

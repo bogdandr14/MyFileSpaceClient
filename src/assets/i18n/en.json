@@ -17,9 +17,7 @@
   "logout": "Logout",
   "username": "Username",
   "password": "Password",
-  "name": "Name",
-  "size":"Size",
-  "contentType":"Content type",
+  "contentType": "Content type",
   "_password": {
     "confirm": "Confirm password",
     "current": "Current password",
@@ -37,8 +35,8 @@
     "markAsChecked": "Mark as checked",
     "fileCreated": "A new file was created: { fileName }",
     "fileModified": "The file { fileName } was modified",
-    "folderCreated": "A new folder was created: { folderName }",
-    "folderModified": "The folder { folderName } was modified"
+    "directoryCreated": "A new directory was created: { folderName }",
+    "directoryModified": "The directory { folderName } was modified"
   },
   "_pages": {
     "home": "Home",
@@ -80,7 +78,11 @@
     "today": "Today",
     "accept": "Accept",
     "decline": "Decline",
-    "understood": "Understood"
+    "understood": "Understood",
+    "name": "Name",
+    "size": "Size",
+    "cut": "Cut",
+    "sound": "Sound"
   },
   "_accessLevel": {
     "private": "Private",
@@ -90,30 +92,35 @@
   "_details": {
     "user": "User",
     "file": "File details",
-    "folder": "Folder details"
+    "directory": "Directory details"
   },
   "_add": {
     "file": "Add file",
-    "folder": "Add folder"
+    "directory": "Add directory"
   },
   "_edit": {
     "user": "Edit profile",
     "file": "Edit file",
-    "folder": "Edit folder"
+    "directory": "Edit directory"
   },
   "_delete": {
     "warning": "This action is permanent. Are you sure you want to delete this",
     "file": "Delete file",
     "fileMessage": "Are you sure you want to delete file { fileName } from { folderName }?",
-    "folder": "Delete folder",
-    "folderMessage": "Are you sure you want to delete folder { folderName } and all its contents?",
+    "directory": "Delete directory",
+    "directoryMessage": "Are you sure you want to delete directory { folderName } and all its contents?",
     "confirm": "Confirm delete"
   },
   "_file": {
+    "name": "File name",
     "upload": "Upload file",
     "toUpload": "File to upload",
+    "download": "Download file",
     "choose": "Choose file",
     "change": "Change file"
+  },
+  "_directory":{
+    "name": "Directory name"
   },
   "_validation": {
     "required": "Field is required.",
@@ -145,8 +152,11 @@
     "success": "Success",
     "_success": {
       "fileUpload": "File was uploaded successfully",
+      "fileEdit": "File was successfully updated",
+      "fileMove": "File was successfully moved",
       "directoryAdd": "Directory was successfully added",
       "directoryEdit": "Directory was successfully updated",
+      "directoryMove": "Directory was successfully moved",
       "register": "The account was successfuly created! Please login to enter the account",
       "login": "Welcome back!",
       "changePassword": "Password changed successfuly!",

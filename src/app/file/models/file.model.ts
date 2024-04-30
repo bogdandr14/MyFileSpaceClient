@@ -7,4 +7,5 @@ export class FileModel {
   accessLevel: AccessLevel;
   sizeInBytes: number;
   contentType: string;
+  ownerId: Guid;
 }

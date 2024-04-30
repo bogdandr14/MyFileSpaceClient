@@ -1,3 +1,4 @@
+import { DataService } from 'src/app/core/services/data.service';
 import { Injectable, Injector } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,12 +19,15 @@ export class AlertService {
     '../../../assets/audio/mixkit-tech-break-fail.wav'
   );
 
+  private useAudio = true;
   constructor(
     private injector: Injector,
     private toastController: ToastController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private dataService: DataService
   ) {
     this.setAudio();
+    this.initAudioSubscriber();
   }
 
   setAudio() {
@@ -31,6 +35,12 @@ export class AlertService {
     this.infoSound.load();
     this.warnSound.load();
     this.errorSound.load();
+  }
+
+  initAudioSubscriber() {
+    this.dataService.audio$.subscribe((audio) => {
+      this.useAudio = audio;
+    });
   }
 
   async presentAlert(
@@ -56,7 +66,9 @@ export class AlertService {
       ],
     });
     await alert.present();
-    this.infoSound.play();
+    if (this.useAudio) {
+      this.infoSound.play();
+    }
   }
 
   public async showSuccess(success: any) {
@@ -68,7 +80,9 @@ export class AlertService {
     );
 
     toast.present();
-    this.successSound.play();
+    if (this.useAudio) {
+      this.successSound.play();
+    }
   }
 
   public async showError(error: any) {
@@ -76,8 +90,9 @@ export class AlertService {
     if (error instanceof AppError) {
       toast = await this.createToast(
         '_message.error',
-        (error.originalErr.error && error.originalErr.error.detail)
-        ? error.originalErr.error.detail : error.message,
+        error.originalErr.error && error.originalErr.error.detail
+          ? error.originalErr.error.detail
+          : error.message,
         'danger',
         'close-circle',
         error.status
@@ -91,7 +106,9 @@ export class AlertService {
       );
     }
     toast.present();
-    this.errorSound.play();
+    if (this.useAudio) {
+      this.errorSound.play();
+    }
   }
 
   public async showInfo(info: any) {
@@ -113,7 +130,9 @@ export class AlertService {
       'alert-circle'
     );
     toast.present();
-    this.warnSound.play();
+    if (this.useAudio) {
+      this.warnSound.play();
+    }
   }
 
   private async createToast(
@@ -124,7 +143,8 @@ export class AlertService {
     status?: number
   ) {
     const toast = await this.toastController.create({
-      header: this.translateService.instant(title) + ' ' + (status ? status : ''),
+      header:
+        this.translateService.instant(title) + ' ' + (status ? status : ''),
       message: this.translateService.instant(message),
       color: color,
       icon: icon,

@@ -1,7 +1,14 @@
 <ion-header translucent>
   <ion-toolbar>
     <ion-title>
-      {{ isUpdate ? "_edit.directory" : ("_add.directory" | translate) }}
+      {{
+        (isUpdate
+          ? isFile === true
+            ? "_edit.file"
+            : "_edit.directory"
+          : "_add.directory"
+        ) | translate
+      }}
     </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="dismiss()">
@@ -19,14 +26,14 @@
             <form #form="ngForm" (ngSubmit)="onSubmit()">
               <app-input-template
                 [isRequired]="true"
-                id="directory-name"
+                id="object-name"
                 [(field)]="name"
-                name="_directory.name"
+                [name]="objectLabel"
               ></app-input-template>
               <app-select-access-level
-              id="access-level"
-              [(field)]="accessLevel"
-              name="_accessLevel"
+                id="access-level"
+                [(field)]="accessLevel"
+                name="_accessLevel"
               ></app-select-access-level>
 
               <ion-button
@@ -34,7 +41,7 @@
                 type="submit"
                 class="submit-button"
                 expand="block"
-                [disabled]="!name ||(isUpdate && !accessLevel)"
+                [disabled]="!name || (isUpdate && !accessLevel)"
               >
                 {{ "_common.save" | translate }}
               </ion-button>

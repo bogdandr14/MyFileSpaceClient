@@ -41,15 +41,22 @@
 
 <ion-content class="content" *ngIf="directoryDetails">
   <ion-fab slot="fixed" vertical="top" horizontal="end" [edge]="true">
-    <ion-fab-button color="success">
+    <ion-fab-button [color]="isObjectCut ? 'warning':'success'">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="bottom">
       <ion-fab-button id="open-file-upload" color="success">
         <ion-icon name="document"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button id="open-directory-add" color="success">
+      <ion-fab-button id="open-directory-edit" color="success">
         <ion-icon name="folder"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="pasteHere()"
+        *ngIf="!!isObjectCut"
+        [color]="canPasteHere ? 'warning':'step-500'"
+        [disabled]="!canPasteHere"
+      >
+        <ion-icon [name]="objectCutType === 1 ? 'document':'folder'"></ion-icon>
       </ion-fab-button>
       <ion-fab-button
         *ngIf="directoryDetails.accessLevel !== 1 && directoryDetails.accessKey"
@@ -73,12 +80,12 @@
     </ng-template>
   </ion-modal>
 
-  <ion-modal trigger="open-directory-add">
+  <ion-modal trigger="open-directory-edit">
     <ng-template>
-      <app-directory-edit
+      <app-object-edit
         *ngIf="directoryDetails"
         [parentDirectoryId]="directoryDetails.id"
-      ></app-directory-edit>
+      ></app-object-edit>
     </ng-template>
   </ion-modal>
 </ion-content>
