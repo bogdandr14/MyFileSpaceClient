@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FileModel } from '../../models/file.model';
 import { MenuController, ModalController } from '@ionic/angular';
 import { FileService } from '../../services/file.service';
@@ -20,6 +20,8 @@ import { ObjectMoveModel } from '../../../core/models/object-move.model';
 export class FileItemComponent {
   static sizes: Array<string> = ['B', 'KB', 'MB', 'GB', 'TB'];
   @Input() file: FileModel;
+  @Output() showDetails = new EventEmitter();
+
 
   get size() {
     let size = this.file.sizeInBytes;

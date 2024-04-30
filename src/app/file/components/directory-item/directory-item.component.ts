@@ -20,6 +20,7 @@ import { ObjectMoveModel } from '../../../core/models/object-move.model';
 export class DirectoryItemComponent {
   @Input() directory: DirectoryModel;
   @Output() directoryChange = new EventEmitter();
+  @Output() showDetails = new EventEmitter();
 
   get isOwner() {
     return this.userService.isCurrentUser(this.directory.ownerId);

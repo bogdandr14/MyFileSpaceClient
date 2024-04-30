@@ -175,8 +175,18 @@ export class FilePage implements OnInit {
     if (directoryChange.action == ActionType.Add) {
       this.directoryDetails.childDirectories.push(directory);
     } else if (directoryChange.action == ActionType.Edit) {
-      this.directoryDetails.name = directory.name;
-      this.directoryDetails.accessLevel = directory.accessLevel;
+      let updatedChildDirectoryIndex =
+        this.directoryDetails.childDirectories.findIndex(
+          (obj) => obj.id === directory.id
+        );
+      if (updatedChildDirectoryIndex !== -1) {
+        this.directoryDetails.childDirectories[
+          updatedChildDirectoryIndex
+        ].name = directory.name;
+        this.directoryDetails.childDirectories[
+          updatedChildDirectoryIndex
+        ].accessLevel = directory.accessLevel;
+      }
       this.updateAccessedDirectory();
       for (const accessedDirectory of this.accessedDirectories) {
         let subObjectIndexToUpdate =

@@ -55,7 +55,7 @@
     "registerHere": "Register here"
   },
   "_common": {
-    "you": "Your profile",
+    "you": "You",
     "details": "Details",
     "add": "Add",
     "edit": "Edit",
@@ -82,12 +82,21 @@
     "name": "Name",
     "size": "Size",
     "cut": "Cut",
-    "sound": "Sound"
+    "sound": "Sound",
+    "dateAdded":"Date added",
+    "dateModified":"Date modified",
+    "owner":"Owner",
+    "accessibility": "Accessibility"
   },
   "_accessLevel": {
+    "name":"Access level",
     "private": "Private",
     "restricted": "Restricted",
     "public": "Public"
+  },
+  "_access":{
+    "allowedUsers":"Allowed users",
+    "accessKeys":"Access keys"
   },
   "_details": {
     "user": "User",
@@ -112,6 +121,7 @@
     "confirm": "Confirm delete"
   },
   "_file": {
+    "properties":"File properties",
     "name": "File name",
     "upload": "Upload file",
     "toUpload": "File to upload",
@@ -120,6 +130,7 @@
     "change": "Change file"
   },
   "_directory":{
+    "properties":"Directory properties",
     "name": "Directory name"
   },
   "_validation": {

@@ -55,7 +55,7 @@
     "registerHere": "Înregistrează-te aici"
   },
   "_common": {
-    "you": "Profilul tău",
+    "you": "Tu",
     "details": "Detalii",
     "add": "Adaugă",
     "edit": "Editează",
@@ -82,12 +82,21 @@
     "name": "Nume",
     "size": "Dimensiune",
     "cut": "Mută",
-    "sound": "Sunet"
+    "sound": "Sunet",
+    "dateAdded":"Data creării",
+    "dateModified":"Data ultimei modificări",
+    "owner":"Deţinător",
+    "accessibility": "Accesibilitate"
   },
   "_accessLevel": {
+    "name":"Nivel acces",
     "private": "Privat",
     "restricted": "Restricţionat",
     "public": "Public"
+  },
+  "_access":{
+    "allowedUsers":"Utilizatori permişi",
+    "accessKeys":"Chei de acces"
   },
   "_details": {
     "user": "Utilizator",
@@ -112,6 +121,7 @@
     "confirm": "Confirmă ştergerea"
   },
   "_file": {
+    "properties":"Proprietăţi fişier",
     "name": "Numele fişierului",
     "upload": "Încarcă fişierul",
     "toUpload": "Fişierul de încărcat",
@@ -120,6 +130,7 @@
     "change": "Schimbă fişierul"
   },
   "_directory": {
+    "properties":"Proprietăţi folder",
     "name": "Numele folder-ului"
   },
   "_validation": {

@@ -8,7 +8,12 @@
       size-xs="12"
       *ngFor="let folder of directoryDetails.childDirectories"
     >
-      <app-directory-item (directoryChange)="directoryChange.emit($event)" [directory]="folder"> </app-directory-item>
+      <app-directory-item
+        (directoryChange)="directoryChange.emit($event)"
+        [directory]="folder"
+        (showDetails)="openDirectoryDetailsMenu(folder.id)"
+      >
+      </app-directory-item>
     </ion-col>
 
     <ion-col
@@ -19,22 +24,33 @@
       size-xs="12"
       *ngFor="let file of directoryDetails.files"
     >
-      <app-file-item [file]="file"></app-file-item>
+      <app-file-item
+        [file]="file"
+        (showDetails)="openFileDetailsMenu(file.id)"
+      ></app-file-item>
     </ion-col>
   </ion-row>
 </ion-grid>
 
-<ion-menu side="end" menuId="details-menu" contentId="file-explorer-content">
+<ion-menu
+  id="object-details-menu"
+  side="end"
+  menuId="details-menu"
+  contentId="file-explorer-content"
+>
   <ion-header>
     <ion-toolbar color="primary">
-      <ion-title>Directory details</ion-title>
+      <ion-title
+        >{{
+          (isFileDetails ? "_details.file" : "_details.directory") | translate
+        }}
+      </ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
-    This is the menu content.
-    <ion-card
-      ><ion-card-header> titlu </ion-card-header>
-      <ion-card-content> continut </ion-card-content>
-    </ion-card>
+    <app-object-details
+      [objectDetails]="detailsMenuObject"
+      [isFile]="isFileDetails"
+    ></app-object-details>
   </ion-content>
 </ion-menu>

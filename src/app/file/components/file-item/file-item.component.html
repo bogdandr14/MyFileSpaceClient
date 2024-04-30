@@ -40,7 +40,7 @@
   <ng-template>
     <ion-content>
       <ion-list>
-        <ion-item button (click)="openDetailsMenu()">
+        <ion-item button (click)="showDetails.emit()">
           <ion-label> {{ "_common.details" | translate }} </ion-label>
         </ion-item>
         <ng-container *ngIf="isOwner">

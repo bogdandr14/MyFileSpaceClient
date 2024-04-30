@@ -10,6 +10,7 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
 import { DirectoryItemComponent } from './components/directory-item/directory-item.component';
 import { NgxFileHelpersModule } from 'ngx-file-helpers';
 import { ReadModePipe } from './read-mode.pipe';
+import { ObjectDetailsComponent } from './components/object-details/object-details.component';
 
 @NgModule({
   imports: [SharedModule, FilePageRoutingModule, NgxFileHelpersModule],
@@ -20,7 +21,8 @@ import { ReadModePipe } from './read-mode.pipe';
     FileUploadComponent,
     ObjectEditComponent,
     DirectoryItemComponent,
-    ReadModePipe
+    ReadModePipe,
+    ObjectDetailsComponent
   ],
 })
 export class FilePageModule {}
