@@ -29,7 +29,8 @@
   "_user": {
     "email": "E-Mail",
     "emailAddress": "E-Mail address",
-    "tagName": "Tag name"
+    "tagName": "Tag name",
+    "search": "Search users"
   },
   "_updates": {
     "markAsChecked": "Mark as checked",
@@ -86,7 +87,8 @@
     "dateAdded":"Date added",
     "dateModified":"Date modified",
     "owner":"Owner",
-    "accessibility": "Accessibility"
+    "accessibility": "Accessibility",
+    "noUserFound":"No users found"
   },
   "_accessLevel": {
     "name":"Access level",
@@ -96,7 +98,12 @@
   },
   "_access":{
     "allowedUsers":"Allowed users",
-    "accessKeys":"Access keys"
+    "accessKey":"Access link",
+    "removeUsers": "Remove user access",
+    "copyLink":"Copy access link",
+    "expiresAt":"The link expires at",
+    "expirationDate":"Expiration date",
+    "temporary": "Offer temporary access"
   },
   "_details": {
     "user": "User",
@@ -105,19 +112,23 @@
   },
   "_add": {
     "file": "Add file",
-    "directory": "Add directory"
+    "directory": "Add directory",
+    "accessKey":"Create access link for { name }"
   },
   "_edit": {
     "user": "Edit profile",
     "file": "Edit file",
-    "directory": "Edit directory"
+    "directory": "Edit directory",
+    "userAccess":"Edit user access"
   },
   "_delete": {
     "warning": "This action is permanent. Are you sure you want to delete this",
     "file": "Delete file",
-    "fileMessage": "Are you sure you want to delete file { fileName } from { folderName }?",
+    "fileMessage": "Are you sure you want to delete file { fileName }?",
     "directory": "Delete directory",
     "directoryMessage": "Are you sure you want to delete directory { folderName } and all its contents?",
+    "accessKey": "Delete access link",
+    "accessKeyMessage": "Are you sure you want to delete the access link for { name }?",
     "confirm": "Confirm delete"
   },
   "_file": {
@@ -158,7 +169,10 @@
     "_information": {
       "tagNameCopied": "Tag name copied to clipboard",
       "emailCopied": "Email address copied to clipboard",
-      "accessKeyCopied": "Access key copied to clipboard"
+      "accessKeyCopied": "Access link copied to clipboard",
+      "fileDeleted": "The file was moved to trash bin",
+      "directoryDeleted": "The directory and all its contents was moved to trash bin",
+      "accessKeyDeleted":"The access link was deleted"
     },
     "success": "Success",
     "_success": {
@@ -168,6 +182,7 @@
       "directoryAdd": "Directory was successfully added",
       "directoryEdit": "Directory was successfully updated",
       "directoryMove": "Directory was successfully moved",
+      "userAccessEdit":"The user access was edited successfully",
       "register": "The account was successfuly created! Please login to enter the account",
       "login": "Welcome back!",
       "changePassword": "Password changed successfuly!",

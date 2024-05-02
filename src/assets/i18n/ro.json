@@ -29,7 +29,8 @@
   "_user": {
     "email": "E-Mail",
     "emailAddress": "Adresă de e-Mail",
-    "tagName": "Nume unic"
+    "tagName": "Nume unic",
+    "search": "Caută utilizatori"
   },
   "_updates": {
     "markAsChecked": "Marchează ca văzut",
@@ -86,7 +87,8 @@
     "dateAdded":"Data creării",
     "dateModified":"Data ultimei modificări",
     "owner":"Deţinător",
-    "accessibility": "Accesibilitate"
+    "accessibility": "Accesibilitate",
+    "noUserFound":"Niciun utilizator găsit"
   },
   "_accessLevel": {
     "name":"Nivel acces",
@@ -96,7 +98,12 @@
   },
   "_access":{
     "allowedUsers":"Utilizatori permişi",
-    "accessKeys":"Chei de acces"
+    "accessKey":"Link de acces",
+    "removeUsers": "Șterge accesul utilizatorilor",
+    "copyLink":"Copiază link acces",
+    "expiresAt":"Link-ul expiră la",
+    "expirationDate":"Data expirării",
+    "temporary": "Oferă acces temporar"
   },
   "_details": {
     "user": "Utilizator",
@@ -105,19 +112,23 @@
   },
   "_add": {
     "file": "Adaugă fişier",
-    "directory": "Adaugă folder"
+    "directory": "Adaugă folder",
+    "accessKey":"Creează link acces pentru { name }"
   },
   "_edit": {
     "user": "Editează profil",
     "file": "Editează fişier",
-    "directory": "Editează folder"
+    "directory": "Editează folder",
+    "userAccess":"Editează accesul utilizatorilor"
   },
   "_delete": {
     "warning": "Această acţiune e permanentă. Eşti sigur(ă) că vrei să ştergi",
     "file": "Şterge fişierul",
-    "fileMessage": "Eşti sigur(ă) că vrei să ştergi fişierul { fileName } din { folderName }?",
+    "fileMessage": "Eşti sigur(ă) că vrei să ştergi fişierul { fileName }?",
     "directory": "Şterge folderul",
-    "folderMessage": "Eşti sigur(ă) că vrei să ştergi folderul { occupationName } şi tot conţinutul lui?",
+    "directoryMessage": "Eşti sigur(ă) că vrei să ştergi folderul { folderName } şi tot conţinutul lui?",
+    "accessKey": "Şterge link-ul de acces",
+    "accessKeyMessage": "Eşti sigur(ă) că vrei să ştergi link-ul de acces pentru { name }?",
     "confirm": "Confirmă ştergerea"
   },
   "_file": {
@@ -158,7 +169,10 @@
     "_information": {
       "tagNameCopied": "Numele unic a fost copiat în clipboard",
       "emailCopied": "Adresa de e-mail a fost copiată în clipboard",
-      "accessKeyCopied": "Cheia de acces a fost copiada în clipboard"
+      "accessKeyCopied": "Link-ul de acces a fost copiat în clipboard",
+      "fileDelete": "Fișierul a fost mutat în coșul de gunoi",
+      "directoryDelete": "Folderul și tot conținutul lui a fost mutat în coșul de gunoi",
+      "accessKeyDeleted":"Link-ul de acces a fost șters"
     },
     "success": "Succes",
     "_success": {
@@ -168,6 +182,7 @@
       "directoryAdd": "Folderul a fost creat cu succes",
       "directoryEdit": "Folderul a fost actualizat cu succes",
       "directoryMove": "Folderul a fost mutat cu succes",
+      "userAccessEdit":"Accesul utilizatorilor a fost editat cu succes",
       "register": "Contul a fost creat cu success! Logează-te pentru a accesa contul",
       "login": "Bine ai revenit!",
       "changePassword": "Parola a fost schimbată cu succes!",

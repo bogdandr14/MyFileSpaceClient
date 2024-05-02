@@ -11,6 +11,7 @@ import { ObjectType } from '../../../core/models/object-type.enum';
 import { AlertService } from '../../../core/services/alert.service';
 import { ObjectEditComponent } from '../object-edit/object-edit.component';
 import { ObjectMoveModel } from '../../../core/models/object-move.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-directory-item',
@@ -32,7 +33,8 @@ export class DirectoryItemComponent {
     private userService: UserService,
     private dataService: DataService,
     private alertService: AlertService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private translateService: TranslateService
   ) {}
 
   openDetailsMenu() {
@@ -56,7 +58,20 @@ export class DirectoryItemComponent {
     );
   }
 
-  public deleteDirectory() {
+  async confirmDeleteDirectory() {
+    await this.alertService.presentAlert(
+      this.translateService.instant('_delete.directory'),
+      this.translateService.instant('_delete.directoryMessage', {
+        folderName: this.directory.name
+      }),
+      this.translateService.instant('_common.cancel'),
+      this.translateService.instant('_common.confirm'),
+      this,
+      () => this.deleteDirectory
+    );
+  }
+
+  deleteDirectory() {
     this.directoryService
       .deleteDirectory(this.directory.id)
       .pipe(take(1))
@@ -68,7 +83,7 @@ export class DirectoryItemComponent {
             this.directory
           )
         );
-        this.alertService.showSuccess('_message._info.directoryDelete');
+        this.alertService.showInfo('_message._information.directoryDeleted');
       });
   }
 }

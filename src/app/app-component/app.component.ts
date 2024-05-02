@@ -19,20 +19,15 @@ export const DEFAULT_TITLE = 'MyFileSpace';
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit {
-  public appPages: Array<RouteDescriptor> = [
-    { title: 'Favorites', path: '/folder/favorites', icon: 'heart' }
-  ];
 
-  public labels// = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+
+  public labels; // = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
   fontSize = 'font-size-5';
 
   public connectedUserLinks: Array<RouteDescriptor> = [
-    { title: '_pages.profile', path: '/user/profile', icon: 'person' },
-    { title: '_pages.accessible', path: '/folder/accessible', icon: 'paper-plane'},
-    //{ title: '_pages.favorites', path: '/folder/favorites', icon: 'heart' },
     { title: '_pages.file', path: '/file', icon: 'folder' },
-
+    { title: '_pages.profile', path: '/user/profile', icon: 'person' },
     { title: '_pages.bin', path: '/folder/trash', icon: 'trash' },
   ];
 

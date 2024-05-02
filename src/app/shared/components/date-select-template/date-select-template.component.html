@@ -32,7 +32,7 @@
           #popoverDate
           showDefaultButtons
           (ionChange)="setDate(popoverDate.value)"
-          min="1800"
+          [min]="minDate"
           presentation="date"
         >
         </ion-datetime>

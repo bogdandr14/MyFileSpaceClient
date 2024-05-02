@@ -8,6 +8,7 @@ import { TagnameCheckDirective } from './directives/tagnameCheck.directive';
 import { LoginPage } from './pages/login/login.page';
 import { RegisterPage } from './pages/register/register.page';
 import { ProfilePage } from './pages/profile/profile.page';
+import { UserSearchComponent } from './components/user-search/user-search.component';
 
 @NgModule({
   declarations: [
@@ -16,8 +17,10 @@ import { ProfilePage } from './pages/profile/profile.page';
     RegisterPage,
     TagnameCheckDirective,
     EmailCheckDirective,
+    UserSearchComponent
   ],
   imports: [SharedModule, UserPageRoutingModule],
+  exports:[UserSearchComponent],
   providers: [Clipboard],
 })
 export class UserPageModule {}

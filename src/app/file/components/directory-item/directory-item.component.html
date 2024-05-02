@@ -27,17 +27,25 @@
     <ion-content>
       <ion-list>
         <ion-item button (click)="showDetails.emit()">
-          <ion-label> {{ "_common.details" | translate }} </ion-label>
+          <ion-label class="primary">
+            {{ "_common.details" | translate }}
+          </ion-label>
         </ion-item>
         <ng-container *ngIf="isOwner">
           <ion-item button (click)="openDirectoryEdit()">
-            <ion-label> {{ "_common.edit" | translate }} </ion-label>
+            <ion-label class="secondary">
+              {{ "_common.edit" | translate }}
+            </ion-label>
           </ion-item>
           <ion-item button (click)="addDirectoryCut()">
-            <ion-label> {{ "_common.cut" | translate }} </ion-label>
+            <ion-label class="warning">
+              {{ "_common.cut" | translate }}
+            </ion-label>
           </ion-item>
-          <ion-item button (click)="deleteDirectory()">
-            <ion-label> {{ "_common.delete" | translate }} </ion-label>
+          <ion-item button (click)="confirmDeleteDirectory()">
+            <ion-label class="danger">
+              {{ "_common.delete" | translate }}
+            </ion-label>
           </ion-item>
         </ng-container>
       </ion-list>

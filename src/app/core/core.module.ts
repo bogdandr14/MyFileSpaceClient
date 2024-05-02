@@ -1,5 +1,5 @@
 import { ErrorHandler, NgModule, Optional, SkipSelf } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { NavigationLinkComponent } from './components/navigation-link/navigation-link.component';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateCompiler, TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -15,6 +15,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { AppErrorHandler } from './app-error-handler';
 import { LocaleProvider } from './locale.provider';
 import { IonicModule } from '@ionic/angular';
+import { ClipboardModule } from 'ngx-clipboard';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(httpClient: HttpClient): TranslateLoader {
@@ -42,6 +43,7 @@ export function createTranslateLoader(httpClient: HttpClient): TranslateLoader {
     }),
     RouterModule,
     CommonModule,
+    ClipboardModule
   ],
   exports: [
     TranslateModule,
@@ -53,6 +55,7 @@ export function createTranslateLoader(httpClient: HttpClient): TranslateLoader {
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: ErrorHandler, useClass: AppErrorHandler },
+    DatePipe,
     Clipboard,
     LocaleProvider
   ],

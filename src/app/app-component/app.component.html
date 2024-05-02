@@ -27,7 +27,9 @@
             {{ "menu" | translate }}
             &emsp;
             <ion-chip *ngIf="authService.isLoggedIn$ | async" color="tertiary">
-              #{{ (dataService.user$ | async).tagName }}
+              <ion-label>
+                #{{ (dataService.user$ | async).tagName }}
+              </ion-label>
             </ion-chip>
           </ion-list-header>
           <app-navigation-link
@@ -44,11 +46,6 @@
             </app-navigation-link>
           </ng-container>
 
-          <app-navigation-link
-            *ngFor="let link of appPages; let i = index"
-            [link]="link"
-          >
-          </app-navigation-link>
           <ng-container *ngIf="(authService.isLoggedIn$ | async) === false">
             <app-navigation-link
               *ngFor="let link of freeUserLinks; let i = index"

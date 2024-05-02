@@ -1,0 +1,14 @@
+.modal-content {
+  overflow: hidden;
+}
+.chips-content {
+  overflow-y: auto;
+}
+
+.fixed-card {
+  position: fixed;
+  top: 20px; /* Adjust as needed */
+  left: 20px; /* Adjust as needed */
+  width: calc(100% - 40px); /* Adjust as needed */
+  z-index: 1000; /* Adjust as needed */
+}

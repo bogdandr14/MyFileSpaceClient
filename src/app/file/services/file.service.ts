@@ -33,7 +33,7 @@ export class FileService extends BaseService {
     accessLevel: AccessLevel,
     file: File
   ): Observable<FileModel> {
-    let path = `${this.url}/upload/${directoryId}`;
+    const path = `${this.url}/upload/${directoryId}`;
     const formData = new FormData();
     formData.append('file', file);
     formData.append('accessLevel', accessLevel.toString());
@@ -41,7 +41,7 @@ export class FileService extends BaseService {
   }
 
   public updateUploadFile(fileId: Guid, file: File): Observable<FileModel> {
-    let path = `${this.url}/upload/${fileId}`;
+    const path = `${this.url}/upload/${fileId}`;
     const formData = new FormData();
     formData.append('file', file);
     return this.httpClient.put<FileModel>(path, formData);

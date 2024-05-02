@@ -11,9 +11,17 @@ import { DirectoryItemComponent } from './components/directory-item/directory-it
 import { NgxFileHelpersModule } from 'ngx-file-helpers';
 import { ReadModePipe } from './read-mode.pipe';
 import { ObjectDetailsComponent } from './components/object-details/object-details.component';
+import { EditAccessComponent } from './components/edit-access/edit-access.component';
+import { UserPageModule } from '../user/user.module';
+import { AddAccessKeyComponent } from './components/add-access-key/add-access-key.component';
 
 @NgModule({
-  imports: [SharedModule, FilePageRoutingModule, NgxFileHelpersModule],
+  imports: [
+    SharedModule,
+    FilePageRoutingModule,
+    UserPageModule,
+    NgxFileHelpersModule,
+  ],
   declarations: [
     FilePage,
     FileExplorerComponent,
@@ -22,7 +30,9 @@ import { ObjectDetailsComponent } from './components/object-details/object-detai
     ObjectEditComponent,
     DirectoryItemComponent,
     ReadModePipe,
-    ObjectDetailsComponent
+    ObjectDetailsComponent,
+    EditAccessComponent,
+    AddAccessKeyComponent,
   ],
 })
 export class FilePageModule {}

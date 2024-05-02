@@ -145,3 +145,26 @@ ion-card.selected > * {
 ion-popover::part(backdrop) {
   background-color: rgb(0, 0, 0);
 }
+
+ion-item:hover ion-label.danger {
+  color: var(--ion-color-danger-tint);
+}
+
+ion-item:hover ion-label.primary {
+  color: var(--ion-color-primary-tint);
+}
+ion-item:hover ion-label.success {
+  color: var(--ion-color-success-tint);
+}
+
+ion-item:hover ion-label.warning {
+  color: var(--ion-color-warning-tint);
+}
+
+ion-item:hover ion-label.secondary {
+  color: var(--ion-color-secondary-tint);
+}
+
+ion-item:hover ion-label.tertiary {
+  color: var(--ion-color-tertiary-tint);
+}

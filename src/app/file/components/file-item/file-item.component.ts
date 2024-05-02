@@ -11,6 +11,7 @@ import { DataService } from '../../../core/services/data.service';
 import { UserService } from '../../../user/user.service';
 import { ObjectEditComponent } from '../object-edit/object-edit.component';
 import { ObjectMoveModel } from '../../../core/models/object-move.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-file-item',
@@ -21,7 +22,6 @@ export class FileItemComponent {
   static sizes: Array<string> = ['B', 'KB', 'MB', 'GB', 'TB'];
   @Input() file: FileModel;
   @Output() showDetails = new EventEmitter();
-
 
   get size() {
     let size = this.file.sizeInBytes;
@@ -61,7 +61,8 @@ export class FileItemComponent {
     private dataService: DataService,
     private alertService: AlertService,
     private userService: UserService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private translateService: TranslateService
   ) {}
 
   openDetailsMenu() {
@@ -80,7 +81,20 @@ export class FileItemComponent {
     directoryEditModal.present();
   }
 
-  public deleteFile() {
+  async confirmDeleteFile() {
+    await this.alertService.presentAlert(
+      this.translateService.instant('_delete.file'),
+      this.translateService.instant('_delete.fileMessage', {
+        fileName: this.file.name
+      }),
+      this.translateService.instant('_common.cancel'),
+      this.translateService.instant('_common.confirm'),
+      this,
+      () => this.deleteFile
+    );
+  }
+
+  deleteFile() {
     this.fileService
       .deleteFile(this.file.id)
       .pipe(take(1))
@@ -88,7 +102,7 @@ export class FileItemComponent {
         this.dataService.triggerObjectChange(
           new ObjectChangeModel(ObjectType.File, ActionType.Delete, this.file)
         );
-        this.alertService.showSuccess('_message._info.fileDelete');
+        this.alertService.showInfo('_message._information.fileDeleted');
       });
   }
 

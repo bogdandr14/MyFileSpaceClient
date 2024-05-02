@@ -45,22 +45,25 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="bottom">
-      <ion-fab-button id="open-file-upload" color="success">
+      <ion-fab-button id="open-file-upload" color="success" title="Add file">
         <ion-icon name="document"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button id="open-directory-edit" color="success">
+      <ion-fab-button id="open-directory-edit" color="success" title="Add directory">
         <ion-icon name="folder"></ion-icon>
       </ion-fab-button>
       <ion-fab-button (click)="pasteHere()"
         *ngIf="!!isObjectCut"
         [color]="canPasteHere ? 'warning':'step-500'"
         [disabled]="!canPasteHere"
+        [title]="canPasteHere? 'Paste here': 'Can not paste here'"
       >
         <ion-icon [name]="objectCutType === 1 ? 'document':'folder'"></ion-icon>
       </ion-fab-button>
       <ion-fab-button
         *ngIf="directoryDetails.accessLevel !== 1 && directoryDetails.accessKey"
-        color="tertiary"
+        color="secondary"
+        title="Copy access link"
+        (click)="copyAccessLinkToClipboard()"
       >
         <ion-icon name="link"></ion-icon>
       </ion-fab-button>

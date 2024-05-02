@@ -1,0 +1,74 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>
+      {{ "_edit.userAccess" | translate }}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        {{ "_common.cancel" | translate }}
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="modal-content">
+  <ion-card [style.max-height]="isMobile ? '100vh' : '56vh'">
+    <ion-card-content *ngIf="!!allowedUsers">
+      <form #form="ngForm" (ngSubmit)="onSubmit()">
+        <ion-list>
+          <ion-item>
+            <ion-label>{{ "_access.allowedUsers" | translate }}</ion-label>
+          </ion-item>
+          <div class="chips-content" [style.max-height]="isMobile ? '15vh' : '9vh'">
+            <ion-chip *ngFor="let user of updatedAllowedUsers" color="primary">
+              <ion-icon name="checkmark"></ion-icon>
+              <ion-label>{{ user.tagName }}</ion-label>
+              <ion-icon
+                name="remove-circle"
+                color="danger"
+                (click)="toggleRemove(user.userId)"
+              ></ion-icon>
+            </ion-chip>
+            <ion-chip *ngFor="let user of usersToAdd" color="success">
+              <ion-icon name="person-add"> </ion-icon>
+              <ion-label>{{ user.tagName }}</ion-label>
+              <ion-icon
+                name="close-circle"
+                color="danger"
+                (click)="removeAddedUser(user.userId)"
+              ></ion-icon>
+            </ion-chip>
+          </div>
+          <ng-container *ngIf="removedUsers.length">
+            <ion-item>
+              <ion-label>{{ "_access.removeUsers" | translate }}</ion-label>
+            </ion-item>
+
+            <div class="chips-content" [style.max-height]="isMobile ? '15vh' : '9vh'">
+              <ion-chip *ngFor="let user of removedUsers" color="danger">
+                <ion-icon name="person-remove"></ion-icon>
+                <ion-label>{{ user.tagName }}</ion-label>
+                <ion-icon
+                  name="close-circle"
+                  color="primary"
+                  (click)="toggleRemove(user.userId)"
+                ></ion-icon>
+              </ion-chip>
+            </div>
+          </ng-container>
+
+            <app-user-search [extraIcon]="{name:'add-circle', color:'success'}" [isModal]="true"(userClicked)="addUser($event)"> </app-user-search>
+        </ion-list>
+
+        <ion-button
+          color="success"
+          type="submit"
+          class="submit-button"
+          expand="block"
+        >
+          {{ "_common.save" | translate }}
+        </ion-button>
+      </form>
+    
+    </ion-card-content>
+  </ion-card>
+</ion-content>

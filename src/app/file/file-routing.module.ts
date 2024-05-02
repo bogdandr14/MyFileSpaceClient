@@ -6,8 +6,9 @@ import { FilePage } from './page/file.page';
 const routes: Routes = [
   {
     path: '',
-    component: FilePage
-  }
+    component: FilePage,
+    data: { title: '_pages.file' },
+  },
 ];
 
 @NgModule({

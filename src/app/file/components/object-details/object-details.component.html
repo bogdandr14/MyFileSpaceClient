@@ -6,40 +6,58 @@
           {{ (isFile ? "_file" : "_directory") + ".properties" | translate }}
         </ion-list-header>
         <ion-item>
-          <ion-label
-            >{{ (isFile ? "_file" : "_directory") + ".name" | translate }}
+          <ion-label class="data">
+            {{ (isFile ? "_file" : "_directory") + ".name" | translate }}:
           </ion-label>
           <ion-text readonly>{{ objectDetails.name }} </ion-text>
         </ion-item>
         <ion-item>
-          <ion-label> {{ "_common.owner" | translate }} </ion-label>
-          <ion-chip button color="primary" (click)="copyOwner()">
+          <ion-label> {{ "_common.owner" | translate }}: </ion-label>
+          <ion-chip
+            button
+            color="primary"
+            (click)="copyTagNameToClipboard(objectDetails.ownerTagName)"
+          >
             <ion-icon name="person" color="primary"></ion-icon>
             <ion-label>
-              {{ objectDetails.ownerTagName
-              }}{{ isOwner ? " (" + ("_common.you" | translate) + ")" : "" }}
+              {{ objectDetails.ownerTagName }}
+              {{ isOwner ? " (" + ("_common.you" | translate) + ")" : "" }}
             </ion-label>
           </ion-chip>
         </ion-item>
         <ion-item>
-          <ion-label>{{ "_common.dateAdded" | translate }}</ion-label>
-          <ion-text readonly>{{
-            objectDetails.createdAt | date : "medium" : timeOffset
-          }}</ion-text>
+          <ion-label class="data">
+            {{ "_common.dateAdded" | translate }}:
+          </ion-label>
+          <ion-text readonly>
+            {{
+              objectDetails.createdAt
+                | date: "medium":timeOffset:localeService.currentLocale
+            }}
+          </ion-text>
         </ion-item>
         <ion-item>
-          <ion-label>{{ "_common.dateModified" | translate }}</ion-label>
-          <ion-text readonly>{{
-            objectDetails.modifiedAt | date : "medium" : timeOffset
-          }}</ion-text>
+          <ion-label class="data">
+            {{ "_common.dateModified" | translate }}:
+          </ion-label>
+          <ion-text readonly>
+            {{
+              objectDetails.createdAt !== objectDetails.modifiedAt
+                ? (objectDetails.modifiedAt
+                  | date: "medium":timeOffset:localeService.currentLocale)
+                : "-"
+            }}
+          </ion-text>
         </ion-item>
         <ion-item *ngIf="isFile">
-          <ion-label> {{ "_common.size" | translate }}</ion-label>
+          <ion-label class="data"> {{ "_common.size" | translate }}:</ion-label>
           <ion-text readonly>{{ size }}</ion-text>
         </ion-item>
       </ion-list>
       <ion-list>
-        <ion-list-header> {{ "_common.accessibility" | translate }} </ion-list-header>
+        <ion-list-header>
+          {{ "_common.accessibility" | translate }}
+        </ion-list-header>
         <ion-item>
           <ion-label>{{ "_accessLevel.name" | translate }}</ion-label>
           <ion-chip [color]="accessibilityColor">
@@ -47,17 +65,84 @@
               [name]="accessibilityIcon"
               [color]="accessibilityColor"
             ></ion-icon>
-            <ion-label>{{
-              "_accessLevel." + accessibilityName | translate
-            }}</ion-label>
+            <ion-label>
+              {{ "_accessLevel." + accessibilityName | translate }}
+            </ion-label>
           </ion-chip>
         </ion-item>
         <ion-item>
           <ion-label>{{ "_access.allowedUsers" | translate }}</ion-label>
+          <ng-container *ngIf="isOwner">
+            <ion-button id="open-edit-access" color="warning">
+              <ion-icon name="create"></ion-icon>
+              {{ "_common.edit" | translate }}
+            </ion-button>
+            <ion-modal trigger="open-edit-access">
+              <ng-template>
+                <app-edit-access
+                  *ngIf="!!objectDetails"
+                  [accessObject]="accessObject"
+                  (userAccessChange)="reloadUserAccess()"
+                ></app-edit-access>
+              </ng-template>
+            </ion-modal>
+          </ng-container>
         </ion-item>
-        <ion-item>
-          <ion-label>{{ "_access.accessKeys" | translate }}</ion-label>
+        <div class="chips-content" [style.max-height]="'10vh'">
+          <ion-chip
+            *ngFor="let allowedUser of objectDetails.allowedUsers"
+            button
+            (click)="copyTagNameToClipboard(allowedUser)"
+            color="primary"
+          >
+            <ion-icon name="person" color="primary"></ion-icon>
+            <ion-label>{{ allowedUser }}</ion-label>
+          </ion-chip>
+        </div>
+        <ion-item *ngIf="isOwner">
+          <ion-label>{{ "_access.accessKey" | translate }}</ion-label>
+          <ion-button
+            *ngIf="objectDetails.accessKey; else addAccessKey"
+            color="danger"
+            (click)="deleteAccessKey()"
+          >
+            <ion-icon name="trash"></ion-icon>
+            {{ "_common.delete" | translate }}
+          </ion-button>
+          <ng-template #addAccessKey>
+            <ion-button id="open-add-access-key" color="success">
+              <ion-icon name="link"></ion-icon>
+              {{ "_common.add" | translate }}
+            </ion-button>
+            <ion-modal trigger="open-add-access-key">
+              <ng-template>
+                <app-add-access-key
+                  *ngIf="!!objectDetails"
+                  [accessObject]="accessObject"
+                  [objectName]="objectDetails.name"
+                  (accessKeyAdded)="setAccessKey($event)"
+                ></app-add-access-key>
+              </ng-template>
+            </ion-modal>
+          </ng-template>
         </ion-item>
+        <ng-container *ngIf="isOwner && objectDetails.accessKey">
+          <ion-chip button color="secondary" (click)="copyAccessLinkToClipboard()">
+            <ion-icon name="link"></ion-icon>
+            <ion-label>{{ "_access.copyLink" | translate }}</ion-label>
+          </ion-chip>
+          <ion-item *ngIf="objectDetails.accessKey.expiresAt">
+            <ion-label class="data">
+              {{ "_access.expiresAt" | translate }}:
+            </ion-label>
+            <ion-text readonly>
+              {{
+                objectDetails.accessKey.expiresAt
+                  | date: "medium":timeOffset:localeService.currentLocale
+              }}
+            </ion-text>
+          </ion-item>
+        </ng-container>
       </ion-list>
     </ion-item-group>
   </ion-card-content>

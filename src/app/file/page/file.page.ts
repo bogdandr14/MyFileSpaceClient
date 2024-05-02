@@ -13,6 +13,7 @@ import { DirectoryModel } from '../models/directory.model';
 import { ObjectMoveModel } from '../../core/models/object-move.model';
 import { FileService } from '../services/file.service';
 import { AlertService } from '../../core/services/alert.service';
+import { ClipboardService } from 'ngx-clipboard';
 
 @Component({
   selector: 'app-file',
@@ -53,7 +54,8 @@ export class FilePage implements OnInit {
     private fileService: FileService,
     private dataService: DataService,
     private route: ActivatedRoute,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private clipboardService: ClipboardService
   ) {}
 
   ngOnInit() {
@@ -93,6 +95,11 @@ export class FilePage implements OnInit {
     this.dataService.objectCut$.subscribe((objectCut) => {
       this.objectCut = objectCut;
     });
+  }
+
+  copyAccessLinkToClipboard() {
+    this.clipboardService.copy(this.directoryDetails.accessKey.key);
+    this.alertService.showInfo('_message._information.accessKeyCopied');
   }
 
   pasteHere() {

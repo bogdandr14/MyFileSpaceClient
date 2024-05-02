@@ -115,11 +115,13 @@ export class AlertService {
     const toast = await this.createToast(
       '_message.information',
       info,
-      'primary',
+      'secondary',
       'information-circle'
     );
     toast.present();
-    this.infoSound.play();
+    if (this.useAudio) {
+      this.infoSound.play();
+    }
   }
 
   public async showWarning(warning: any) {

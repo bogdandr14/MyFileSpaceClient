@@ -25,6 +25,9 @@ export class RegisterPage implements OnDestroy {
   }
 
   public onRegister(): void {
+    if(!!this.registerModel.tagName){
+      this.registerModel.tagName='';
+    }
     this.authService
       .register(this.registerModel)
       .pipe(first())

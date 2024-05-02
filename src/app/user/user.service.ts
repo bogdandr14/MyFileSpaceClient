@@ -54,7 +54,7 @@ export class UserService extends BaseService {
   }
 
   public findUsers(filter: InfiniteScrollFilter) {
-    return super.getOneByPath<FoundUsersModel>(`find/${this.turnFilterIntoUrl(filter)}`);
+    return super.getOneByPath<FoundUsersModel>(`search/${this.turnFilterIntoUrl(filter)}`);
   }
 
   public getPersonalInfo(): Observable<CurrentUserModel> {
