@@ -15,8 +15,13 @@ export class FileService extends BaseService {
     super(httpClient, 'api/storedfile', environment.baseApiUrl);
   }
 
-  public getAllFiles(): Observable<FileModel[]> {
-    return super.getAll<FileModel>();
+  public getAllFiles(deleted?: boolean): Observable<FileModel[]> {
+    const params = !!deleted
+      ? {
+          deleted,
+        }
+      : {};
+    return super.getAll<FileModel>(params);
   }
 
   public getFileInfo(
@@ -69,7 +74,7 @@ export class FileService extends BaseService {
     });
   }
 
-  public restoreDirectory(fileId: Guid, directoryId?: Guid) {
+  public restoreFile(fileId: Guid, directoryId?: Guid) {
     const params: any = {
       restore: true,
     };
@@ -77,7 +82,7 @@ export class FileService extends BaseService {
       params.newParentDirectoryId = directoryId.toString();
     }
 
-    return super.update('move', fileId.toString(), params);
+    return super.update(null, `move/${fileId.toString()}`, params);
   }
 
   public deleteFile(fileId: Guid, permanentDelete?: boolean) {

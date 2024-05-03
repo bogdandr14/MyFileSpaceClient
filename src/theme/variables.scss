@@ -80,7 +80,7 @@
   color-scheme: light dark;
   #main-content ion-content {
     --background: none;
-    background: #fff url(../assets/light-image.jpg) no-repeat center center / cover;
+    background: #fff url(../assets/light_bg.jpeg) no-repeat center center / cover;
   }
 }
 
@@ -136,7 +136,8 @@
   --ion-color-danger-tint: #ff0e27;
 
   #main-content ion-content {
-    //background: #fff url(../assets/dark-image.jpg) no-repeat center center / cover;
+    --background: none;
+    background: #fff url(../assets/dark_bg.jpeg) no-repeat center center / cover;
   }
 
   /*

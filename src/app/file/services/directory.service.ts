@@ -15,8 +15,13 @@ export class DirectoryService extends BaseService {
     super(httpClient, 'api/directory', environment.baseApiUrl);
   }
 
-  public getAllDirectories(): Observable<DirectoryModel[]> {
-    return super.getAll<DirectoryModel>();
+  public getAllDirectories(deleted?: boolean): Observable<DirectoryModel[]> {
+    const params = !!deleted
+      ? {
+          deleted,
+        }
+      : {};
+    return super.getAll<DirectoryModel>(params);
   }
 
   public getDirectoryInfo(
@@ -57,7 +62,7 @@ export class DirectoryService extends BaseService {
     if (!!parentDirectoryId) {
       params.newParentDirectoryId = parentDirectoryId.toString();
     }
-    return super.update('move', directoryId.toString(), params);
+    return super.update(null, `move/${directoryId.toString()}`, params);
   }
 
   public deleteDirectory(directoryId: Guid, permanentDelete?: boolean) {

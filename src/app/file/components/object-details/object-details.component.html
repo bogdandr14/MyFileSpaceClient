@@ -11,7 +11,7 @@
           </ion-label>
           <ion-text readonly>{{ objectDetails.name }} </ion-text>
         </ion-item>
-        <ion-item>
+        <ion-item *ngIf="!objectDetails.isDeleted">
           <ion-label> {{ "_common.owner" | translate }}: </ion-label>
           <ion-chip
             button
@@ -38,7 +38,11 @@
         </ion-item>
         <ion-item>
           <ion-label class="data">
-            {{ "_common.dateModified" | translate }}:
+            {{
+              "_common." +
+                (objectDetails.isDeleted ? "dateDeleted" : "dateModified")
+                | translate
+            }}:
           </ion-label>
           <ion-text readonly>
             {{
@@ -49,12 +53,22 @@
             }}
           </ion-text>
         </ion-item>
-        <ion-item *ngIf="isFile">
+        <ion-item *ngIf="isFile || objectDetails.isDeleted">
           <ion-label class="data"> {{ "_common.size" | translate }}:</ion-label>
           <ion-text readonly>{{ size }}</ion-text>
         </ion-item>
+        <ng-container *ngIf="objectDetails.isDeleted">
+          &nbsp;
+          <ion-button color="secondary" expand="block" (click)="restore()">
+            {{ "_common.restore" | translate }}
+          </ion-button>
+          &nbsp;
+          <ion-button color="danger" expand="block" (click)="confirmPermanentDelete()">
+            {{ "_common.permanentDelete" | translate }}
+          </ion-button>
+        </ng-container>
       </ion-list>
-      <ion-list>
+      <ion-list *ngIf="!objectDetails.isDeleted">
         <ion-list-header>
           {{ "_common.accessibility" | translate }}
         </ion-list-header>
@@ -127,7 +141,11 @@
           </ng-template>
         </ion-item>
         <ng-container *ngIf="isOwner && objectDetails.accessKey">
-          <ion-chip button color="secondary" (click)="copyAccessLinkToClipboard()">
+          <ion-chip
+            button
+            color="secondary"
+            (click)="copyAccessLinkToClipboard()"
+          >
             <ion-icon name="link"></ion-icon>
             <ion-label>{{ "_access.copyLink" | translate }}</ion-label>
           </ion-chip>

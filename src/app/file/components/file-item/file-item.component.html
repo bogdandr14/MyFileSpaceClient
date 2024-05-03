@@ -32,6 +32,7 @@
     </ion-content>
   </ng-template>
 </ion-popover>
+
 <ion-popover
   trigger="{{ file.name }}-trigger"
   triggerAction="context-menu"
@@ -41,22 +42,53 @@
     <ion-content>
       <ion-list>
         <ion-item button (click)="showDetails.emit()">
-          <ion-label class="primary"> {{ "_common.details" | translate }} </ion-label>
+          <ion-label class="primary">
+            {{ "_common.details" | translate }}
+          </ion-label>
         </ion-item>
-        <ng-container *ngIf="isOwner">
-          <ion-item button (click)="openFileEdit()">
-            <ion-label class="secondary"> {{ "_common.edit" | translate }} </ion-label>
-          </ion-item>
-          <ion-item button (click)="addFileCut()">
-            <ion-label class="warning"> {{ "_common.cut" | translate }} </ion-label>
-          </ion-item>
-          <ion-item button (click)="confirmDeleteFile()">
-            <ion-label class="danger"> {{ "_common.delete" | translate }} </ion-label>
+        <ng-container *ngIf="!file.isDeleted; else deletedOptions">
+          <ng-container *ngIf="isOwner">
+            <ion-item button (click)="openFileEdit()">
+              <ion-label class="secondary">
+                {{ "_common.edit" | translate }}
+              </ion-label>
+            </ion-item>
+            <ion-item button (click)="openFileUpload()">
+              <ion-label class="tertiary">
+                {{ "_file.reUpload" | translate }}
+              </ion-label>
+            </ion-item>
+            <ion-item button (click)="addFileCut()">
+              <ion-label class="warning">
+                {{ "_common.cut" | translate }}
+              </ion-label>
+            </ion-item>
+            <ion-item button (click)="confirmDeleteFile()">
+              <ion-label class="danger">
+                {{ "_common.delete" | translate }}
+              </ion-label>
+            </ion-item>
+          </ng-container>
+          <ion-item button (click)="downloadFile()">
+            <ion-label class="success">
+              {{ "_file.download" | translate }}
+            </ion-label>
           </ion-item>
         </ng-container>
-        <ion-item button (click)="downloadFile()">
-          <ion-label class="success"> {{ "_file.download" | translate }} </ion-label>
-        </ion-item>
+        <ng-template #deletedOptions>
+          <ng-container *ngIf="isOwner">
+            <ion-item button (click)="restoreFile()">
+              <ion-label class="secondary">
+                {{ "_common.restore" | translate }}
+              </ion-label>
+            </ion-item>
+            <ion-item button (click)="confirmPermanentDeleteFile()">
+              <ion-label class="danger">
+                {{ "_common.permanentDelete" | translate }}
+              </ion-label>
+            </ion-item>
+          </ng-container>
+        </ng-template>
       </ion-list>
     </ion-content>
   </ng-template>

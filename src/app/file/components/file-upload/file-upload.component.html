@@ -14,7 +14,7 @@
 <ion-content class="custom-margin-ends">
   <ion-card>
     <ion-card-content>
-      <form #form="ngForm" (ngSubmit)="submitPhoto()">
+      <form #form="ngForm" (ngSubmit)="submitFile()">
         <ion-item-group id="changePhoto">
           <ion-item color="transparent">
             <ion-label for="file" position="stacked">
@@ -67,6 +67,7 @@
             [number]="maxSizeMb"
           ></app-validation-errors>
           <app-select-access-level
+            *ngIf="!isUpdate"
             id="access-level"
             [(field)]="accessLevel"
             name="_accessLevel"

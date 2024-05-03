@@ -17,10 +17,10 @@
     {{ directory.name }}
   </ion-label>
 </ion-chip>
+
 <ion-popover
   trigger="{{ directory.name }}-trigger"
   triggerAction="context-menu"
-  #contextPopover
   [dismissOnSelect]="true"
 >
   <ng-template>
@@ -32,21 +32,35 @@
           </ion-label>
         </ion-item>
         <ng-container *ngIf="isOwner">
-          <ion-item button (click)="openDirectoryEdit()">
-            <ion-label class="secondary">
-              {{ "_common.edit" | translate }}
-            </ion-label>
-          </ion-item>
-          <ion-item button (click)="addDirectoryCut()">
-            <ion-label class="warning">
-              {{ "_common.cut" | translate }}
-            </ion-label>
-          </ion-item>
-          <ion-item button (click)="confirmDeleteDirectory()">
-            <ion-label class="danger">
-              {{ "_common.delete" | translate }}
-            </ion-label>
-          </ion-item>
+          <ng-container *ngIf="!directory.isDeleted; else deletedOptions">
+            <ion-item button (click)="openDirectoryEdit()">
+              <ion-label class="secondary">
+                {{ "_common.edit" | translate }}
+              </ion-label>
+            </ion-item>
+            <ion-item button (click)="addDirectoryCut()">
+              <ion-label class="warning">
+                {{ "_common.cut" | translate }}
+              </ion-label>
+            </ion-item>
+            <ion-item button (click)="confirmDeleteDirectory()">
+              <ion-label class="danger">
+                {{ "_common.delete" | translate }}
+              </ion-label>
+            </ion-item>
+          </ng-container>
+          <ng-template #deletedOptions>
+            <ion-item button (click)="restoreDirectory()">
+              <ion-label class="secondary">
+                {{ "_common.restore" | translate }}
+              </ion-label>
+            </ion-item>
+            <ion-item button (click)="confirmPermanentDeleteDirectory()">
+              <ion-label class="danger">
+                {{ "_common.permanentDelete" | translate }}
+              </ion-label>
+            </ion-item>
+          </ng-template>
         </ng-container>
       </ion-list>
     </ion-content>

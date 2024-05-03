@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
   public connectedUserLinks: Array<RouteDescriptor> = [
     { title: '_pages.file', path: '/file', icon: 'folder' },
     { title: '_pages.profile', path: '/user/profile', icon: 'person' },
-    { title: '_pages.bin', path: '/folder/trash', icon: 'trash' },
+    { title: '_pages.bin', path: '/bin', icon: 'trash' },
   ];
 
   public freeUserLinks: Array<RouteDescriptor> = [

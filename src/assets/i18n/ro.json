@@ -61,6 +61,8 @@
     "add": "Adaugă",
     "edit": "Editează",
     "delete": "Şterge",
+    "restore": "Restaurează",
+    "permanentDelete":"Șterge definitiv",
     "save": "Salvează",
     "submit": "Trimite",
     "confirm": "Confirmă",
@@ -86,9 +88,11 @@
     "sound": "Sunet",
     "dateAdded":"Data creării",
     "dateModified":"Data ultimei modificări",
+    "dateDeleted":"Data ștergerii",
     "owner":"Deţinător",
     "accessibility": "Accesibilitate",
-    "noUserFound":"Niciun utilizator găsit"
+    "noUserFound":"Niciun utilizator găsit",
+    "binSize":"Coșul conține în prezent { size }."
   },
   "_accessLevel": {
     "name":"Nivel acces",
@@ -122,19 +126,22 @@
     "userAccess":"Editează accesul utilizatorilor"
   },
   "_delete": {
-    "warning": "Această acţiune e permanentă. Eşti sigur(ă) că vrei să ştergi",
     "file": "Şterge fişierul",
     "fileMessage": "Eşti sigur(ă) că vrei să ştergi fişierul { fileName }?",
+    "filePermanentMessage": "Această acțiune este ireversibilă. Sunteți sigur(ă) că doriți să ștergeți definitiv fișierul { fileName }?",
     "directory": "Şterge folderul",
     "directoryMessage": "Eşti sigur(ă) că vrei să ştergi folderul { folderName } şi tot conţinutul lui?",
+    "directoryPermanentMessage": "Această acțiune este ireversibilă. Sunteți sigur(ă) că doriți să ștergeți definitiv folderul { folderName } şi tot conţinutul lui?",
     "accessKey": "Şterge link-ul de acces",
     "accessKeyMessage": "Eşti sigur(ă) că vrei să ştergi link-ul de acces pentru { name }?",
-    "confirm": "Confirmă ştergerea"
+    "confirm": "Confirmă ştergerea",
+    "binAutomatic":"Fișierele și folderele vor fi șterse automat și definitiv după 30 de zile de păstrare în coșul de gunoi."
   },
   "_file": {
     "properties":"Proprietăţi fişier",
     "name": "Numele fişierului",
     "upload": "Încarcă fişierul",
+    "reUpload": "Încarcă o nouă versiune",
     "toUpload": "Fişierul de încărcat",
     "download": "Descarcă fişierul",
     "choose": "Alege fişierul",
@@ -170,8 +177,12 @@
       "tagNameCopied": "Numele unic a fost copiat în clipboard",
       "emailCopied": "Adresa de e-mail a fost copiată în clipboard",
       "accessKeyCopied": "Link-ul de acces a fost copiat în clipboard",
-      "fileDelete": "Fișierul a fost mutat în coșul de gunoi",
-      "directoryDelete": "Folderul și tot conținutul lui a fost mutat în coșul de gunoi",
+      "fileDeleted": "Fișierul a fost mutat în coșul de gunoi",
+      "filePermanentDeleted": "Fișierul a fost șters definitiv",
+      "fileRestored": "Fișierul a fost restaurat",
+      "directoryDeleted": "Folderul și tot conținutul lui a fost mutat în coșul de gunoi",
+      "directoryPermanentDeleted": "Directorul și tot conținutul său au fost șterse definitiv.",
+      "directoryRestored": "Directorul și tot conținutul său au fost restaurate",
       "accessKeyDeleted":"Link-ul de acces a fost șters"
     },
     "success": "Succes",

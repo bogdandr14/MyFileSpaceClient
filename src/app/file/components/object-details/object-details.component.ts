@@ -13,6 +13,11 @@ import { ClipboardService } from 'ngx-clipboard';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AccessKeyModel } from '../../models/access-key.model';
 import { TranslateService } from '@ngx-translate/core';
+import { FileService } from '../../services/file.service';
+import { DirectoryService } from '../../services/directory.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { ActionType } from 'src/app/core/models/action-type.enum';
+import { ObjectChangeModel } from 'src/app/core/models/object-change.model';
 
 @Component({
   selector: 'app-object-details',
@@ -22,6 +27,8 @@ import { TranslateService } from '@ngx-translate/core';
 export class ObjectDetailsComponent {
   @Input() objectDetails: any;
   @Input() isFile: boolean = false;
+  @Input() externalSize: number;
+
   public static readonly accessibilityData = [
     { icon: 'lock-closed', color: 'tertiary', level: 'private' },
     { icon: 'link', color: 'secondary', level: 'restricted' },
@@ -39,6 +46,12 @@ export class ObjectDetailsComponent {
 
   get size() {
     let size = this.objectDetails.sizeInBytes;
+    if (this.objectDetails.isDeleted && !this.isFile) {
+      size = this.externalSize;
+      if (!size) {
+        size = 0;
+      }
+    }
     let i = 0;
     while (size > 1024) {
       size /= 1024;
@@ -91,7 +104,10 @@ export class ObjectDetailsComponent {
     private accessService: AccessService,
     private clipboardService: ClipboardService,
     private alertService: AlertService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private fileService: FileService,
+    private directoryService:DirectoryService,
+    private dataService: DataService
   ) {}
 
   get timeOffset(): string {
@@ -103,11 +119,111 @@ export class ObjectDetailsComponent {
     return offsetFormatted;
   }
 
+  restore() {
+    if(this.isFile){
+      this.restoreFile();
+    }else{
+      this.restoreDirectory();
+    }
+  }
+
+  restoreFile() {
+    this.fileService
+      .restoreFile(this.objectDetails.id)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.dataService.triggerObjectChange(
+          new ObjectChangeModel(ObjectType.File, ActionType.Restore, this.objectDetails)
+        );
+        this.alertService.showInfo('_message._information.fileRestored');
+      });
+  }
+
+  restoreDirectory() {
+    this.directoryService
+      .restoreDirectory(this.objectDetails.id)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.dataService.triggerObjectChange(
+          new ObjectChangeModel(
+            ObjectType.Directory,
+            ActionType.Restore,
+            this.objectDetails
+          )
+        );
+        this.alertService.showInfo('_message._information.directoryRestored');
+      });
+  }
+
+  confirmPermanentDelete() {
+    if(this.isFile){
+      this.confirmPermanentDeleteFile();
+    }else{
+      this.confirmPermanentDeleteDirectory();
+    }
+  }
+
+  async confirmPermanentDeleteFile() {
+    await this.alertService.presentAlert(
+      this.translateService.instant('_delete.file'),
+      this.translateService.instant('_delete.filePermanentMessage', {
+        fileName: this.objectDetails.name,
+      }),
+      this.translateService.instant('_common.cancel'),
+      this.translateService.instant('_common.confirm'),
+      this,
+      this.deleteFilePermanent
+    );
+  }
+
+  async deleteFilePermanent() {
+    this.fileService
+      .deleteFile(this.objectDetails.id, true)
+      .pipe(take(1))
+      .subscribe((file) => {
+        this.dataService.triggerObjectChange(
+          new ObjectChangeModel(ObjectType.File, ActionType.Delete, this.objectDetails)
+        );
+        this.alertService.showInfo('_message._information.filePermanentDeleted');
+      });
+  }
+
+  async confirmPermanentDeleteDirectory() {
+    await this.alertService.presentAlert(
+      this.translateService.instant('_delete.directory'),
+      this.translateService.instant('_delete.directoryPermanentMessage', {
+        folderName: this.objectDetails.name,
+      }),
+      this.translateService.instant('_common.cancel'),
+      this.translateService.instant('_common.confirm'),
+      this,
+      this.deleteDirectoryPermanent
+    );
+  }
+
+  async deleteDirectoryPermanent() {
+    this.directoryService
+      .deleteDirectory(this.objectDetails.id, true)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.dataService.triggerObjectChange(
+          new ObjectChangeModel(
+            ObjectType.Directory,
+            ActionType.Delete,
+            this.objectDetails
+          )
+        );
+        this.alertService.showInfo(
+          '_message._information.directoryPermanentDeleted'
+        );
+      });
+  }
+
   async confirmDeleteAccessKey() {
     await this.alertService.presentAlert(
       this.translateService.instant('_delete.accessKey'),
       this.translateService.instant('_delete.accessKeyMessage', {
-        name: this.objectDetails.name
+        name: this.objectDetails.name,
       }),
       this.translateService.instant('_common.cancel'),
       this.translateService.instant('_common.confirm'),
@@ -115,7 +231,6 @@ export class ObjectDetailsComponent {
       () => this.deleteAccessKey
     );
   }
-
 
   deleteAccessKey() {
     this.accessService

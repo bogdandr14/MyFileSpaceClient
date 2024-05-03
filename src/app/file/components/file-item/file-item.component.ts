@@ -12,6 +12,7 @@ import { UserService } from '../../../user/user.service';
 import { ObjectEditComponent } from '../object-edit/object-edit.component';
 import { ObjectMoveModel } from '../../../core/models/object-move.model';
 import { TranslateService } from '@ngx-translate/core';
+import { FileUploadComponent } from '../file-upload/file-upload.component';
 
 @Component({
   selector: 'app-file-item',
@@ -81,20 +82,68 @@ export class FileItemComponent {
     directoryEditModal.present();
   }
 
-  async confirmDeleteFile() {
+  async openFileUpload() {
+    const fileUploadModal = await this.modalCtrl.create({
+      component: FileUploadComponent,
+      componentProps: {
+        isUpdate: true,
+        fileId: this.file.id,
+      },
+    });
+    fileUploadModal.present();
+  }
+
+  restoreFile() {
+    this.fileService
+      .restoreFile(this.file.id)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.dataService.triggerObjectChange(
+          new ObjectChangeModel(ObjectType.File, ActionType.Restore, this.file)
+        );
+        this.alertService.showInfo('_message._information.fileRestored');
+      });
+  }
+
+  async confirmPermanentDeleteFile() {
     await this.alertService.presentAlert(
       this.translateService.instant('_delete.file'),
-      this.translateService.instant('_delete.fileMessage', {
-        fileName: this.file.name
+      this.translateService.instant('_delete.filePermanentMessage', {
+        fileName: this.file.name,
       }),
       this.translateService.instant('_common.cancel'),
       this.translateService.instant('_common.confirm'),
       this,
-      () => this.deleteFile
+      this.deleteFilePermanent
     );
   }
 
-  deleteFile() {
+  async deleteFilePermanent() {
+    this.fileService
+      .deleteFile(this.file.id, true)
+      .pipe(take(1))
+      .subscribe((file) => {
+        this.dataService.triggerObjectChange(
+          new ObjectChangeModel(ObjectType.File, ActionType.Delete, this.file)
+        );
+        this.alertService.showInfo('_message._information.filePermanentDeleted');
+      });
+  }
+
+  async confirmDeleteFile() {
+    await this.alertService.presentAlert(
+      this.translateService.instant('_delete.file'),
+      this.translateService.instant('_delete.fileMessage', {
+        fileName: this.file.name,
+      }),
+      this.translateService.instant('_common.cancel'),
+      this.translateService.instant('_common.confirm'),
+      this,
+      this.deleteFile
+    );
+  }
+
+  async deleteFile() {
     this.fileService
       .deleteFile(this.file.id)
       .pipe(take(1))

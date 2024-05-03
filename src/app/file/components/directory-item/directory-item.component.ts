@@ -58,20 +58,67 @@ export class DirectoryItemComponent {
     );
   }
 
-  async confirmDeleteDirectory() {
+  restoreDirectory() {
+    this.directoryService
+      .restoreDirectory(this.directory.id)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.dataService.triggerObjectChange(
+          new ObjectChangeModel(
+            ObjectType.Directory,
+            ActionType.Restore,
+            this.directory
+          )
+        );
+        this.alertService.showInfo('_message._information.directoryRestored');
+      });
+  }
+
+  async confirmPermanentDeleteDirectory() {
     await this.alertService.presentAlert(
       this.translateService.instant('_delete.directory'),
-      this.translateService.instant('_delete.directoryMessage', {
-        folderName: this.directory.name
+      this.translateService.instant('_delete.directoryPermanentMessage', {
+        folderName: this.directory.name,
       }),
       this.translateService.instant('_common.cancel'),
       this.translateService.instant('_common.confirm'),
       this,
-      () => this.deleteDirectory
+      this.deleteDirectoryPermanent
     );
   }
 
-  deleteDirectory() {
+  async deleteDirectoryPermanent() {
+    this.directoryService
+      .deleteDirectory(this.directory.id, true)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.dataService.triggerObjectChange(
+          new ObjectChangeModel(
+            ObjectType.Directory,
+            ActionType.Delete,
+            this.directory
+          )
+        );
+        this.alertService.showInfo(
+          '_message._information.directoryPermanentDeleted'
+        );
+      });
+  }
+
+  async confirmDeleteDirectory() {
+    await this.alertService.presentAlert(
+      this.translateService.instant('_delete.directory'),
+      this.translateService.instant('_delete.directoryMessage', {
+        folderName: this.directory.name,
+      }),
+      this.translateService.instant('_common.cancel'),
+      this.translateService.instant('_common.confirm'),
+      this,
+      this.deleteDirectory
+    );
+  }
+
+  async deleteDirectory() {
     this.directoryService
       .deleteDirectory(this.directory.id)
       .pipe(take(1))

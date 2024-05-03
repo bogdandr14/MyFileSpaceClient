@@ -7,4 +7,7 @@ export class DirectoryModel {
   parentDirectoryId: Guid;
   accessLevel: AccessLevel;
   ownerId: Guid;
+  createdAt: Date;
+  modifiedAt: Date;
+  isDeleted: boolean;
 }

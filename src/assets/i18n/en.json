@@ -61,6 +61,8 @@
     "add": "Add",
     "edit": "Edit",
     "delete": "Delete",
+    "restore": "Restore",
+    "permanentDelete":"Delete permanently",
     "save": "Save",
     "submit": "Submit",
     "confirm": "Confirm",
@@ -86,9 +88,11 @@
     "sound": "Sound",
     "dateAdded":"Date added",
     "dateModified":"Date modified",
+    "dateDeleted":"Date deleted",
     "owner":"Owner",
     "accessibility": "Accessibility",
-    "noUserFound":"No users found"
+    "noUserFound":"No users found",
+    "binSize":"The bin currently contains { size }."
   },
   "_accessLevel": {
     "name":"Access level",
@@ -122,19 +126,22 @@
     "userAccess":"Edit user access"
   },
   "_delete": {
-    "warning": "This action is permanent. Are you sure you want to delete this",
     "file": "Delete file",
     "fileMessage": "Are you sure you want to delete file { fileName }?",
+    "filePermanentMessage": "This action is irreversible. Are you sure you want to permanently delete the file { fileName }?",
     "directory": "Delete directory",
     "directoryMessage": "Are you sure you want to delete directory { folderName } and all its contents?",
+    "directoryPermanentMessage": "This action is irreversible. Are you sure you want to permanently delete the directory { folderName } and all its contents?",
     "accessKey": "Delete access link",
     "accessKeyMessage": "Are you sure you want to delete the access link for { name }?",
-    "confirm": "Confirm delete"
+    "confirm": "Confirm delete",
+    "binAutomatic":"Files and directories will be automatically and permanently deleted after 30 days in the bin."
   },
   "_file": {
     "properties":"File properties",
     "name": "File name",
     "upload": "Upload file",
+    "reUpload": "Upload a new version",
     "toUpload": "File to upload",
     "download": "Download file",
     "choose": "Choose file",
@@ -171,7 +178,11 @@
       "emailCopied": "Email address copied to clipboard",
       "accessKeyCopied": "Access link copied to clipboard",
       "fileDeleted": "The file was moved to trash bin",
+      "filePermanentDeleted": "The file has been permanently deleted",
+      "fileRestored": "The file has been restored",
       "directoryDeleted": "The directory and all its contents was moved to trash bin",
+      "directoryPermanentDeleted": "The directory and all its contents have been permanently deleted",
+      "directoryRestored": "The directory and all its contents have been restored",
       "accessKeyDeleted":"The access link was deleted"
     },
     "success": "Success",

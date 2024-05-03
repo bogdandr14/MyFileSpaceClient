@@ -20,6 +20,7 @@ import { DataService } from '../../../core/services/data.service';
 import { ObjectChangeModel } from '../../../core/models/object-change.model';
 import { ObjectType } from '../../../core/models/object-type.enum';
 import { ActionType } from '../../../core/models/action-type.enum';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-file-upload',
@@ -32,6 +33,8 @@ export class FileUploadComponent implements OnInit {
   @Output() fileSave = new EventEmitter<FileModel>();
   @Input() maxSizeMb = 2;
   @Input() directoryId: Guid;
+  @Input() fileId: Guid;
+  @Input() isUpdate = false;
 
   public fileToUpload: File;
   public accessLevel: AccessLevel = AccessLevel.Private;
@@ -100,21 +103,34 @@ export class FileUploadComponent implements OnInit {
   //   return blob;
   // }
 
-  submitPhoto() {
-    this.fileService
-      .uploadFile(this.directoryId, this.accessLevel, this.fileToUpload)
-      .pipe(take(1))
-      .subscribe(
-        (uploadedFile) => {
-          this.fileSave.emit(uploadedFile);
-          this.dataService.triggerObjectChange(
-            new ObjectChangeModel(ObjectType.File, ActionType.Add, uploadedFile)
-          );
-          this.alertService.showSuccess('_message._success.fileUpload');
-          this.dismiss();
-        },
-        (error) => this.alertService.showError(error)
+  submitFile() {
+    let observable: Observable<FileModel>;
+    let actionType: ActionType;
+    if (this.isUpdate) {
+      observable = this.fileService.updateUploadFile(
+        this.fileId,
+        this.fileToUpload
       );
+      actionType = ActionType.Edit;
+    } else {
+      observable = this.fileService.uploadFile(
+        this.directoryId,
+        this.accessLevel,
+        this.fileToUpload
+      );
+      actionType = ActionType.Add;
+    }
+    observable.pipe(take(1)).subscribe(
+      (uploadedFile) => {
+        this.fileSave.emit(uploadedFile);
+        this.dataService.triggerObjectChange(
+          new ObjectChangeModel(ObjectType.File, actionType, uploadedFile)
+        );
+        this.alertService.showSuccess('_message._success.fileUpload');
+        this.dismiss();
+      },
+      (error) => this.alertService.showError(error)
+    );
   }
   dismiss() {
     this.modalCtrl.dismiss();

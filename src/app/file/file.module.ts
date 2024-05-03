@@ -34,5 +34,8 @@ import { AddAccessKeyComponent } from './components/add-access-key/add-access-ke
     EditAccessComponent,
     AddAccessKeyComponent,
   ],
+  exports:[
+    FileExplorerComponent
+  ]
 })
 export class FilePageModule {}

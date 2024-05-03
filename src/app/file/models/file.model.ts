@@ -7,5 +7,9 @@ export class FileModel {
   accessLevel: AccessLevel;
   sizeInBytes: number;
   contentType: string;
+  directoryId: Guid;
   ownerId: Guid;
+  createdAt: Date;
+  modifiedAt: Date;
+  isDeleted: boolean;
 }

@@ -1,10 +1,9 @@
-import { Guid } from 'guid-typescript';
 import { AccessKeyModel } from './access-key.model';
 import { FileModel } from './file.model';
 
 export class FileDetailsModel extends FileModel {
-  directoryId: Guid;
+  ownerTagName: string;
   directoryName: string;
-  isDeleted: boolean;
   accessKey: AccessKeyModel;
+  allowedUsers: string[];
 }
