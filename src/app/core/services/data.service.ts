@@ -3,7 +3,7 @@ import { filter, switchMap, take } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, forkJoin, from, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { CurrentUserModel } from '../models/auth/current-user.model';
+import { AuthUserModel as AuthUserModel } from '../models/auth/auth-user.model';
 import { Storage } from '@ionic/storage-angular';
 import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 import { AUDIO_KEY, DARK_THEME_KEY, GRAYSCALE_KEY, HIGHLIGHT_KEY, INVERT_COLOR_KEY, LANG_KEY, TOKEN_KEY, USER_KEY } from '../models/data-keys.constants';
@@ -13,7 +13,7 @@ import { ObjectMoveModel } from '../models/object-move.model';
   providedIn: 'root',
 })
 export class DataService {
-  private user = new BehaviorSubject<CurrentUserModel>(new CurrentUserModel());
+  private user = new BehaviorSubject<AuthUserModel>(new AuthUserModel());
   public user$ = this.user.asObservable();
 
   private darkTheme = new BehaviorSubject<boolean>(null);
@@ -57,7 +57,7 @@ export class DataService {
 
   initData() {
     forkJoin([
-      this.getCurrentUser(),
+      this.getAuthUser(),
       this.get<boolean>(DARK_THEME_KEY),
       this.get<boolean>(INVERT_COLOR_KEY),
       this.get<boolean>(GRAYSCALE_KEY),
@@ -150,13 +150,13 @@ export class DataService {
     this.remove(TOKEN_KEY);
   }
 
-  setCurrentUser(user: CurrentUserModel) {
+  setCurrentUser(user: AuthUserModel) {
     this.set(USER_KEY, user);
     this.user.next(user);
   }
 
-  getCurrentUser(): Observable<CurrentUserModel | null> {
-    const user = this.get<CurrentUserModel>(USER_KEY);
+  getAuthUser(): Observable<AuthUserModel | null> {
+    const user = this.get<AuthUserModel>(USER_KEY);
     return user;
   }
 

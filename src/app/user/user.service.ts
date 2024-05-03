@@ -4,15 +4,16 @@ import { Injectable } from '@angular/core';
 import { Guid } from 'guid-typescript';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { CurrentUserModel } from '../core/models/auth/current-user.model';
+import { AuthUserModel } from '../core/models/auth/auth-user.model';
 import { BaseService } from '../core/services/base.service';
 import { DataService } from '../core/services/data.service';
 import { InfiniteScrollFilter } from '../shared/models/infinite-scroll.filter';
 import { FoundUsersModel } from './models/found-users.model';
+import { CurrentUserModel } from './models/current-user.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserService extends BaseService {
-  private userState = new BehaviorSubject<CurrentUserModel>(null);
+  private userState = new BehaviorSubject<AuthUserModel>(null);
 
   constructor(httpClient: HttpClient, private dataService: DataService) {
     super(httpClient, 'api/user', environment.baseApiUrl);
@@ -58,15 +59,11 @@ export class UserService extends BaseService {
   }
 
   public getPersonalInfo(): Observable<CurrentUserModel> {
-    return this.dataService.getCurrentUser();
+    return super.getOneByPath<CurrentUserModel>('');
   }
 
-  public getUser<UserModel>(userId: Guid | string): Observable<UserModel> {
-    return super.getOneById<UserModel>(userId);
-  }
-
-  public getUserByTagname<UserModel>(tagname: string): Observable<UserModel> {
-    return super.getOneByPath<UserModel>(`tagname/${tagname}`);
+  public getUser<UserDetailsModel>(userId: Guid | string): Observable<UserDetailsModel> {
+    return super.getOneById<UserDetailsModel>(userId);
   }
 
   public updateUser(userEdit: UserEditModel) {

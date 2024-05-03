@@ -1,6 +1,6 @@
 import { Guid } from 'guid-typescript';
 
-export class CurrentUserModel {
+export class AuthUserModel {
   public userId!: Guid;
   public email!: string;
   public role!: string;

@@ -1,9 +1,5 @@
-import { AccessLevel } from 'src/app/shared/models/access-level.enum';
-import { Component, Input, OnInit } from '@angular/core';
-import { FileDetailsModel } from '../../models/file-details.model';
-import { DirectoryDetailsModel } from '../../models/directory-details.model';
+import { Component, Input } from '@angular/core';
 import { UserService } from 'src/app/user/user.service';
-import { DatePipe } from '@angular/common';
 import { LocaleService } from 'src/app/core/services/locale.service';
 import { AccessObjectModel } from 'src/app/core/models/access-object.model';
 import { ObjectType } from 'src/app/core/models/object-type.enum';
@@ -13,11 +9,8 @@ import { ClipboardService } from 'ngx-clipboard';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { AccessKeyModel } from '../../models/access-key.model';
 import { TranslateService } from '@ngx-translate/core';
-import { FileService } from '../../services/file.service';
-import { DirectoryService } from '../../services/directory.service';
-import { DataService } from 'src/app/core/services/data.service';
-import { ActionType } from 'src/app/core/models/action-type.enum';
-import { ObjectChangeModel } from 'src/app/core/models/object-change.model';
+import { FileSystemHelperService } from '../../services/file-system-helper.service';
+import { UiHelperService } from 'src/app/core/services/ui-helper.service';
 
 @Component({
   selector: 'app-object-details',
@@ -28,14 +21,6 @@ export class ObjectDetailsComponent {
   @Input() objectDetails: any;
   @Input() isFile: boolean = false;
   @Input() externalSize: number;
-
-  public static readonly accessibilityData = [
-    { icon: 'lock-closed', color: 'tertiary', level: 'private' },
-    { icon: 'link', color: 'secondary', level: 'restricted' },
-    { icon: 'accessibility', color: 'success', level: 'public' },
-  ];
-
-  static sizes: Array<string> = ['B', 'KB', 'MB', 'GB', 'TB'];
 
   get accessObject() {
     if (this.isFile) {
@@ -48,175 +33,72 @@ export class ObjectDetailsComponent {
     let size = this.objectDetails.sizeInBytes;
     if (this.objectDetails.isDeleted && !this.isFile) {
       size = this.externalSize;
-      if (!size) {
-        size = 0;
-      }
     }
-    let i = 0;
-    while (size > 1024) {
-      size /= 1024;
-      ++i;
-    }
-    return `${size.toFixed(2)} ${ObjectDetailsComponent.sizes[i]}`;
+    return this.uiHelperService.computeSize(size);
   }
+
   get accessibilityColor() {
-    return ObjectDetailsComponent.accessibilityData[
-      this.objectDetails.accessLevel - 1
-    ].color;
+    return this.uiHelperService.accessibilityColor(
+      this.objectDetails.accessLevel
+    );
   }
   get accessibilityIcon() {
-    return ObjectDetailsComponent.accessibilityData[
-      this.objectDetails.accessLevel - 1
-    ].icon;
+    return this.uiHelperService.accessibilityIcon(
+      this.objectDetails.accessLevel
+    );
   }
   get accessibilityName() {
-    return ObjectDetailsComponent.accessibilityData[
-      this.objectDetails.accessLevel - 1
-    ].level;
+    return this.uiHelperService.accessibilityName(
+      this.objectDetails.accessLevel
+    );
   }
   get icon() {
-    if (this.objectDetails instanceof DirectoryDetailsModel) {
-      return 'folder';
-    }
-    if (
-      this.objectDetails.contentType.includes('octet-stream') ||
-      this.objectDetails.contentType.includes('compressed')
-    ) {
-      return 'file-tray-full';
-    }
-    if (this.objectDetails.contentType.includes('image')) {
-      return 'image';
-    }
-    if (this.objectDetails.contentType.includes('video')) {
-      return 'film';
-    }
-    if (this.objectDetails.contentType.includes('text')) {
-      return 'document-text';
-    }
-    return 'document';
+    return this.uiHelperService.objectIcon(this.objectDetails);
   }
+
   get isOwner() {
     return this.userService.isCurrentUser(this.objectDetails.ownerId);
   }
+
+  get timeOffset(): string {
+    return this.uiHelperService.timeOffset();
+  }
+
   constructor(
     private userService: UserService,
-    public localeService: LocaleService,
     private accessService: AccessService,
     private clipboardService: ClipboardService,
     private alertService: AlertService,
     private translateService: TranslateService,
-    private fileService: FileService,
-    private directoryService:DirectoryService,
-    private dataService: DataService
+    private fileSystemHelper: FileSystemHelperService,
+    private uiHelperService: UiHelperService,
+    public localeService: LocaleService
   ) {}
 
-  get timeOffset(): string {
-    const now = new Date();
-    const offsetInMinutes = now.getTimezoneOffset();
-    const offsetHours = Math.abs(offsetInMinutes) / 60;
-    const offsetSign = offsetInMinutes >= 0 ? '-' : '+';
-    const offsetFormatted = `UTC${offsetSign}${offsetHours * 2}`;
-    return offsetFormatted;
+  copyTagNameToClipboard(tagName: string) {
+    this.clipboardService.copy(tagName);
+    this.alertService.showInfo('_message._information.tagNameCopied');
+  }
+
+  copyAccessLinkToClipboard() {
+    this.clipboardService.copy(this.objectDetails.accessKey.key);
+    this.alertService.showInfo('_message._information.accessKeyCopied');
   }
 
   restore() {
-    if(this.isFile){
-      this.restoreFile();
-    }else{
-      this.restoreDirectory();
+    if (this.isFile) {
+      this.fileSystemHelper.restoreFile(this.objectDetails);
+    } else {
+      this.fileSystemHelper.restoreDirectory(this.objectDetails);
     }
-  }
-
-  restoreFile() {
-    this.fileService
-      .restoreFile(this.objectDetails.id)
-      .pipe(take(1))
-      .subscribe(() => {
-        this.dataService.triggerObjectChange(
-          new ObjectChangeModel(ObjectType.File, ActionType.Restore, this.objectDetails)
-        );
-        this.alertService.showInfo('_message._information.fileRestored');
-      });
-  }
-
-  restoreDirectory() {
-    this.directoryService
-      .restoreDirectory(this.objectDetails.id)
-      .pipe(take(1))
-      .subscribe(() => {
-        this.dataService.triggerObjectChange(
-          new ObjectChangeModel(
-            ObjectType.Directory,
-            ActionType.Restore,
-            this.objectDetails
-          )
-        );
-        this.alertService.showInfo('_message._information.directoryRestored');
-      });
   }
 
   confirmPermanentDelete() {
-    if(this.isFile){
-      this.confirmPermanentDeleteFile();
-    }else{
-      this.confirmPermanentDeleteDirectory();
+    if (this.isFile) {
+      this.fileSystemHelper.confirmPermanentDeleteFile(this.objectDetails);
+    } else {
+      this.fileSystemHelper.confirmPermanentDeleteDirectory(this.objectDetails);
     }
-  }
-
-  async confirmPermanentDeleteFile() {
-    await this.alertService.presentAlert(
-      this.translateService.instant('_delete.file'),
-      this.translateService.instant('_delete.filePermanentMessage', {
-        fileName: this.objectDetails.name,
-      }),
-      this.translateService.instant('_common.cancel'),
-      this.translateService.instant('_common.confirm'),
-      this,
-      this.deleteFilePermanent
-    );
-  }
-
-  async deleteFilePermanent() {
-    this.fileService
-      .deleteFile(this.objectDetails.id, true)
-      .pipe(take(1))
-      .subscribe((file) => {
-        this.dataService.triggerObjectChange(
-          new ObjectChangeModel(ObjectType.File, ActionType.Delete, this.objectDetails)
-        );
-        this.alertService.showInfo('_message._information.filePermanentDeleted');
-      });
-  }
-
-  async confirmPermanentDeleteDirectory() {
-    await this.alertService.presentAlert(
-      this.translateService.instant('_delete.directory'),
-      this.translateService.instant('_delete.directoryPermanentMessage', {
-        folderName: this.objectDetails.name,
-      }),
-      this.translateService.instant('_common.cancel'),
-      this.translateService.instant('_common.confirm'),
-      this,
-      this.deleteDirectoryPermanent
-    );
-  }
-
-  async deleteDirectoryPermanent() {
-    this.directoryService
-      .deleteDirectory(this.objectDetails.id, true)
-      .pipe(take(1))
-      .subscribe(() => {
-        this.dataService.triggerObjectChange(
-          new ObjectChangeModel(
-            ObjectType.Directory,
-            ActionType.Delete,
-            this.objectDetails
-          )
-        );
-        this.alertService.showInfo(
-          '_message._information.directoryPermanentDeleted'
-        );
-      });
   }
 
   async confirmDeleteAccessKey() {
@@ -228,11 +110,11 @@ export class ObjectDetailsComponent {
       this.translateService.instant('_common.cancel'),
       this.translateService.instant('_common.confirm'),
       this,
-      () => this.deleteAccessKey
+      this.deleteAccessKey
     );
   }
 
-  deleteAccessKey() {
+  async deleteAccessKey() {
     this.accessService
       .deleteAccessKey(this.accessObject)
       .pipe(take(1))
@@ -240,19 +122,6 @@ export class ObjectDetailsComponent {
         this.objectDetails.accessKey = null;
         this.alertService.showInfo('_message._information.accessKeyDeleted');
       });
-  }
-  copyOwner() {
-    console.log(this.objectDetails.ownerId);
-  }
-
-  copyTagNameToClipboard(tagName: string) {
-    this.clipboardService.copy(tagName);
-    this.alertService.showInfo('_message._information.tagNameCopied');
-  }
-
-  copyAccessLinkToClipboard() {
-    this.clipboardService.copy(this.objectDetails.accessKey.key);
-    this.alertService.showInfo('_message._information.accessKeyCopied');
   }
 
   reloadUserAccess() {

@@ -21,6 +21,7 @@ import { ObjectChangeModel } from '../../../core/models/object-change.model';
 import { ObjectType } from '../../../core/models/object-type.enum';
 import { ActionType } from '../../../core/models/action-type.enum';
 import { Observable } from 'rxjs';
+import { UiHelperService } from 'src/app/core/services/ui-helper.service';
 
 @Component({
   selector: 'app-file-upload',
@@ -45,11 +46,12 @@ export class FileUploadComponent implements OnInit {
   // public fileImgUrl: string;
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    public modalCtrl: ModalController,
+    private modalCtrl: ModalController,
     private fileService: FileService,
     private platform: Platform,
     private alertService: AlertService,
-    private dataService: DataService
+    private dataService: DataService,
+    private uiHelperService: UiHelperService
   ) {}
 
   ngOnInit(): void {
@@ -83,13 +85,7 @@ export class FileUploadComponent implements OnInit {
     if (!this.fileToUpload) {
       return null;
     }
-    let size = this.fileToUpload.size;
-    let i = 0;
-    while (size > 1024) {
-      size /= 1024;
-      ++i;
-    }
-    return `${size.toFixed(2)} ${FileUploadComponent.sizes[i]}`;
+    return this.uiHelperService.computeSize(this.fileToUpload.size);
   }
 
   // dataURItoBlob(dataURI: string) {

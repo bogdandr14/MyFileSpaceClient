@@ -4,13 +4,7 @@
     size="large"
     class="file-icon"
     [name]="fileIcon"
-    [color]="
-      file.accessLevel === 1
-        ? 'tertiary'
-        : file.accessLevel === 2
-        ? 'secondary'
-        : 'success'
-    "
+    [color]="accessibilityColor"
   ></ion-icon>
   <ion-label id="hover-label-{{ file.name }}-trigger">
     {{ file.name }}
@@ -58,18 +52,18 @@
                 {{ "_file.reUpload" | translate }}
               </ion-label>
             </ion-item>
-            <ion-item button (click)="addFileCut()">
+            <ion-item button (click)="fileSystemHelper.addFileCut(file)">
               <ion-label class="warning">
                 {{ "_common.cut" | translate }}
               </ion-label>
             </ion-item>
-            <ion-item button (click)="confirmDeleteFile()">
+            <ion-item button (click)="fileSystemHelper.confirmDeleteFile(file)">
               <ion-label class="danger">
                 {{ "_common.delete" | translate }}
               </ion-label>
             </ion-item>
           </ng-container>
-          <ion-item button (click)="downloadFile()">
+          <ion-item button (click)="fileSystemHelper.downloadFile(file)">
             <ion-label class="success">
               {{ "_file.download" | translate }}
             </ion-label>
@@ -77,12 +71,15 @@
         </ng-container>
         <ng-template #deletedOptions>
           <ng-container *ngIf="isOwner">
-            <ion-item button (click)="restoreFile()">
+            <ion-item button (click)="fileSystemHelper.restoreFile(file)">
               <ion-label class="secondary">
                 {{ "_common.restore" | translate }}
               </ion-label>
             </ion-item>
-            <ion-item button (click)="confirmPermanentDeleteFile()">
+            <ion-item
+              button
+              (click)="fileSystemHelper.confirmPermanentDeleteFile(file)"
+            >
               <ion-label class="danger">
                 {{ "_common.permanentDelete" | translate }}
               </ion-label>

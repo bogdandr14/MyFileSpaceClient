@@ -63,7 +63,11 @@
             {{ "_common.restore" | translate }}
           </ion-button>
           &nbsp;
-          <ion-button color="danger" expand="block" (click)="confirmPermanentDelete()">
+          <ion-button
+            color="danger"
+            expand="block"
+            (click)="confirmPermanentDelete()"
+          >
             {{ "_common.permanentDelete" | translate }}
           </ion-button>
         </ng-container>

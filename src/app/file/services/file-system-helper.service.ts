@@ -1,7 +1,16 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { take } from 'rxjs';
+import { ActionType } from 'src/app/core/models/action-type.enum';
+import { ObjectChangeModel } from 'src/app/core/models/object-change.model';
+import { ObjectMoveModel } from 'src/app/core/models/object-move.model';
+import { ObjectType } from 'src/app/core/models/object-type.enum';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { DataService } from 'src/app/core/services/data.service';
+import { DirectoryDetailsModel } from '../models/directory-details.model';
+import { DirectoryModel } from '../models/directory.model';
+import { FileDetailsModel } from '../models/file-details.model';
+import { FileModel } from '../models/file.model';
 import { DirectoryService } from './directory.service';
 import { FileService } from './file.service';
 
@@ -14,4 +23,174 @@ export class FileSystemHelperService {
     private directoryService: DirectoryService,
     private dataService: DataService
   ) {}
+
+  public addDirectoryCut(directory: DirectoryModel | DirectoryDetailsModel) {
+    this.dataService.triggerObjectCut(
+      new ObjectMoveModel(ObjectType.Directory, directory)
+    );
+  }
+
+  restoreDirectory(directory: DirectoryModel | DirectoryDetailsModel) {
+    this.directoryService
+      .restoreDirectory(directory.id)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.dataService.triggerObjectChange(
+          new ObjectChangeModel(
+            ObjectType.Directory,
+            ActionType.Restore,
+            directory
+          )
+        );
+        this.alertService.showInfo('_message._information.directoryRestored');
+      });
+  }
+
+  async confirmPermanentDeleteDirectory(directory) {
+    await this.alertService.presentAlert(
+      this.translateService.instant('_delete.directory'),
+      this.translateService.instant('_delete.directoryPermanentMessage', {
+        folderName: directory.name,
+      }),
+      this.translateService.instant('_common.cancel'),
+      this.translateService.instant('_common.confirm'),
+      this,
+      () => this.deleteDirectoryPermanent(directory)
+    );
+  }
+
+  async deleteDirectoryPermanent(directory) {
+    this.directoryService
+      .deleteDirectory(directory.id, true)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.dataService.triggerObjectChange(
+          new ObjectChangeModel(
+            ObjectType.Directory,
+            ActionType.Delete,
+            directory
+          )
+        );
+        this.alertService.showInfo(
+          '_message._information.directoryPermanentDeleted'
+        );
+      });
+  }
+
+  async confirmDeleteDirectory(directory) {
+    await this.alertService.presentAlert(
+      this.translateService.instant('_delete.directory'),
+      this.translateService.instant('_delete.directoryMessage', {
+        folderName: directory.name,
+      }),
+      this.translateService.instant('_common.cancel'),
+      this.translateService.instant('_common.confirm'),
+      this,
+      () => this.deleteDirectory(directory)
+    );
+  }
+
+  async deleteDirectory(directory) {
+    this.directoryService
+      .deleteDirectory(directory.id)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.dataService.triggerObjectChange(
+          new ObjectChangeModel(
+            ObjectType.Directory,
+            ActionType.Delete,
+            directory
+          )
+        );
+        this.alertService.showInfo('_message._information.directoryDeleted');
+      });
+  }
+
+  public addFileCut(file: FileModel | FileDetailsModel) {
+    this.dataService.triggerObjectCut(
+      new ObjectMoveModel(ObjectType.File, file)
+    );
+  }
+
+  restoreFile(file: FileModel | FileDetailsModel) {
+    this.fileService
+      .restoreFile(file.id)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.dataService.triggerObjectChange(
+          new ObjectChangeModel(ObjectType.File, ActionType.Restore, file)
+        );
+        this.alertService.showInfo('_message._information.fileRestored');
+      });
+  }
+
+  async confirmPermanentDeleteFile(file: FileModel | FileDetailsModel) {
+    await this.alertService.presentAlert(
+      this.translateService.instant('_delete.file'),
+      this.translateService.instant('_delete.filePermanentMessage', {
+        fileName: file.name,
+      }),
+      this.translateService.instant('_common.cancel'),
+      this.translateService.instant('_common.confirm'),
+      this,
+      () => this.deleteFilePermanent(file)
+    );
+  }
+
+  async deleteFilePermanent(file: FileModel | FileDetailsModel) {
+    this.fileService
+      .deleteFile(file.id, true)
+      .pipe(take(1))
+      .subscribe((file) => {
+        this.dataService.triggerObjectChange(
+          new ObjectChangeModel(ObjectType.File, ActionType.Delete, file)
+        );
+        this.alertService.showInfo(
+          '_message._information.filePermanentDeleted'
+        );
+      });
+  }
+
+  async confirmDeleteFile(file: FileModel | FileDetailsModel) {
+    await this.alertService.presentAlert(
+      this.translateService.instant('_delete.file'),
+      this.translateService.instant('_delete.fileMessage', {
+        fileName: file.name,
+      }),
+      this.translateService.instant('_common.cancel'),
+      this.translateService.instant('_common.confirm'),
+      this,
+      () => this.deleteFile(file)
+    );
+  }
+
+  async deleteFile(file: FileModel | FileDetailsModel) {
+    this.fileService
+      .deleteFile(file.id)
+      .pipe(take(1))
+      .subscribe((file) => {
+        this.dataService.triggerObjectChange(
+          new ObjectChangeModel(ObjectType.File, ActionType.Delete, file)
+        );
+        this.alertService.showInfo('_message._information.fileDeleted');
+      });
+  }
+
+  public downloadFile(file: FileModel | FileDetailsModel) {
+    this.fileService
+      .downloadFile(file.id)
+      .pipe(take(1))
+      .subscribe((blob) => {
+        const downloadUrl = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.download = file.name;
+        document.body.appendChild(link);
+        link.click();
+        setTimeout(() => {
+          document.body.removeChild(link);
+          URL.revokeObjectURL(downloadUrl);
+        }, 100);
+      });
+  }
 }

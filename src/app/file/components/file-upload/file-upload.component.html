@@ -24,7 +24,7 @@
               </b>
             </ion-label>
             <div
-              [class]="isMobile ? '' : 'dropzone'"
+              [class.dropzone]="!isMobile"
               class="file-upload"
               ngxFileDropzone
               [readMode]="readMode"

@@ -4,13 +4,7 @@
     size="large"
     class="file-icon"
     name="folder"
-    [color]="
-      directory.accessLevel === 1
-        ? 'tertiary'
-        : directory.accessLevel === 2
-        ? 'secondary'
-        : 'success'
-    "
+    [color]="accessibilityColor"
     (click)="directoryChange.emit(directory.id)"
   ></ion-icon>
   <ion-label (click)="directoryChange.emit(directory.id)">
@@ -38,24 +32,38 @@
                 {{ "_common.edit" | translate }}
               </ion-label>
             </ion-item>
-            <ion-item button (click)="addDirectoryCut()">
+            <ion-item
+              button
+              (click)="fileSystemHelper.addDirectoryCut(directory)"
+            >
               <ion-label class="warning">
                 {{ "_common.cut" | translate }}
               </ion-label>
             </ion-item>
-            <ion-item button (click)="confirmDeleteDirectory()">
+            <ion-item
+              button
+              (click)="fileSystemHelper.confirmDeleteDirectory(directory)"
+            >
               <ion-label class="danger">
                 {{ "_common.delete" | translate }}
               </ion-label>
             </ion-item>
           </ng-container>
           <ng-template #deletedOptions>
-            <ion-item button (click)="restoreDirectory()">
+            <ion-item
+              button
+              (click)="fileSystemHelper.restoreDirectory(directory)"
+            >
               <ion-label class="secondary">
                 {{ "_common.restore" | translate }}
               </ion-label>
             </ion-item>
-            <ion-item button (click)="confirmPermanentDeleteDirectory()">
+            <ion-item
+              button
+              (click)="
+                fileSystemHelper.confirmPermanentDeleteDirectory(directory)
+              "
+            >
               <ion-label class="danger">
                 {{ "_common.permanentDelete" | translate }}
               </ion-label>

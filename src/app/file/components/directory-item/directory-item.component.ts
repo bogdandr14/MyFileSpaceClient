@@ -1,17 +1,10 @@
-import { DataService } from './../../../core/services/data.service';
 import { UserService } from './../../../user/user.service';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DirectoryModel } from '../../models/directory.model';
 import { MenuController, ModalController } from '@ionic/angular';
-import { DirectoryService } from '../../services/directory.service';
-import { take } from 'rxjs';
-import { ActionType } from '../../../core/models/action-type.enum';
-import { ObjectChangeModel } from '../../../core/models/object-change.model';
-import { ObjectType } from '../../../core/models/object-type.enum';
-import { AlertService } from '../../../core/services/alert.service';
 import { ObjectEditComponent } from '../object-edit/object-edit.component';
-import { ObjectMoveModel } from '../../../core/models/object-move.model';
-import { TranslateService } from '@ngx-translate/core';
+import { FileSystemHelperService } from '../../services/file-system-helper.service';
+import { UiHelperService } from 'src/app/core/services/ui-helper.service';
 
 @Component({
   selector: 'app-directory-item',
@@ -26,15 +19,17 @@ export class DirectoryItemComponent {
   get isOwner() {
     return this.userService.isCurrentUser(this.directory.ownerId);
   }
+  
+  get accessibilityColor(){
+    return this.uiHelperService.accessibilityColor(this.directory.accessLevel);
+  }
 
   constructor(
     private menuCtrl: MenuController,
-    private directoryService: DirectoryService,
     private userService: UserService,
-    private dataService: DataService,
-    private alertService: AlertService,
     private modalCtrl: ModalController,
-    private translateService: TranslateService
+    private uiHelperService: UiHelperService,
+    public fileSystemHelper: FileSystemHelperService
   ) {}
 
   openDetailsMenu() {
@@ -50,87 +45,5 @@ export class DirectoryItemComponent {
       },
     });
     directoryEditModal.present();
-  }
-
-  public addDirectoryCut() {
-    this.dataService.triggerObjectCut(
-      new ObjectMoveModel(ObjectType.Directory, this.directory)
-    );
-  }
-
-  restoreDirectory() {
-    this.directoryService
-      .restoreDirectory(this.directory.id)
-      .pipe(take(1))
-      .subscribe(() => {
-        this.dataService.triggerObjectChange(
-          new ObjectChangeModel(
-            ObjectType.Directory,
-            ActionType.Restore,
-            this.directory
-          )
-        );
-        this.alertService.showInfo('_message._information.directoryRestored');
-      });
-  }
-
-  async confirmPermanentDeleteDirectory() {
-    await this.alertService.presentAlert(
-      this.translateService.instant('_delete.directory'),
-      this.translateService.instant('_delete.directoryPermanentMessage', {
-        folderName: this.directory.name,
-      }),
-      this.translateService.instant('_common.cancel'),
-      this.translateService.instant('_common.confirm'),
-      this,
-      this.deleteDirectoryPermanent
-    );
-  }
-
-  async deleteDirectoryPermanent() {
-    this.directoryService
-      .deleteDirectory(this.directory.id, true)
-      .pipe(take(1))
-      .subscribe(() => {
-        this.dataService.triggerObjectChange(
-          new ObjectChangeModel(
-            ObjectType.Directory,
-            ActionType.Delete,
-            this.directory
-          )
-        );
-        this.alertService.showInfo(
-          '_message._information.directoryPermanentDeleted'
-        );
-      });
-  }
-
-  async confirmDeleteDirectory() {
-    await this.alertService.presentAlert(
-      this.translateService.instant('_delete.directory'),
-      this.translateService.instant('_delete.directoryMessage', {
-        folderName: this.directory.name,
-      }),
-      this.translateService.instant('_common.cancel'),
-      this.translateService.instant('_common.confirm'),
-      this,
-      this.deleteDirectory
-    );
-  }
-
-  async deleteDirectory() {
-    this.directoryService
-      .deleteDirectory(this.directory.id)
-      .pipe(take(1))
-      .subscribe((directory) => {
-        this.dataService.triggerObjectChange(
-          new ObjectChangeModel(
-            ObjectType.Directory,
-            ActionType.Delete,
-            this.directory
-          )
-        );
-        this.alertService.showInfo('_message._information.directoryDeleted');
-      });
   }
 }

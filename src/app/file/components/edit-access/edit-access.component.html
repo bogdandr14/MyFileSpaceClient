@@ -18,7 +18,10 @@
           <ion-item>
             <ion-label>{{ "_access.allowedUsers" | translate }}</ion-label>
           </ion-item>
-          <div class="chips-content" [style.max-height]="isMobile ? '15vh' : '9vh'">
+          <div
+            class="chips-content"
+            [style.max-height]="isMobile ? '15vh' : '9vh'"
+          >
             <ion-chip *ngFor="let user of updatedAllowedUsers" color="primary">
               <ion-icon name="checkmark"></ion-icon>
               <ion-label>{{ user.tagName }}</ion-label>
@@ -43,7 +46,10 @@
               <ion-label>{{ "_access.removeUsers" | translate }}</ion-label>
             </ion-item>
 
-            <div class="chips-content" [style.max-height]="isMobile ? '15vh' : '9vh'">
+            <div
+              class="chips-content"
+              [style.max-height]="isMobile ? '15vh' : '9vh'"
+            >
               <ion-chip *ngFor="let user of removedUsers" color="danger">
                 <ion-icon name="person-remove"></ion-icon>
                 <ion-label>{{ user.tagName }}</ion-label>
@@ -56,7 +62,12 @@
             </div>
           </ng-container>
 
-            <app-user-search [extraIcon]="{name:'add-circle', color:'success'}" [isModal]="true"(userClicked)="addUser($event)"> </app-user-search>
+          <app-user-search
+            [extraIcon]="{ name: 'add-circle', color: 'success' }"
+            [isModal]="true"
+            (userClicked)="addUser($event)"
+          >
+          </app-user-search>
         </ion-list>
 
         <ion-button
@@ -68,7 +79,6 @@
           {{ "_common.save" | translate }}
         </ion-button>
       </form>
-    
     </ion-card-content>
   </ion-card>
 </ion-content>
