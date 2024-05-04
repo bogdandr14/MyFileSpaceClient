@@ -1,0 +1,71 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>{{ "_edit.user" | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">{{
+        "_common.cancel" | translate
+      }}</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row class="custom-margin-bottom">
+      <ion-col size="12" offset="0">
+        <ion-card>
+          <ion-card-content>
+            <form #form="ngForm" (ngSubmit)="submitInfo()">
+              <ion-item-group id="tagName">
+                <ion-item color="transparent">
+                  <ion-label for="tagName" position="floating">
+                    <b>
+                      {{ "_user.tagName" | translate }}
+                      <span class="required"> *</span>
+                    </b>
+                  </ion-label>
+                  <ion-input
+                    type="text"
+                    name="tagName"
+                    #tagName="ngModel"
+                    [(ngModel)]="userEdit.tagName"
+                    tagnameCheck
+                    required
+                  ></ion-input>
+                </ion-item>
+                <app-validation-errors
+                  [model]="tagName"
+                ></app-validation-errors>
+              </ion-item-group>
+              <ion-item-group id="confirmPassword">
+                <ion-item color="transparent">
+                  <ion-label for="cpsw" position="floating">
+                    <b
+                      >{{ "_password.confirm" | translate }}
+                      <span class="required"> *</span>
+                    </b>
+                  </ion-label>
+                  <ion-input
+                    type="password"
+                    name="cpsw"
+                    #cpsw="ngModel"
+                    [(ngModel)]="userEdit.password"
+                    required
+                  ></ion-input>
+                </ion-item>
+                <app-validation-errors [model]="cpsw"></app-validation-errors>
+              </ion-item-group>
+              <ion-button
+                fill="solid"
+                color="success"
+                type="submit"
+                expand="block"
+              >
+                {{ "_common.save" | translate }}
+              </ion-button>
+            </form>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

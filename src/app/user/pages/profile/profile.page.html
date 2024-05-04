@@ -1,13 +1,168 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>profile</ion-title>
+    <ion-title>
+      {{ isCurrentUser ? ('_pages.yourProfile' | translate ) :
+      ('_pages.otherProfile' | translate: {name: userInfo?.tagName } )}}
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding-top ion-text-center" *ngIf="userInfo">
+  <ion-card>
+    <ion-card-header class="ion-text-center">
+      <ion-card-title text-wrap>
+        <h1>
+          {{ userInfo.tagName }}
+          <ion-chip *ngIf="isAdmin" color="secondary">
+            <ion-icon name="book"></ion-icon>
+            <ion-label> {{ "_user.admin" | translate }} </ion-label>
+          </ion-chip>
+        </h1>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list slot="content">
+        <ion-row>
+          <ion-col size="12" size-md="6">
+            <ion-item>
+              <ion-label>
+                {{ "_user.tagName" | translate }}:
+                <ion-chip
+                  button
+                  color="primary"
+                  (click)="copyTagNameToClipboard(userInfo?.tagName)"
+                >
+                  <ion-icon name="at"></ion-icon>
+                  <ion-label>{{ userInfo.tagName }} </ion-label>
+                </ion-chip></ion-label
+              >
+            </ion-item>
+          </ion-col>
+
+          <ng-container *ngIf="isCurrentUser">
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label>
+                  {{ "_user.email" | translate }}:
+                  <ion-chip color="primary">
+                    <ion-icon name="mail"></ion-icon>
+                    <ion-label>{{ email }} </ion-label>
+                  </ion-chip></ion-label
+                >
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label>
+                  {{ "_user.lastPasswordChange" | translate }}:
+                  <ion-text readonly>
+                    {{ lastPasswordChange? (lastPasswordChange | date:
+                    "medium":uiHelper.timeOffset():localeService.currentLocale)
+                    : '-'}}
+                  </ion-text>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-row>
+                <ion-button
+                  id="open-edit-user"
+                  fill="solid"
+                  expand="block"
+                  color="secondary"
+                >
+                  <ion-icon name="pencil" slot="start"></ion-icon>
+                  {{ "_common.edit" | translate }}
+                </ion-button>
+                &nbsp;
+                <ion-button
+                  id="open-change-password"
+                  fill="solid"
+                  expand="block"
+                  color="warning"
+                >
+                  <ion-icon slot="start" name="hammer"></ion-icon>
+                  {{ "_password.change" | translate }}
+                </ion-button>
+              </ion-row>
+            </ion-col>
+          </ng-container>
+        </ion-row>
+
+        <ion-grid>
+          <ion-row class="ion-align-item-center">
+            <ion-col size-lg="12" [sizeXl]="isCurrentUser ? '7' : '12'">
+              <ng-container *ngIf="isCurrentUser">
+                <ion-item>
+                  <ion-label class="data">
+                    {{ "_file.usedStorage" | translate :{
+                    currentUsage:uiHelper.computeSize(totalSize), maxUsage:
+                    uiHelper.computeSize(maxStorage)} }}
+                  </ion-label>
+                </ion-item>
+                <ion-progress-bar
+                  color="success"
+                  [value]="totalSize / maxStorage"
+                ></ion-progress-bar>
+              </ng-container>
+              <ion-item>
+                <ion-label class="data">
+                  {{ "_user.availableFiles" | translate }} ( {{
+                  userInfo.files.length }} ):
+                </ion-label>
+              </ion-item>
+              <ion-chip
+                *ngFor="let file of userInfo.files"
+                [color]="file.isDeleted ? 'danger' : uiHelper.accessibilityColor(file.accessLevel)"
+              >
+                <ion-icon [name]="uiHelper.objectIcon(file)"> </ion-icon>
+                <ion-label>
+                  {{file.name}} | {{ uiHelper.computeSize(file.sizeInBytes)}}
+                </ion-label>
+              </ion-chip>
+              <ion-item>
+                <ion-label class="data">
+                  {{ "_user.availableDirectories" | translate }} ( {{
+                  userInfo.directories.length }} ):
+                </ion-label>
+              </ion-item>
+              <ion-chip
+                *ngFor="let directory of userInfo.directories"
+                [color]="directory.isDeleted ? 'danger': uiHelper.accessibilityColor(directory.accessLevel)"
+              >
+                <ion-icon [name]="uiHelper.objectIcon(directory)"> </ion-icon>
+                <ion-label>
+                  {{(directory.name !== '$USER_ROOT') ? directory.name :
+                  "_pages.home" | translate}}
+                  <ng-container *ngIf="isDirectoryEmpty(directory.id)">
+                    ({{ "_common.empty" | translate }})
+                  </ng-container>
+                </ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col *ngIf="isCurrentUser" size-lg="12" size-xl="4">
+              <app-storage-usage
+                [maxStorage]="maxStorage"
+                [files]="userInfo.files"
+              ></app-storage-usage>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-modal trigger="open-edit-user">
+    <ng-template>
+      <app-user-edit [tagName]="userInfo.tagName"> </app-user-edit>
+    </ng-template>
+  </ion-modal>
+  <ion-modal trigger="open-change-password">
+    <ng-template>
+      <app-change-password></app-change-password>
+    </ng-template>
+  </ion-modal>
 </ion-content>

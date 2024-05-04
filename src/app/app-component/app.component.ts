@@ -26,9 +26,10 @@ export class AppComponent implements OnInit {
   fontSize = 'font-size-5';
 
   public connectedUserLinks: Array<RouteDescriptor> = [
-    { title: '_pages.file', path: '/file', icon: 'folder' },
     { title: '_pages.profile', path: '/user/profile', icon: 'person' },
-    { title: '_pages.bin', path: '/bin', icon: 'trash' },
+    { title: '_pages.myFiles', path: '/file/mine', icon: 'folder' },
+    { title: '_pages.sharedFiles', path: '/file/shared', icon: 'share' },
+    { title: '_pages.bin', path: '/file/bin', icon: 'trash' },
   ];
 
   public freeUserLinks: Array<RouteDescriptor> = [
@@ -37,7 +38,7 @@ export class AppComponent implements OnInit {
   ];
 
   public otherLinks: Array<RouteDescriptor> = [
-    { title: '_pages.browse', path: '/search', icon: 'search' },
+    { title: '_pages.browse', path: '/browse', icon: 'search' },
     { title: '_pages.settings', path: '/settings', icon: 'settings' },
   ];
 

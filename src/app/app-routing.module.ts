@@ -21,13 +21,13 @@ const routes: Routes = [
     loadChildren: () => import('./user/user.module').then( m => m.UserPageModule)
   },
   {
-    path: 'bin',
-    loadChildren: () => import('./bin/bin.module').then( m => m.BinPageModule)
-  },
-  {
     path: 'file',
     loadChildren: () => import('./file/file.module').then( m => m.FilePageModule)
+  },  {
+    path: 'browse',
+    loadChildren: () => import('./browse/browse.module').then( m => m.BrowsePageModule)
   },
+
 
 ];
 

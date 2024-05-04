@@ -39,9 +39,12 @@ export class UiHelperService {
 
   public objectIcon(object) {
     if (
-      object instanceof DirectoryDetailsModel ||
-      object instanceof DirectoryModel
+      (object as DirectoryModel) !== undefined &&
+      object.parentDirectoryId !== undefined
     ) {
+      if (object.name === '$USER_ROOT') {
+        return 'home';
+      }
       return 'folder';
     }
     if (
@@ -61,7 +64,7 @@ export class UiHelperService {
     }
     return 'document';
   }
-  public timeOffset(){
+  public timeOffset() {
     const now = new Date();
     const offsetInMinutes = now.getTimezoneOffset();
     const offsetHours = Math.abs(offsetInMinutes) / 60;

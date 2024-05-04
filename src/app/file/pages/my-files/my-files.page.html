@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title> {{'_pages.file' | translate }} </ion-title>
+    <ion-title> {{'_pages.myFiles' | translate }} </ion-title>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -18,7 +18,7 @@
       >
         <ion-chip
           button
-          [color]="(parentDirectory.accessLevel === 1) ? 'tertiary' : ((parentDirectory.accessLevel === 2) ? 'secondary' : 'success')"
+          [color]="uiHelper.accessibilityColor(parentDirectory.accessLevel)"
           (click)="loadDirectory(parentDirectory.id)"
         >
           <ion-icon
@@ -48,10 +48,15 @@
       <ion-fab-button id="open-file-upload" color="success" title="Add file">
         <ion-icon name="document"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button id="open-directory-edit" color="success" title="Add directory">
+      <ion-fab-button
+        id="open-directory-edit"
+        color="success"
+        title="Add directory"
+      >
         <ion-icon name="folder"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button (click)="pasteHere()"
+      <ion-fab-button
+        (click)="pasteHere()"
         *ngIf="!!isObjectCut"
         [color]="canPasteHere ? 'warning':'step-500'"
         [disabled]="!canPasteHere"

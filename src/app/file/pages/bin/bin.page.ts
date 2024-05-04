@@ -5,6 +5,7 @@ import { ActionType } from 'src/app/core/models/action-type.enum';
 import { ObjectChangeModel } from 'src/app/core/models/object-change.model';
 import { ObjectType } from 'src/app/core/models/object-type.enum';
 import { DataService } from 'src/app/core/services/data.service';
+import { UiHelperService } from 'src/app/core/services/ui-helper.service';
 import { DirectoryDetailsModel } from 'src/app/file/models/directory-details.model';
 import { DirectoryModel } from 'src/app/file/models/directory.model';
 import { FileModel } from 'src/app/file/models/file.model';
@@ -27,17 +28,13 @@ export class BinPage implements OnInit {
   constructor(
     private fileService: FileService,
     private directoryService: DirectoryService,
-    private dataService: DataService
+    private dataService: DataService,
+    private uiHelper:UiHelperService
   ) {}
 
   get totalSize() {
     let size = this.deletedFiles.reduce((acc, obj) => acc + obj.sizeInBytes, 0);
-    let i = 0;
-    while (size > 1024) {
-      size /= 1024;
-      ++i;
-    }
-    return `${size.toFixed(2)} ${BinPage.sizes[i]}`;
+    return this.uiHelper.computeSize(size);
   }
 
   ngOnInit() {

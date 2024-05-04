@@ -168,7 +168,7 @@ export class FileSystemHelperService {
     this.fileService
       .deleteFile(file.id)
       .pipe(take(1))
-      .subscribe((file) => {
+      .subscribe(() => {
         this.dataService.triggerObjectChange(
           new ObjectChangeModel(ObjectType.File, ActionType.Delete, file)
         );

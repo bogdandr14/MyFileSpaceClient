@@ -5,17 +5,13 @@ import { SettingsPage } from './page/settings.page';
 import { AccessibilitySettingsComponent } from './components/accessibility-settings/accessibility-settings.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
-
-
 @NgModule({
   declarations: [
     SettingsPage,
     AccessibilitySettingsComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
   ],
-  imports: [
-    SharedModule,
-    SettingsPageRoutingModule,
-  ]
+  imports: [SharedModule, SettingsPageRoutingModule],
+  exports: [ChangePasswordComponent],
 })
-export class SettingsModule { }
+export class SettingsModule {}

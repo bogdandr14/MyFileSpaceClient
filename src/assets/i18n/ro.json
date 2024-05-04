@@ -30,7 +30,10 @@
     "email": "E-Mail",
     "emailAddress": "Adresă de e-Mail",
     "tagName": "Nume unic",
-    "search": "Caută utilizatori"
+    "search": "Caută utilizatori",
+    "lastPasswordChange":"Ultima schimbare a parolei",
+    "availableFiles": "Fișiere disponibile",
+    "availableDirectories": "Foldere disponibile"
   },
   "_updates": {
     "markAsChecked": "Marchează ca văzut",
@@ -42,8 +45,10 @@
   "_pages": {
     "home": "Acasă",
     "browse": "Caută fişiere",
-    "file": "Fişierele mele",
+    "myFiles": "Fişierele mele",
+    "sharedFiles": "Împărtășit cu mine",
     "profile": "Profil",
+    "yourProfile":"Profilul tău",
     "accessible": "Accesibilitate",
     "bin": "Coş de gunoi",
     "otherProfile": "Profilul lui { name }",
@@ -92,7 +97,8 @@
     "owner":"Deţinător",
     "accessibility": "Accesibilitate",
     "noUserFound":"Niciun utilizator găsit",
-    "binSize":"Coșul conține în prezent { size }."
+    "binSize":"Coșul conține în prezent { size }.",
+    "empty":"Gol"
   },
   "_accessLevel": {
     "name":"Nivel acces",
@@ -145,7 +151,9 @@
     "toUpload": "Fişierul de încărcat",
     "download": "Descarcă fişierul",
     "choose": "Alege fişierul",
-    "change": "Schimbă fişierul"
+    "change": "Schimbă fişierul",
+    "usedStorage":"Ați folosit { currentUsage } din cei { maxUsage } disponibili",
+    "storageUsage":"Utilizare stocare fișiere"
   },
   "_directory": {
     "properties":"Proprietăţi folder",

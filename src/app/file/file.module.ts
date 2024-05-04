@@ -2,7 +2,6 @@ import { ObjectEditComponent } from './components/object-edit/object-edit.compon
 import { NgModule } from '@angular/core';
 import { FilePageRoutingModule } from './file-routing.module';
 
-import { FilePage } from './page/file.page';
 import { FileExplorerComponent } from './components/file-explorer/file-explorer.component';
 import { FileItemComponent } from './components/file-item/file-item.component';
 import { SharedModule } from '../shared/shared.module';
@@ -14,6 +13,9 @@ import { ObjectDetailsComponent } from './components/object-details/object-detai
 import { EditAccessComponent } from './components/edit-access/edit-access.component';
 import { UserPageModule } from '../user/user.module';
 import { AddAccessKeyComponent } from './components/add-access-key/add-access-key.component';
+import { SharedFilesPage } from './pages/shared-files/shared-files.page';
+import { MyFilesPage } from './pages/my-files/my-files.page';
+import { BinPage } from './pages/bin/bin.page';
 
 @NgModule({
   imports: [
@@ -23,7 +25,9 @@ import { AddAccessKeyComponent } from './components/add-access-key/add-access-ke
     NgxFileHelpersModule,
   ],
   declarations: [
-    FilePage,
+    SharedFilesPage,
+    MyFilesPage,
+    BinPage,
     FileExplorerComponent,
     FileItemComponent,
     FileUploadComponent,
@@ -34,8 +38,6 @@ import { AddAccessKeyComponent } from './components/add-access-key/add-access-ke
     EditAccessComponent,
     AddAccessKeyComponent,
   ],
-  exports:[
-    FileExplorerComponent
-  ]
+  exports: [FileExplorerComponent],
 })
 export class FilePageModule {}

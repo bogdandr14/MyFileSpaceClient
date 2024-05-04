@@ -4,7 +4,8 @@ import { UserDetailsModel } from './user-details.model';
 
 export class CurrentUserModel extends UserDetailsModel {
   email: string;
-  role: number;
+  lastPasswordChange: Date;
+  roleType: number;
   allowedFiles: FileModel[];
   allowedDirectories: DirectoryModel[];
 }

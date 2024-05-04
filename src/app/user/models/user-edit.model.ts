@@ -1,5 +1,7 @@
 export class UserEditModel {
-  email: string;
+  constructor(tagName: string) {
+    this.tagName = tagName;
+  }
+  tagName: string;
   password: string;
-  tagname: string;
 }

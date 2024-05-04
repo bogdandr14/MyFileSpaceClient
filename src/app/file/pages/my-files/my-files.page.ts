@@ -1,26 +1,27 @@
-import { ObjectChangeModel } from './../../core/models/object-change.model';
-import { DataService } from './../../core/services/data.service';
+import { ObjectChangeModel } from './../../../core/models/object-change.model';
+import { DataService } from './../../../core/services/data.service';
 import { Component, OnInit } from '@angular/core';
-import { DirectoryService } from '../services/directory.service';
+import { DirectoryService } from '../../services/directory.service';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap, iif, take, tap, of } from 'rxjs';
-import { DirectoryDetailsModel } from '../models/directory-details.model';
+import { DirectoryDetailsModel } from '../../models/directory-details.model';
 import { Guid } from 'guid-typescript';
-import { ObjectType } from '../../core/models/object-type.enum';
-import { ActionType } from '../../core/models/action-type.enum';
-import { FileModel } from '../models/file.model';
-import { DirectoryModel } from '../models/directory.model';
-import { ObjectMoveModel } from '../../core/models/object-move.model';
-import { FileService } from '../services/file.service';
-import { AlertService } from '../../core/services/alert.service';
+import { ObjectType } from '../../../core/models/object-type.enum';
+import { ActionType } from '../../../core/models/action-type.enum';
+import { FileModel } from '../../models/file.model';
+import { DirectoryModel } from '../../models/directory.model';
+import { ObjectMoveModel } from '../../../core/models/object-move.model';
+import { FileService } from '../../services/file.service';
+import { AlertService } from '../../../core/services/alert.service';
 import { ClipboardService } from 'ngx-clipboard';
+import { UiHelperService } from 'src/app/core/services/ui-helper.service';
 
 @Component({
-  selector: 'app-file',
-  templateUrl: './file.page.html',
-  styleUrls: ['./file.page.scss'],
+  selector: 'app-my-files',
+  templateUrl: './my-files.page.html',
+  styleUrls: ['./my-files.page.scss'],
 })
-export class FilePage implements OnInit {
+export class MyFilesPage implements OnInit {
   public directoryDetails: DirectoryDetailsModel;
   private accessedDirectories: DirectoryDetailsModel[] = [];
   private accessKey: string;
@@ -55,7 +56,8 @@ export class FilePage implements OnInit {
     private dataService: DataService,
     private route: ActivatedRoute,
     private alertService: AlertService,
-    private clipboardService: ClipboardService
+    private clipboardService: ClipboardService,
+    public uiHelper: UiHelperService
   ) {}
 
   ngOnInit() {

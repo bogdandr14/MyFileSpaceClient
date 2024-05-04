@@ -30,7 +30,10 @@
     "email": "E-Mail",
     "emailAddress": "E-Mail address",
     "tagName": "Tag name",
-    "search": "Search users"
+    "search": "Search users",
+    "lastPasswordChange":"Last password change",
+    "availableFiles": "Available files",
+    "availableDirectories": "Available directories"
   },
   "_updates": {
     "markAsChecked": "Mark as checked",
@@ -42,8 +45,10 @@
   "_pages": {
     "home": "Home",
     "browse": "Browse files",
-    "file": "My files",
+    "myFiles": "My files",
+    "sharedFiles": "Shared with me",
     "profile": "Profile",
+    "yourProfile":"Your profile",
     "accessible": "Accessibility",
     "bin": "Bin",
     "otherProfile": "{ name }'s profile",
@@ -92,7 +97,8 @@
     "owner":"Owner",
     "accessibility": "Accessibility",
     "noUserFound":"No users found",
-    "binSize":"The bin currently contains { size }."
+    "binSize":"The bin currently contains { size }.",
+    "empty":"Empty"
   },
   "_accessLevel": {
     "name":"Access level",
@@ -145,7 +151,9 @@
     "toUpload": "File to upload",
     "download": "Download file",
     "choose": "Choose file",
-    "change": "Change file"
+    "change": "Change file",
+    "usedStorage":"You have used { currentUsage } of the { maxUsage } available",
+    "storageUsage":"File storage usage"
   },
   "_directory":{
     "properties":"Directory properties",
