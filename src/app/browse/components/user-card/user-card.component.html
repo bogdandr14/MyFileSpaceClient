@@ -1,0 +1,15 @@
+<ion-card *ngIf="user" class="user">
+  <ion-card-header>
+    <ion-item lines="none">
+      <ion-label class="ion-padding-start" text-wrap>
+        <h1>{{ user.tagName }}</h1>
+      </ion-label>
+    </ion-item>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list lines="none">
+      <ion-button>browse collection</ion-button>
+      <ion-button>profile</ion-button>
+    </ion-list>
+  </ion-card-content>
+</ion-card>

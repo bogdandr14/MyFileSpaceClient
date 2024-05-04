@@ -1,6 +1,23 @@
-.data {
-    overflow: hidden;
-    text-overflow: initial;
-    white-space: normal;
+.chips-content {
+  overflow-y: auto;
+  max-height: 36vh;
+  @media (min-width: 768px) {
+    max-height: 32vh;
   }
-  
+
+  @media (min-width: 1024px) {
+    max-height: 28vh;
+  }
+
+  /* Media query for screens wider than 1024px */
+  @media (min-width: 1280px) {
+    max-height: 24vh;
+  }
+  @media (min-width: 1440px) {
+    max-height: 20vh;
+  }
+
+  @media (min-width: 1920px) {
+    max-height: 16vh;
+  }
+}

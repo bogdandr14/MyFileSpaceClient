@@ -32,7 +32,7 @@
  * the entire app.
  */
 
- ion-menu-button {
+ion-menu-button {
   color: var(--ion-color-primary);
 }
 
@@ -167,4 +167,31 @@ ion-item:hover ion-label.secondary {
 
 ion-item:hover ion-label.tertiary {
   color: var(--ion-color-tertiary-tint);
+}
+
+ion-card.public {
+  background-image: linear-gradient(
+    var(--ion-color-success-shade),
+    var(--ion-color-warning-shade)
+  );
+}
+
+ion-card.restricted {
+  background-image: linear-gradient(
+    var(--ion-color-secondary-shade),
+    var(--ion-color-medium-shade)
+  );
+}
+
+ion-card.private {
+  background-image: linear-gradient(
+    var(--ion-color-tertiary-shade),
+    var(--ion-color-danger-shade)
+  );
+}
+ion-card.user {
+  background-image: linear-gradient(
+    var(--ion-color-primary-shade),
+    var(--ion-color-warning-shade)
+  );
 }

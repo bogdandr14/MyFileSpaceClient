@@ -1,0 +1,30 @@
+<ion-card *ngIf="file" [ngClass]="uiHelper.accessibilityName(file.accessLevel)">
+  <ion-card-header>
+    <ion-item lines="none">
+      <ion-label class="ion-padding-start" text-wrap>
+        <h1>{{ file.name }}</h1>
+      </ion-label>
+    </ion-item>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list lines="none">
+      <ion-item>
+        <ion-label text-wrap> {{ "_common.size" | translate }}:</ion-label>
+        <ion-text readonly>
+          {{ uiHelper.computeSize(file.sizeInBytes) }}</ion-text
+        >
+      </ion-item>
+      <ion-item>
+        <ion-label text-wrap>
+          {{ "_common.dateModified" | translate }}:</ion-label
+        >
+        <ion-text readonly>
+          {{
+            file.modifiedAt
+              | date: "medium":uiHelper.timeOffset:localeService.currentLocale
+          }}</ion-text
+        >
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+</ion-card>

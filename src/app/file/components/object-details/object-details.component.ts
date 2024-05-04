@@ -34,34 +34,15 @@ export class ObjectDetailsComponent {
     if (this.objectDetails.isDeleted && !this.isFile) {
       size = this.externalSize;
     }
-    return this.uiHelperService.computeSize(size);
+    return this.uiHelper.computeSize(size);
   }
 
-  get accessibilityColor() {
-    return this.uiHelperService.accessibilityColor(
-      this.objectDetails.accessLevel
-    );
-  }
-  get accessibilityIcon() {
-    return this.uiHelperService.accessibilityIcon(
-      this.objectDetails.accessLevel
-    );
-  }
-  get accessibilityName() {
-    return this.uiHelperService.accessibilityName(
-      this.objectDetails.accessLevel
-    );
-  }
   get icon() {
-    return this.uiHelperService.objectIcon(this.objectDetails);
+    return this.uiHelper.objectIcon(this.objectDetails);
   }
 
   get isOwner() {
     return this.userService.isCurrentUser(this.objectDetails.ownerId);
-  }
-
-  get timeOffset(): string {
-    return this.uiHelperService.timeOffset();
   }
 
   constructor(
@@ -71,7 +52,7 @@ export class ObjectDetailsComponent {
     private alertService: AlertService,
     private translateService: TranslateService,
     private fileSystemHelper: FileSystemHelperService,
-    private uiHelperService: UiHelperService,
+    public uiHelper: UiHelperService,
     public localeService: LocaleService
   ) {}
 

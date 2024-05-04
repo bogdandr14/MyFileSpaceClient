@@ -60,8 +60,8 @@
                   {{ "_user.lastPasswordChange" | translate }}:
                   <ion-text readonly>
                     {{ lastPasswordChange? (lastPasswordChange | date:
-                    "medium":uiHelper.timeOffset():localeService.currentLocale)
-                    : '-'}}
+                    "medium":uiHelper.timeOffset:localeService.currentLocale) :
+                    '-'}}
                   </ion-text>
                 </ion-label>
               </ion-item>
@@ -94,10 +94,13 @@
 
         <ion-grid>
           <ion-row class="ion-align-item-center">
-            <ion-col size-lg="12" [sizeXl]="isCurrentUser ? '7' : '12'">
+            <ion-col
+              [sizeLg]="isCurrentUser ? '8' : '12'"
+              [sizeXl]="isCurrentUser ? '9' : '12'"
+            >
               <ng-container *ngIf="isCurrentUser">
                 <ion-item>
-                  <ion-label class="data">
+                  <ion-label text-wrap>
                     {{ "_file.usedStorage" | translate :{
                     currentUsage:uiHelper.computeSize(totalSize), maxUsage:
                     uiHelper.computeSize(maxStorage)} }}
@@ -109,41 +112,45 @@
                 ></ion-progress-bar>
               </ng-container>
               <ion-item>
-                <ion-label class="data">
+                <ion-label text-wrap>
                   {{ "_user.availableFiles" | translate }} ( {{
                   userInfo.files.length }} ):
                 </ion-label>
               </ion-item>
-              <ion-chip
-                *ngFor="let file of userInfo.files"
-                [color]="file.isDeleted ? 'danger' : uiHelper.accessibilityColor(file.accessLevel)"
-              >
-                <ion-icon [name]="uiHelper.objectIcon(file)"> </ion-icon>
-                <ion-label>
-                  {{file.name}} | {{ uiHelper.computeSize(file.sizeInBytes)}}
-                </ion-label>
-              </ion-chip>
+              <div [class.chips-content]="isCurrentUser">
+                <ion-chip
+                  *ngFor="let file of userInfo.files"
+                  [color]="file.isDeleted ? 'danger' : uiHelper.accessibilityColor(file.accessLevel)"
+                >
+                  <ion-icon [name]="uiHelper.objectIcon(file)"> </ion-icon>
+                  <ion-label>
+                    {{file.name}} | {{ uiHelper.computeSize(file.sizeInBytes)}}
+                  </ion-label>
+                </ion-chip>
+              </div>
               <ion-item>
-                <ion-label class="data">
+                <ion-label text-wrap>
                   {{ "_user.availableDirectories" | translate }} ( {{
                   userInfo.directories.length }} ):
                 </ion-label>
               </ion-item>
-              <ion-chip
-                *ngFor="let directory of userInfo.directories"
-                [color]="directory.isDeleted ? 'danger': uiHelper.accessibilityColor(directory.accessLevel)"
-              >
-                <ion-icon [name]="uiHelper.objectIcon(directory)"> </ion-icon>
-                <ion-label>
-                  {{(directory.name !== '$USER_ROOT') ? directory.name :
-                  "_pages.home" | translate}}
-                  <ng-container *ngIf="isDirectoryEmpty(directory.id)">
-                    ({{ "_common.empty" | translate }})
-                  </ng-container>
-                </ion-label>
-              </ion-chip>
+              <div [class.chips-content]="isCurrentUser">
+                <ion-chip
+                  *ngFor="let directory of userInfo.directories"
+                  [color]="directory.isDeleted ? 'danger': uiHelper.accessibilityColor(directory.accessLevel)"
+                >
+                  <ion-icon [name]="uiHelper.objectIcon(directory)"> </ion-icon>
+                  <ion-label>
+                    {{(directory.name !== '$USER_ROOT') ? directory.name :
+                    "_pages.home" | translate}}
+                    <ng-container *ngIf="isDirectoryEmpty(directory.id)">
+                      ({{ "_common.empty" | translate }})
+                    </ng-container>
+                  </ion-label>
+                </ion-chip>
+              </div>
             </ion-col>
-            <ion-col *ngIf="isCurrentUser" size-lg="12" size-xl="4">
+            <ion-col *ngIf="isCurrentUser" size="auto">
               <app-storage-usage
                 [maxStorage]="maxStorage"
                 [files]="userInfo.files"

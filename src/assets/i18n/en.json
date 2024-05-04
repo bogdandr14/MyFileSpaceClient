@@ -44,7 +44,7 @@
   },
   "_pages": {
     "home": "Home",
-    "browse": "Browse files",
+    "browse": "Browse",
     "myFiles": "My files",
     "sharedFiles": "Shared with me",
     "profile": "Profile",
@@ -99,6 +99,12 @@
     "noUserFound":"No users found",
     "binSize":"The bin currently contains { size }.",
     "empty":"Empty"
+  },
+  "_search":{
+    "files":"Files",
+    "users":"Users",
+    "noResultsFound":"No results found",
+    "includeSelf":"Myself included"
   },
   "_accessLevel": {
     "name":"Access level",

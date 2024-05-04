@@ -8,6 +8,8 @@ import { FileModel } from '../models/file.model';
 import { FileDetailsModel } from '../models/file-details.model';
 import { FileUpdateModel } from '../models/file-update.model';
 import { AccessLevel } from 'src/app/shared/models/access-level.enum';
+import { FoundFilesModel } from 'src/app/browse/models/found-files.model';
+import { InfiniteScrollFilter } from 'src/app/shared/models/infinite-scroll.filter';
 
 @Injectable({ providedIn: 'root' })
 export class FileService extends BaseService {
@@ -22,6 +24,10 @@ export class FileService extends BaseService {
         }
       : {};
     return super.getAll<FileModel>(params);
+  }
+
+  public findFiles(filter: InfiniteScrollFilter) {
+    return super.getOneByPath<FoundFilesModel>(`search/${this.turnFilterIntoUrl(filter)}`);
   }
 
   public getFileInfo(

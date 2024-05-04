@@ -6,7 +6,7 @@
           {{ (isFile ? "_file" : "_directory") + ".properties" | translate }}
         </ion-list-header>
         <ion-item>
-          <ion-label class="data">
+          <ion-label text-wrap>
             {{ (isFile ? "_file" : "_directory") + ".name" | translate }}:
           </ion-label>
           <ion-text readonly>{{ objectDetails.name }} </ion-text>
@@ -26,18 +26,18 @@
           </ion-chip>
         </ion-item>
         <ion-item>
-          <ion-label class="data">
+          <ion-label text-wrap>
             {{ "_common.dateAdded" | translate }}:
           </ion-label>
           <ion-text readonly>
             {{
               objectDetails.createdAt
-                | date: "medium":timeOffset:localeService.currentLocale
+                | date: "medium":uiHelper.timeOffset:localeService.currentLocale
             }}
           </ion-text>
         </ion-item>
         <ion-item>
-          <ion-label class="data">
+          <ion-label text-wrap>
             {{
               "_common." +
                 (objectDetails.isDeleted ? "dateDeleted" : "dateModified")
@@ -48,13 +48,16 @@
             {{
               objectDetails.createdAt !== objectDetails.modifiedAt
                 ? (objectDetails.modifiedAt
-                  | date: "medium":timeOffset:localeService.currentLocale)
+                  | date
+                    : "medium"
+                    : uiHelper.timeOffset
+                    : localeService.currentLocale)
                 : "-"
             }}
           </ion-text>
         </ion-item>
         <ion-item *ngIf="isFile || objectDetails.isDeleted">
-          <ion-label class="data"> {{ "_common.size" | translate }}:</ion-label>
+          <ion-label text-wrap> {{ "_common.size" | translate }}:</ion-label>
           <ion-text readonly>{{ size }}</ion-text>
         </ion-item>
         <ng-container *ngIf="objectDetails.isDeleted">
@@ -78,13 +81,19 @@
         </ion-list-header>
         <ion-item>
           <ion-label>{{ "_accessLevel.name" | translate }}</ion-label>
-          <ion-chip [color]="accessibilityColor">
+          <ion-chip
+            [color]="uiHelper.accessibilityColor(objectDetails.accessLevel)"
+          >
             <ion-icon
-              [name]="accessibilityIcon"
-              [color]="accessibilityColor"
+              [name]="uiHelper.accessibilityIcon(objectDetails.accessLevel)"
+              [color]="uiHelper.accessibilityColor(objectDetails.accessLevel)"
             ></ion-icon>
             <ion-label>
-              {{ "_accessLevel." + accessibilityName | translate }}
+              {{
+                "_accessLevel." +
+                  uiHelper.accessibilityName(objectDetails.accessLevel)
+                  | translate
+              }}
             </ion-label>
           </ion-chip>
         </ion-item>
@@ -154,13 +163,16 @@
             <ion-label>{{ "_access.copyLink" | translate }}</ion-label>
           </ion-chip>
           <ion-item *ngIf="objectDetails.accessKey.expiresAt">
-            <ion-label class="data">
+            <ion-label text-wrap>
               {{ "_access.expiresAt" | translate }}:
             </ion-label>
             <ion-text readonly>
               {{
                 objectDetails.accessKey.expiresAt
-                  | date: "medium":timeOffset:localeService.currentLocale
+                  | date
+                    : "medium"
+                    : uiHelper.timeOffset
+                    : localeService.currentLocale
               }}
             </ion-text>
           </ion-item>

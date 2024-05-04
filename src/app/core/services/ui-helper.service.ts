@@ -14,6 +14,15 @@ export class UiHelperService {
 
   constructor() {}
 
+  public get timeOffset() {
+    const now = new Date();
+    const offsetInMinutes = now.getTimezoneOffset();
+    const offsetHours = Math.abs(offsetInMinutes) / 60;
+    const offsetSign = offsetInMinutes >= 0 ? '-' : '+';
+    const offsetFormatted = `UTC${offsetSign}${offsetHours * 2}`;
+    return offsetFormatted;
+  }
+  
   public computeSize(size: number) {
     if (!size) {
       size = 0;
@@ -64,12 +73,5 @@ export class UiHelperService {
     }
     return 'document';
   }
-  public timeOffset() {
-    const now = new Date();
-    const offsetInMinutes = now.getTimezoneOffset();
-    const offsetHours = Math.abs(offsetInMinutes) / 60;
-    const offsetSign = offsetInMinutes >= 0 ? '-' : '+';
-    const offsetFormatted = `UTC${offsetSign}${offsetHours * 2}`;
-    return offsetFormatted;
-  }
+
 }
