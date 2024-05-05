@@ -31,7 +31,7 @@
     "emailAddress": "E-Mail address",
     "tagName": "Tag name",
     "search": "Search users",
-    "lastPasswordChange":"Last password change",
+    "lastPasswordChange": "Last password change",
     "availableFiles": "Available files",
     "availableDirectories": "Available directories"
   },
@@ -48,7 +48,7 @@
     "myFiles": "My files",
     "sharedFiles": "Shared with me",
     "profile": "Profile",
-    "yourProfile":"Your profile",
+    "yourProfile": "Your profile",
     "accessible": "Accessibility",
     "bin": "Bin",
     "otherProfile": "{ name }'s profile",
@@ -67,7 +67,7 @@
     "edit": "Edit",
     "delete": "Delete",
     "restore": "Restore",
-    "permanentDelete":"Delete permanently",
+    "permanentDelete": "Delete permanently",
     "save": "Save",
     "submit": "Submit",
     "confirm": "Confirm",
@@ -91,35 +91,42 @@
     "size": "Size",
     "cut": "Cut",
     "sound": "Sound",
-    "dateAdded":"Date added",
-    "dateModified":"Date modified",
-    "dateDeleted":"Date deleted",
-    "owner":"Owner",
+    "dateAdded": "Date added",
+    "dateModified": "Date modified",
+    "dateDeleted": "Date deleted",
+    "owner": "Owner",
     "accessibility": "Accessibility",
-    "noUserFound":"No users found",
-    "binSize":"The bin currently contains { size }.",
-    "empty":"Empty",
-    "collection":"Collection"
+    "noUserFound": "No users found",
+    "binSize": "The bin currently contains { size }.",
+    "empty": "Empty",
+    "collection": "Collection",
+    "options":"Options"
   },
-  "_search":{
-    "files":"Files",
-    "users":"Users",
-    "noResultsFound":"No results found",
-    "includeSelf":"Myself included"
+  "_search": {
+    "files": "Files",
+    "users": "Users",
+    "noResultsFound": "No results found",
+    "includeSelf": "Myself included"
   },
   "_accessLevel": {
-    "name":"Access level",
+    "name": "Access level",
     "private": "Private",
     "restricted": "Restricted",
     "public": "Public"
   },
-  "_access":{
-    "allowedUsers":"Allowed users",
-    "accessKey":"Access link",
+  "_access": {
+    "allowedUsers": "Allowed users",
+    "noAllowedUsers": "No user has been allowed yet",
+    "editUsers": "Edit allowed users",
+    "accessKey": "Access link",
     "removeUsers": "Remove user access",
-    "copyLink":"Copy access link",
-    "expiresAt":"The link expires at",
-    "expirationDate":"Expiration date",
+    "copyLink": "Copy access link",
+    "keyNoExpiry": "Link does not expire",
+    "expiresAt": "The link expires at",
+    "deleteKey": "Șterge link acces",
+    "noKey":"No access link",
+    "addKey":"Create access link",
+    "expirationDate": "Expiration date",
     "temporary": "Offer temporary access"
   },
   "_details": {
@@ -130,13 +137,13 @@
   "_add": {
     "file": "Add file",
     "directory": "Add directory",
-    "accessKey":"Create access link for { name }"
+    "accessKey": "Create access link for { name }"
   },
   "_edit": {
     "user": "Edit profile",
     "file": "Edit file",
     "directory": "Edit directory",
-    "userAccess":"Edit user access"
+    "userAccess": "Edit user access"
   },
   "_delete": {
     "file": "Delete file",
@@ -148,10 +155,10 @@
     "accessKey": "Delete access link",
     "accessKeyMessage": "Are you sure you want to delete the access link for { name }?",
     "confirm": "Confirm delete",
-    "binAutomatic":"Files and directories will be automatically and permanently deleted after 30 days in the bin."
+    "binAutomatic": "Files and directories will be automatically and permanently deleted after 30 days in the bin."
   },
   "_file": {
-    "properties":"File properties",
+    "properties": "File properties",
     "name": "File name",
     "upload": "Upload file",
     "reUpload": "Upload a new version",
@@ -159,11 +166,11 @@
     "download": "Download file",
     "choose": "Choose file",
     "change": "Change file",
-    "usedStorage":"You have used { currentUsage } of the { maxUsage } available",
-    "storageUsage":"File storage usage"
+    "usedStorage": "You have used { currentUsage } of the { maxUsage } available",
+    "storageUsage": "File storage usage"
   },
-  "_directory":{
-    "properties":"Directory properties",
+  "_directory": {
+    "properties": "Directory properties",
     "name": "Directory name"
   },
   "_validation": {
@@ -198,7 +205,7 @@
       "directoryDeleted": "The directory and all its contents was moved to trash bin",
       "directoryPermanentDeleted": "The directory and all its contents have been permanently deleted",
       "directoryRestored": "The directory and all its contents have been restored",
-      "accessKeyDeleted":"The access link was deleted"
+      "accessKeyDeleted": "The access link was deleted"
     },
     "success": "Success",
     "_success": {
@@ -208,7 +215,7 @@
       "directoryAdd": "Directory was successfully added",
       "directoryEdit": "Directory was successfully updated",
       "directoryMove": "Directory was successfully moved",
-      "userAccessEdit":"The user access was edited successfully",
+      "userAccessEdit": "The user access was edited successfully",
       "register": "The account was successfuly created! Please login to enter the account",
       "login": "Welcome back!",
       "changePassword": "Password changed successfuly!",

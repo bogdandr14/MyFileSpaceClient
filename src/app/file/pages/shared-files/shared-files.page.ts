@@ -3,6 +3,8 @@ import { Guid } from 'guid-typescript';
 import { take } from 'rxjs';
 import { UiHelperService } from 'src/app/core/services/ui-helper.service';
 import { AccessLevel } from 'src/app/shared/models/access-level.enum';
+import { CurrentUserModel } from 'src/app/user/models/current-user.model';
+import { UserDetailsModel } from 'src/app/user/models/user-details.model';
 import { UserService } from 'src/app/user/user.service';
 import { DirectoryDetailsModel } from '../../models/directory-details.model';
 import { DirectoryModel } from '../../models/directory.model';
@@ -15,9 +17,13 @@ import { DirectoryService } from '../../services/directory.service';
   styleUrls: ['./shared-files.page.scss'],
 })
 export class SharedFilesPage implements OnInit {
+  private readonly sharedDirectory = {
+    id: Guid.createEmpty(),
+    name: '$SHARED_ROOT',
+    accessLevel: 1,
+  } as DirectoryDetailsModel;
+  
   private accessedDirectories: DirectoryDetailsModel[] = [];
-  private sharedFiles: FileModel[];
-  private sharedDirectories: DirectoryModel[];
   public currentDirectoryDetails: DirectoryDetailsModel;
 
   constructor(
@@ -31,37 +37,38 @@ export class SharedFilesPage implements OnInit {
       .getPersonalInfo()
       .pipe(take(1))
       .subscribe((user) => {
-        this.sharedFiles = user.allowedFiles;
-        this.sharedDirectories = user.allowedDirectories;
-        this.createSharedDirectory();
+        this.createSharedDirectory(user);
       });
   }
 
-  createSharedDirectory() {
-    this.currentDirectoryDetails = new DirectoryDetailsModel();
-    this.currentDirectoryDetails.accessLevel = AccessLevel.Private;
-    this.currentDirectoryDetails.name = '$SHARED_ROOT';
-    this.currentDirectoryDetails.id = Guid.createEmpty();
-    this.currentDirectoryDetails.childDirectories = this.sharedDirectories
+  createSharedDirectory(user: CurrentUserModel) {
+    this.sharedDirectory.childDirectories = user.allowedDirectories
       .filter(
-        (x) => !this.sharedDirectories.some((y) => y.id == x.parentDirectoryId)
+        (x) => !user.allowedDirectories.some((y) => y.id == x.parentDirectoryId)
       )
       .map((d) => {
         d.parentDirectoryId = Guid.createEmpty();
         return d;
       });
-    this.currentDirectoryDetails.files = this.sharedFiles
-      .filter((x) => !this.sharedDirectories.some((y) => y.id == x.directoryId))
+    this.sharedDirectory.files = user.allowedFiles
+      .filter(
+        (x) => !user.allowedDirectories.some((y) => y.id == x.directoryId)
+      )
       .map((f) => {
         f.directoryId = Guid.createEmpty();
         return f;
       });
+    this.currentDirectoryDetails = this.sharedDirectory;
     this.accessedDirectories.push(this.currentDirectoryDetails);
+  }
+
+  loadSharedDirectory() {
+    this.currentDirectoryDetails = this.sharedDirectory;
   }
 
   loadDirectory(directoryId: Guid) {
     const accessedDirectory = this.accessedDirectories.find(
-      (x) => x.id === directoryId
+      (x) => x.id == directoryId
     );
     if (accessedDirectory) {
       this.currentDirectoryDetails = accessedDirectory;

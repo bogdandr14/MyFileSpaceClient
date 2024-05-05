@@ -13,6 +13,12 @@
       </ion-chip>
     </ion-breadcrumb>
     <ng-container *ngIf="currentDirectoryDetails.name !=='$SHARED_ROOT'">
+      <ion-breadcrumb>
+        <ion-chip button color="tertiary" (click)="loadSharedDirectory()">
+          <ion-icon name="share"></ion-icon>
+          <ion-label> {{'_pages.sharedFiles'| translate}} </ion-label>
+        </ion-chip>
+      </ion-breadcrumb>
       <ion-breadcrumb
         *ngFor="let parentDirectory of currentDirectoryDetails.pathParentDirectories"
       >
@@ -25,10 +31,7 @@
             *ngIf="parentDirectory.name==='$SHARED_ROOT'"
             name="share"
           ></ion-icon>
-          <ion-label>
-            {{ parentDirectory.name==='$SHARED_ROOT' ? ('_pages.sharedFiles'|
-            translate) : parentDirectory.name}}
-          </ion-label>
+          <ion-label> {{ parentDirectory.name}} </ion-label>
         </ion-chip>
         <ion-icon slot="separator" name="chevron-forward"></ion-icon>
       </ion-breadcrumb>

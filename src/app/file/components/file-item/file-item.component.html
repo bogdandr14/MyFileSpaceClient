@@ -22,7 +22,8 @@
     <ion-content class="ion-padding">
       {{ "_file.name" | translate }}: {{ file.name }}
       <br />
-      {{ "_common.size" | translate }}: {{ uiHelper.computeSize(file.sizeInBytes) }}
+      {{ "_common.size" | translate }}:
+      {{ uiHelper.computeSize(file.sizeInBytes) }}
     </ion-content>
   </ng-template>
 </ion-popover>
@@ -34,7 +35,16 @@
 >
   <ng-template>
     <ion-content>
-      <ion-list>
+      <ion-list class="options">
+        <ion-item
+          button
+          *ngIf="!file.isDeleted"
+          (click)="fileSystemHelper.downloadFile(file)"
+        >
+          <ion-label class="success">
+            {{ "_file.download" | translate }}
+          </ion-label>
+        </ion-item>
         <ion-item button (click)="showDetails.emit()">
           <ion-label class="primary">
             {{ "_common.details" | translate }}
@@ -63,11 +73,6 @@
               </ion-label>
             </ion-item>
           </ng-container>
-          <ion-item button (click)="fileSystemHelper.downloadFile(file)">
-            <ion-label class="success">
-              {{ "_file.download" | translate }}
-            </ion-label>
-          </ion-item>
         </ng-container>
         <ng-template #deletedOptions>
           <ng-container *ngIf="isOwner">

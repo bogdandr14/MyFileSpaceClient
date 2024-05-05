@@ -68,25 +68,30 @@
             </ion-col>
             <ion-col size="12" size-md="6">
               <ion-row>
-                <ion-button
-                  id="open-edit-user"
-                  fill="solid"
-                  expand="block"
-                  color="secondary"
-                >
-                  <ion-icon name="pencil" slot="start"></ion-icon>
-                  {{ "_common.edit" | translate }}
-                </ion-button>
-                &nbsp;
-                <ion-button
-                  id="open-change-password"
-                  fill="solid"
-                  expand="block"
-                  color="warning"
-                >
-                  <ion-icon slot="start" name="hammer"></ion-icon>
-                  {{ "_password.change" | translate }}
-                </ion-button>
+                <ion-col>
+                  <ion-button
+                    id="open-edit-user"
+                    fill="solid"
+                    expand="block"
+                    color="secondary"
+                    class="ion-text-center"
+                  >
+                    <ion-icon name="pencil" slot="start"></ion-icon>
+                    {{ "_common.edit" | translate }}
+                  </ion-button>
+                </ion-col>
+                <ion-col>
+                  <ion-button
+                    id="open-change-password"
+                    fill="solid"
+                    expand="block"
+                    color="warning"
+                    class="ion-text-center"
+                  >
+                    <ion-icon slot="start" name="hammer"></ion-icon>
+                    {{ "_password.change" | translate }}
+                  </ion-button>
+                </ion-col>
               </ion-row>
             </ion-col>
           </ng-container>

@@ -57,7 +57,6 @@ export class ObjectDetailsComponent {
   ) {}
 
   copyTagNameToClipboard(tagName: string) {
-    debugger;
     this.clipboardService.copy(tagName);
     this.alertService.showInfo('_message._information.tagNameCopied');
   }
