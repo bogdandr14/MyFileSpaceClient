@@ -4,7 +4,7 @@
     size="large"
     class="file-icon"
     name="folder"
-    [color]="accessibilityColor"
+    [color]="uiHelper.accessibilityColor(directory.accessLevel)"
     (click)="directoryChange.emit(directory.id)"
   ></ion-icon>
   <ion-label (click)="directoryChange.emit(directory.id)">
@@ -27,7 +27,7 @@
         </ion-item>
         <ng-container *ngIf="isOwner">
           <ng-container *ngIf="!directory.isDeleted; else deletedOptions">
-            <ion-item button (click)="openDirectoryEdit()">
+            <ion-item button (click)="fileSystemHelper.openDirectoryEdit(directory)">
               <ion-label class="secondary">
                 {{ "_common.edit" | translate }}
               </ion-label>

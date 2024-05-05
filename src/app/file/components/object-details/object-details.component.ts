@@ -51,12 +51,13 @@ export class ObjectDetailsComponent {
     private clipboardService: ClipboardService,
     private alertService: AlertService,
     private translateService: TranslateService,
-    private fileSystemHelper: FileSystemHelperService,
+    public fileSystemHelper: FileSystemHelperService,
     public uiHelper: UiHelperService,
     public localeService: LocaleService
   ) {}
 
   copyTagNameToClipboard(tagName: string) {
+    debugger;
     this.clipboardService.copy(tagName);
     this.alertService.showInfo('_message._information.tagNameCopied');
   }
@@ -64,6 +65,30 @@ export class ObjectDetailsComponent {
   copyAccessLinkToClipboard() {
     this.clipboardService.copy(this.objectDetails.accessKey.key);
     this.alertService.showInfo('_message._information.accessKeyCopied');
+  }
+
+  openEdit(){
+    if (this.isFile) {
+      this.fileSystemHelper.openFileEdit(this.objectDetails);
+    } else {
+      this.fileSystemHelper.openDirectoryEdit(this.objectDetails);
+    }
+  }
+
+  addObjectCut(){
+    if (this.isFile) {
+      this.fileSystemHelper.addFileCut(this.objectDetails);
+    } else {
+      this.fileSystemHelper.addDirectoryCut(this.objectDetails);
+    }
+  }
+
+  confirmDelete(){
+    if (this.isFile) {
+      this.fileSystemHelper.confirmDeleteFile(this.objectDetails);
+    } else {
+      this.fileSystemHelper.confirmDeleteDirectory(this.objectDetails);
+    }
   }
 
   restore() {

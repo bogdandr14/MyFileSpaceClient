@@ -3,8 +3,8 @@
     id="{{ file.name }}-trigger"
     size="large"
     class="file-icon"
-    [name]="fileIcon"
-    [color]="accessibilityColor"
+    [name]="uiHelper.objectIcon(file)"
+    [color]="uiHelper.accessibilityColor(file.accessLevel)"
   ></ion-icon>
   <ion-label id="hover-label-{{ file.name }}-trigger">
     {{ file.name }}
@@ -22,7 +22,7 @@
     <ion-content class="ion-padding">
       {{ "_file.name" | translate }}: {{ file.name }}
       <br />
-      {{ "_common.size" | translate }}: {{ size }}
+      {{ "_common.size" | translate }}: {{ uiHelper.computeSize(file.sizeInBytes) }}
     </ion-content>
   </ng-template>
 </ion-popover>
@@ -42,12 +42,12 @@
         </ion-item>
         <ng-container *ngIf="!file.isDeleted; else deletedOptions">
           <ng-container *ngIf="isOwner">
-            <ion-item button (click)="openFileEdit()">
+            <ion-item button (click)="fileSystemHelper.openFileEdit(file)">
               <ion-label class="secondary">
                 {{ "_common.edit" | translate }}
               </ion-label>
             </ion-item>
-            <ion-item button (click)="openFileUpload()">
+            <ion-item button (click)="fileSystemHelper.openFileUpload(file.id)">
               <ion-label class="tertiary">
                 {{ "_file.reUpload" | translate }}
               </ion-label>

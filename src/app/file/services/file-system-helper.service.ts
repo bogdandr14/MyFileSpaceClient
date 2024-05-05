@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { Guid } from 'guid-typescript';
 import { take } from 'rxjs';
 import { ActionType } from 'src/app/core/models/action-type.enum';
 import { ObjectChangeModel } from 'src/app/core/models/object-change.model';
@@ -7,6 +9,8 @@ import { ObjectMoveModel } from 'src/app/core/models/object-move.model';
 import { ObjectType } from 'src/app/core/models/object-type.enum';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { DataService } from 'src/app/core/services/data.service';
+import { FileUploadComponent } from '../components/file-upload/file-upload.component';
+import { ObjectEditComponent } from '../components/object-edit/object-edit.component';
 import { DirectoryDetailsModel } from '../models/directory-details.model';
 import { DirectoryModel } from '../models/directory.model';
 import { FileDetailsModel } from '../models/file-details.model';
@@ -21,8 +25,20 @@ export class FileSystemHelperService {
     private translateService: TranslateService,
     private fileService: FileService,
     private directoryService: DirectoryService,
-    private dataService: DataService
+    private dataService: DataService,
+    private modalCtrl: ModalController
   ) {}
+
+  async openDirectoryEdit(directory: DirectoryModel) {
+    const directoryEditModal = await this.modalCtrl.create({
+      component: ObjectEditComponent,
+      componentProps: {
+        isUpdate: true,
+        toUpdate: directory,
+      },
+    });
+    directoryEditModal.present();
+  }
 
   public addDirectoryCut(directory: DirectoryModel | DirectoryDetailsModel) {
     this.dataService.triggerObjectCut(
@@ -104,6 +120,29 @@ export class FileSystemHelperService {
         );
         this.alertService.showInfo('_message._information.directoryDeleted');
       });
+  }
+
+  async openFileEdit(file: FileModel) {
+    const fileEditModal = await this.modalCtrl.create({
+      component: ObjectEditComponent,
+      componentProps: {
+        isUpdate: true,
+        toUpdate: file,
+        isFile: true,
+      },
+    });
+    fileEditModal.present();
+  }
+
+  async openFileUpload(fileId: Guid) {
+    const fileUploadModal = await this.modalCtrl.create({
+      component: FileUploadComponent,
+      componentProps: {
+        isUpdate: true,
+        fileId: fileId,
+      },
+    });
+    fileUploadModal.present();
   }
 
   public addFileCut(file: FileModel | FileDetailsModel) {
