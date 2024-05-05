@@ -5,9 +5,11 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { IonInfiniteScroll, MenuController } from '@ionic/angular';
+import { Guid } from 'guid-typescript';
 import { take, tap } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { FileDetailsModel } from 'src/app/file/models/file-details.model';
 import { FileModel } from 'src/app/file/models/file.model';
 import { FileService } from 'src/app/file/services/file.service';
 import { InfiniteScrollFilter } from 'src/app/shared/models/infinite-scroll.filter';
@@ -31,10 +33,12 @@ export class BrowsePage implements AfterViewInit {
   public files: FileModel[];
   public users: UserModel[];
   public fixedCardHeight: number;
+  public fileDetailsObject: FileDetailsModel;
 
   constructor(
     private fileService: FileService,
     private userService: UserService,
+    private menuCtrl: MenuController,
     public authService: AuthService
   ) {}
 
@@ -134,5 +138,15 @@ export class BrowsePage implements AfterViewInit {
           this.infiniteScroll.disabled = response.areLast;
         });
     }
+  }
+
+  openFileDetailsMenu(fileId: Guid) {
+    this.fileService
+      .getFileInfo(fileId)
+      .pipe(take(1))
+      .subscribe((response) => {
+        this.fileDetailsObject = response;
+        this.menuCtrl.open('file-details-menu');
+      });
   }
 }

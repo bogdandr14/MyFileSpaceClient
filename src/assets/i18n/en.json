@@ -98,7 +98,8 @@
     "accessibility": "Accessibility",
     "noUserFound":"No users found",
     "binSize":"The bin currently contains { size }.",
-    "empty":"Empty"
+    "empty":"Empty",
+    "collection":"Collection"
   },
   "_search":{
     "files":"Files",

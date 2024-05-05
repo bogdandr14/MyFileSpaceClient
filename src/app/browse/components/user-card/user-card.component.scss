@@ -1,10 +1,15 @@
 ion-card {
-    border-radius: 10px;
-  }
-  ion-item {
-    border-radius: 5px;
-  }
-  ion-list {
-    border-radius: 5px;
-  }
-  
+  border-radius: 10px;
+}
+ion-item {
+  border-radius: 5px;
+}
+ion-list {
+  border-radius: 5px;
+}
+ion-card {
+  background-image: linear-gradient(
+    var(--ion-color-tertiary-shade),
+    var(--ion-color-primary-shade)
+  );
+}

@@ -27,7 +27,7 @@ export class UserService extends BaseService {
   }
 
   public isCurrentUser(userId: Guid) {
-    return userId === this.userState.value.userId;
+    return this.userState.value && userId === this.userState.value.userId;
   }
 
   public getUserId() {
@@ -44,13 +44,13 @@ export class UserService extends BaseService {
 
   public checkTagnameTaken(tagName: string): Observable<boolean> {
     return super.getOneByPath<boolean>(
-      `isAvailable/tagname/${tagName}`, null, BaseService.noLoadingConfig
+      `availability/tagname/${tagName}`, null, BaseService.noLoadingConfig
     );
   }
 
   public checkEmailTaken(email: string): Observable<boolean> {
     return super.getOneByPath<boolean>(
-      `isAvailable/email/${email}`, null, BaseService.noLoadingConfig
+      `availability/email/${email}`, null, BaseService.noLoadingConfig
     );
   }
 

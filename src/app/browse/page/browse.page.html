@@ -7,18 +7,22 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" >
   <ion-card id="fixed-search-card" class="search-input">
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-item>
-            <ion-segment value="1" (ionChange)="toggleSearchType($event)">
+          <ion-item class="search-type-select">
+            <ion-segment
+              value="1"
+              color="tertiary"
+              (ionChange)="toggleSearchType($event)"
+            >
               <ion-segment-button layout="icon-start" [value]="1">
                 <ion-icon name="document"></ion-icon>
-                <ion-label class="hide-mobile"
-                  >{{ "_search.files" | translate }}</ion-label
-                >
+                <ion-label class="hide-mobile">
+                  {{ "_search.files" | translate }}
+                </ion-label>
               </ion-segment-button>
               <ion-segment-button
                 layout="icon-start"
@@ -26,9 +30,9 @@
                 backgroundcolor="secondary"
               >
                 <ion-icon name="person"></ion-icon>
-                <ion-label class="hide-mobile"
-                  >{{ "_search.users" | translate }}</ion-label
-                >
+                <ion-label class="hide-mobile">
+                  {{ "_search.users" | translate }}
+                </ion-label>
               </ion-segment-button>
             </ion-segment>
           </ion-item>
@@ -45,24 +49,29 @@
           ></ion-searchbar>
         </ion-col>
         <ion-col size="auto" *ngIf="authService.isLoggedIn$|async">
-          <ion-item class="ion-align-items-center">
+          <ion-item class="ion-align-items-center current-user-check">
             <ion-checkbox
               color="tertiary"
               slot="start"
               (ionChange)="toggleIncludeOwn($event)"
             ></ion-checkbox>
-            <ion-label text-wrap>{{ "_search.includeSelf" | translate }}</ion-label>
+            <ion-label text-wrap>
+              {{ "_search.includeSelf" | translate }}
+            </ion-label>
           </ion-item>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-card>
 
-  <ion-grid class="search-result" [style.margin-top.px]="fixedCardHeight">
+  <ion-grid id="search-content" class="search-result" [style.margin-top.px]="fixedCardHeight">
     <ion-row>
       <ng-container *ngIf="searchType == 1 && files && files.length">
         <ion-col size="12" size-lg="6" size-xl="4" *ngFor="let file of files">
-          <app-file-card [file]="file"></app-file-card>
+          <app-file-card
+            (click)="openFileDetailsMenu(file.id)"
+            [file]="file"
+          ></app-file-card>
         </ion-col>
       </ng-container>
 
@@ -96,4 +105,23 @@
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </ion-grid>
+
+  <ion-menu
+    id="file-details-menu"
+    side="end"
+    menuId="file-details-menu"
+    contentId="search-content"
+  >
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>{{"_details.file" | translate }} </ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <app-object-details
+        [objectDetails]="fileDetailsObject"
+        [isFile]="true"
+      ></app-object-details>
+    </ion-content>
+  </ion-menu>
 </ion-content>

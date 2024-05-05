@@ -38,6 +38,6 @@ import { BinPage } from './pages/bin/bin.page';
     EditAccessComponent,
     AddAccessKeyComponent,
   ],
-  exports: [FileExplorerComponent],
+  exports: [FileExplorerComponent, ObjectDetailsComponent],
 })
 export class FilePageModule {}

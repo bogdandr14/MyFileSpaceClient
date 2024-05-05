@@ -98,7 +98,8 @@
     "accessibility": "Accesibilitate",
     "noUserFound":"Niciun utilizator găsit",
     "binSize":"Coșul conține în prezent { size }.",
-    "empty":"Gol"
+    "empty":"Gol",
+    "collection":"Colecție"
   },
   "_search":{
     "files":"Fișiere",
