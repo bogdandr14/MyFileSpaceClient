@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CollectionPage } from './pages/collection/collection.page';
 
-import { BrowsePage } from './page/browse.page';
+import { SearchPage } from './pages/search/search.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: BrowsePage
-  }
-
+    component: SearchPage,
+  },
+  {
+    path: 'collection/:id',
+    component: CollectionPage,
+  },
 ];
 
 @NgModule({

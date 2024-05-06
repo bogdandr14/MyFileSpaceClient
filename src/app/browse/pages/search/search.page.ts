@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { IonInfiniteScroll, MenuController } from '@ionic/angular';
 import { Guid } from 'guid-typescript';
-import { take, tap } from 'rxjs';
+import { take } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { FileDetailsModel } from 'src/app/file/models/file-details.model';
 import { FileModel } from 'src/app/file/models/file.model';
@@ -17,11 +17,11 @@ import { UserModel } from 'src/app/user/models/user.model';
 import { UserService } from 'src/app/user/user.service';
 
 @Component({
-  selector: 'app-browse',
-  templateUrl: './browse.page.html',
-  styleUrls: ['./browse.page.scss'],
+  selector: 'app-search',
+  templateUrl: './search.page.html',
+  styleUrls: ['./search.page.scss'],
 })
-export class BrowsePage implements AfterViewInit {
+export class SearchPage implements AfterViewInit {
   @ViewChild('infiniteScroll') infiniteScroll: IonInfiniteScroll;
 
   private filter: InfiniteScrollFilter;

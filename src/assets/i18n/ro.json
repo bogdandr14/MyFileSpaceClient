@@ -33,7 +33,8 @@
     "search": "Caută utilizatori",
     "lastPasswordChange": "Ultima schimbare a parolei",
     "availableFiles": "Fișiere disponibile",
-    "availableDirectories": "Foldere disponibile"
+    "availableDirectories": "Foldere disponibile",
+    "storedContent":"Conținut stocat"
   },
   "_updates": {
     "markAsChecked": "Marchează ca văzut",
@@ -47,7 +48,7 @@
     "browse": "Caută",
     "myFiles": "Fişierele mele",
     "sharedFiles": "Împărtășit cu mine",
-    "profile": "Profil",
+    "profile": "Profil utilizator",
     "yourProfile": "Profilul tău",
     "accessible": "Accesibilitate",
     "bin": "Coş de gunoi",

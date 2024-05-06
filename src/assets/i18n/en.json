@@ -33,7 +33,8 @@
     "search": "Search users",
     "lastPasswordChange": "Last password change",
     "availableFiles": "Available files",
-    "availableDirectories": "Available directories"
+    "availableDirectories": "Available directories",
+    "storedContent":"Stored content"
   },
   "_updates": {
     "markAsChecked": "Mark as checked",
@@ -47,7 +48,7 @@
     "browse": "Browse",
     "myFiles": "My files",
     "sharedFiles": "Shared with me",
-    "profile": "Profile",
+    "profile": "User profile",
     "yourProfile": "Your profile",
     "accessible": "Accessibility",
     "bin": "Bin",

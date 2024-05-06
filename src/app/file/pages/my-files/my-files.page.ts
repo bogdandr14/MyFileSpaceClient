@@ -2,7 +2,7 @@ import { ObjectChangeModel } from './../../../core/models/object-change.model';
 import { DataService } from './../../../core/services/data.service';
 import { Component, OnInit } from '@angular/core';
 import { DirectoryService } from '../../services/directory.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, iif, take, tap, of } from 'rxjs';
 import { DirectoryDetailsModel } from '../../models/directory-details.model';
 import { Guid } from 'guid-typescript';
@@ -24,7 +24,6 @@ import { UiHelperService } from 'src/app/core/services/ui-helper.service';
 export class MyFilesPage implements OnInit {
   public directoryDetails: DirectoryDetailsModel;
   private accessedDirectories: DirectoryDetailsModel[] = [];
-  private accessKey: string;
   private objectCut: ObjectMoveModel;
 
   get isObjectCut() {
@@ -57,16 +56,17 @@ export class MyFilesPage implements OnInit {
     private route: ActivatedRoute,
     private alertService: AlertService,
     private clipboardService: ClipboardService,
+    private router: Router,
     public uiHelper: UiHelperService
   ) {}
 
   ngOnInit() {
-    this.route.paramMap
+    this.route.queryParams
       .pipe(
         switchMap((params) =>
           iif<Guid, Guid>(
-            () => !!params.get('id'),
-            of(this.getGuid(params.get('id'))),
+            () => !!params['id'],
+            of(this.getGuid(params['id'])),
             this.directoryService
               .getAllDirectories()
               .pipe(
@@ -270,7 +270,11 @@ export class MyFilesPage implements OnInit {
     const accessedDirectory = this.accessedDirectories.find(
       (x) => x.id === directoryId
     );
+    
     if (accessedDirectory) {
+      this.router.navigate(['/file/mine'], {
+        queryParams: { id: directoryId },
+      });
       this.directoryDetails = accessedDirectory;
       return;
     }
@@ -278,6 +282,9 @@ export class MyFilesPage implements OnInit {
       .getDirectoryInfo(directoryId)
       .pipe(take(1))
       .subscribe((directory) => {
+        this.router.navigate(['/file/mine'], {
+          queryParams: { id: directoryId },
+        });
         this.directoryDetails = directory;
         this.accessedDirectories.push(directory);
       });

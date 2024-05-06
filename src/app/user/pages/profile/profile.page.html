@@ -11,7 +11,7 @@
 </ion-header>
 
 <ion-content class="ion-padding-top ion-text-center" *ngIf="userInfo">
-  <ion-card>
+  <ion-card *ngIf="isCurrentUser">
     <ion-card-header class="ion-text-center">
       <ion-card-title text-wrap>
         <h1>
@@ -42,7 +42,7 @@
             </ion-item>
           </ion-col>
 
-          <ng-container *ngIf="isCurrentUser">
+          <ng-container>
             <ion-col size="12" size-md="6">
               <ion-item>
                 <ion-label>
@@ -96,77 +96,85 @@
             </ion-col>
           </ng-container>
         </ion-row>
-
-        <ion-grid>
-          <ion-row class="ion-align-item-center">
-            <ion-col
-              [sizeLg]="isCurrentUser ? '8' : '12'"
-              [sizeXl]="isCurrentUser ? '9' : '12'"
-            >
-              <ng-container *ngIf="isCurrentUser">
-                <ion-item>
-                  <ion-label text-wrap>
-                    {{ "_file.usedStorage" | translate :{
-                    currentUsage:uiHelper.computeSize(totalSize), maxUsage:
-                    uiHelper.computeSize(maxStorage)} }}
-                  </ion-label>
-                </ion-item>
-                <ion-progress-bar
-                  color="success"
-                  [value]="totalSize / maxStorage"
-                ></ion-progress-bar>
-              </ng-container>
-              <ion-item>
-                <ion-label text-wrap>
-                  {{ "_user.availableFiles" | translate }} ( {{
-                  userInfo.files.length }} ):
-                </ion-label>
-              </ion-item>
-              <div [class.chips-content]="isCurrentUser">
-                <ion-chip
-                  *ngFor="let file of userInfo.files"
-                  [color]="file.isDeleted ? 'danger' : uiHelper.accessibilityColor(file.accessLevel)"
-                >
-                  <ion-icon [name]="uiHelper.objectIcon(file)"> </ion-icon>
-                  <ion-label>
-                    {{file.name}} | {{ uiHelper.computeSize(file.sizeInBytes)}}
-                  </ion-label>
-                </ion-chip>
-              </div>
-              <ion-item>
-                <ion-label text-wrap>
-                  {{ "_user.availableDirectories" | translate }} ( {{
-                  userInfo.directories.length }} ):
-                </ion-label>
-              </ion-item>
-              <div [class.chips-content]="isCurrentUser">
-                <ion-chip
-                  *ngFor="let directory of userInfo.directories"
-                  [color]="directory.isDeleted ? 'danger': uiHelper.accessibilityColor(directory.accessLevel)"
-                >
-                  <ion-icon [name]="uiHelper.objectIcon(directory)"> </ion-icon>
-                  <ion-label>
-                    {{(directory.name !== '$USER_ROOT') ? directory.name :
-                    "_pages.home" | translate}}
-                    <ng-container *ngIf="isDirectoryEmpty(directory.id)">
-                      ({{ "_common.empty" | translate }})
-                    </ng-container>
-                  </ion-label>
-                </ion-chip>
-              </div>
-            </ion-col>
-            <ion-col *ngIf="isCurrentUser" size="auto">
-              <app-storage-usage
-                [maxStorage]="maxStorage"
-                [files]="userInfo.files"
-              ></app-storage-usage>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
       </ion-list>
     </ion-card-content>
   </ion-card>
 
+  <ion-card>
+    <ion-card-header class="ion-text-center">
+      <ion-card-title text-wrap>
+        <h1>{{"_user.storedContent"|translate}}</h1>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row class="ion-align-item-center">
+          <ion-col
+            [sizeLg]="isCurrentUser ? '8' : '12'"
+            [sizeXl]="isCurrentUser ? '9' : '12'"
+          >
+            <ng-container *ngIf="isCurrentUser">
+              <ion-item>
+                <ion-label text-wrap>
+                  {{ "_file.usedStorage" | translate :{
+                  currentUsage:uiHelper.computeSize(totalSize), maxUsage:
+                  uiHelper.computeSize(maxStorage)} }}
+                </ion-label>
+              </ion-item>
+              <ion-progress-bar
+                color="success"
+                [value]="totalSize / maxStorage"
+              ></ion-progress-bar>
+            </ng-container>
+            <ion-item>
+              <ion-label text-wrap>
+                {{ "_user.availableFiles" | translate }} ( {{
+                userInfo.files.length }} ):
+              </ion-label>
+            </ion-item>
+            <div [class.chips-content]="isCurrentUser">
+              <ion-chip
+                *ngFor="let file of userInfo.files"
+                [color]="file.isDeleted ? 'danger' : uiHelper.accessibilityColor(file.accessLevel)"
+              >
+                <ion-icon [name]="uiHelper.objectIcon(file)"> </ion-icon>
+                <ion-label>
+                  {{file.name}} | {{ uiHelper.computeSize(file.sizeInBytes)}}
+                </ion-label>
+              </ion-chip>
+            </div>
+            <ion-item>
+              <ion-label text-wrap>
+                {{ "_user.availableDirectories" | translate }} ( {{
+                userInfo.directories.length }} ):
+              </ion-label>
+            </ion-item>
+            <div [class.chips-content]="isCurrentUser">
+              <ion-chip
+                *ngFor="let directory of userInfo.directories"
+                [color]="directory.isDeleted ? 'danger': uiHelper.accessibilityColor(directory.accessLevel)"
+              >
+                <ion-icon [name]="uiHelper.objectIcon(directory)"> </ion-icon>
+                <ion-label>
+                  {{(directory.name !== '$USER_ROOT') ? directory.name :
+                  "_pages.home" | translate}}
+                  <ng-container *ngIf="isDirectoryEmpty(directory.id)">
+                    ({{ "_common.empty" | translate }})
+                  </ng-container>
+                </ion-label>
+              </ion-chip>
+            </div>
+          </ion-col>
+          <ion-col *ngIf="isCurrentUser" size="auto">
+            <app-storage-usage
+              [maxStorage]="maxStorage"
+              [files]="userInfo.files"
+            ></app-storage-usage>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
   <ion-modal trigger="open-edit-user">
     <ng-template>
       <app-user-edit [tagName]="userInfo.tagName"> </app-user-edit>

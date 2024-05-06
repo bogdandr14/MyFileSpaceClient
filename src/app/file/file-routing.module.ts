@@ -23,6 +23,11 @@ const routes: Routes = [
     data: { title: '_pages.myFiles' }
   },
   {
+    path: 'mine/:id',
+    component: MyFilesPage,
+    data: { title: '_pages.myFiles' }
+  },
+  {
     path: '',
     component: MyFilesPage,
     data: { title: '_pages.myFiles' },
