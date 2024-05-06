@@ -44,7 +44,6 @@ export class DateSelectTemplateComponent {
 
   setDate(date: string | string[] | Date) {
     this._date = new Date(date as string);
-    debugger;
     this.selectedDate = this.datePipe.transform(
       this._date,
       'dd/MM/yyyy',

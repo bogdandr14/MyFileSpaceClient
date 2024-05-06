@@ -109,7 +109,6 @@ export class BinPage implements OnInit {
   }
 
   handleDirectoryChange(directoryChange: ObjectChangeModel) {
-    debugger;
     const directory = directoryChange.changedObject as DirectoryModel;
     if (
       directoryChange.action == ActionType.Delete ||
@@ -126,7 +125,7 @@ export class BinPage implements OnInit {
   }
 
   handleFileChange(fileChange: ObjectChangeModel) {
-    debugger;
+    ;
     const file = fileChange.changedObject as FileModel;
     if (
       fileChange.action == ActionType.Delete ||

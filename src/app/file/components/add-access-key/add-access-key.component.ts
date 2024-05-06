@@ -33,11 +33,10 @@ export class AddAccessKeyComponent {
   ) {}
 
   onSubmit() {
-    debugger;
-    const c = new AccessKeyAddModel(this.accessObject.objectType, this.accessObject.objectId);
-    c.expiresAt = this.expiresAt;
+    const accessKeyModel = new AccessKeyAddModel(this.accessObject.objectType, this.accessObject.objectId);
+    accessKeyModel.expiresAt = this.expiresAt;
     this.accessService
-      .addAccessKey(c)
+      .addAccessKey(accessKeyModel)
       .pipe(take(1))
       .subscribe((key) => {
         this.accessKeyAdded.emit(key);
