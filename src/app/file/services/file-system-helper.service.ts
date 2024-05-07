@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Guid } from 'guid-typescript';
-import { take } from 'rxjs';
+import { switchMap, take } from 'rxjs';
 import { ActionType } from 'src/app/core/models/action-type.enum';
 import { ObjectChangeModel } from 'src/app/core/models/object-change.model';
 import { ObjectMoveModel } from 'src/app/core/models/object-move.model';
@@ -26,7 +27,8 @@ export class FileSystemHelperService {
     private fileService: FileService,
     private directoryService: DirectoryService,
     private dataService: DataService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private route: ActivatedRoute
   ) {}
 
   async openDirectoryEdit(directory: DirectoryModel) {
@@ -216,9 +218,13 @@ export class FileSystemHelperService {
   }
 
   public downloadFile(file: FileModel | FileDetailsModel) {
-    this.fileService
-      .downloadFile(file.id)
-      .pipe(take(1))
+    this.route.queryParams
+      .pipe(
+        switchMap((queryParams) =>
+          this.fileService.downloadFile(file.id, queryParams['accessKey'])
+        ),
+        take(1)
+      )
       .subscribe((blob) => {
         const downloadUrl = URL.createObjectURL(blob);
         const link = document.createElement('a');

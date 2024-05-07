@@ -34,7 +34,8 @@
     "lastPasswordChange": "Last password change",
     "availableFiles": "Available files",
     "availableDirectories": "Available directories",
-    "storedContent":"Stored content"
+    "storedContent": "Stored content",
+    "collection": "{ownerName}'s collection"
   },
   "_updates": {
     "markAsChecked": "Mark as checked",
@@ -55,7 +56,8 @@
     "otherProfile": "{ name }'s profile",
     "settings": "Settings",
     "login": "Login",
-    "register": "Register"
+    "register": "Register",
+    "collection": "User collection"
   },
   "_links": {
     "backToLogin": "Back to Login",
@@ -101,7 +103,7 @@
     "binSize": "The bin currently contains { size }.",
     "empty": "Empty",
     "collection": "Collection",
-    "options":"Options"
+    "options": "Options"
   },
   "_search": {
     "files": "Files",
@@ -125,8 +127,8 @@
     "keyNoExpiry": "Link does not expire",
     "expiresAt": "The link expires at",
     "deleteKey": "Șterge link acces",
-    "noKey":"No access link",
-    "addKey":"Create access link",
+    "noKey": "No access link",
+    "addKey": "Create access link",
     "expirationDate": "Expiration date",
     "temporary": "Offer temporary access"
   },

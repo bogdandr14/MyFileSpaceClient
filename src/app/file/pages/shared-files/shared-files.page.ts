@@ -21,7 +21,7 @@ export class SharedFilesPage implements OnInit {
   private readonly sharedDirectory = {
     id: Guid.createEmpty(),
     name: '$SHARED_ROOT',
-    accessLevel: 1,
+    accessLevel: 2,
   } as DirectoryDetailsModel;
 
   private accessedDirectories: DirectoryDetailsModel[] = [];

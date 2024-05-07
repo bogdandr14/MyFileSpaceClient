@@ -10,6 +10,7 @@ import { DataService } from '../core/services/data.service';
 import { InfiniteScrollFilter } from '../shared/models/infinite-scroll.filter';
 import { FoundUsersModel } from './models/found-users.model';
 import { CurrentUserModel } from './models/current-user.model';
+import { UserDetailsModel } from './models/user-details.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserService extends BaseService {
@@ -62,7 +63,7 @@ export class UserService extends BaseService {
     return super.getOneByPath<CurrentUserModel>('');
   }
 
-  public getUser<UserDetailsModel>(userId: Guid | string): Observable<UserDetailsModel> {
+  public getUser(userId: Guid | string): Observable<UserDetailsModel> {
     return super.getOneById<UserDetailsModel>(userId);
   }
 

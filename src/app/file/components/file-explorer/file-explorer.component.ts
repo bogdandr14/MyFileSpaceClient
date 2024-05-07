@@ -14,9 +14,11 @@ import { FileModel } from '../../models/file.model';
   templateUrl: './file-explorer.component.html',
   styleUrls: ['./file-explorer.component.scss'],
 })
-export class FileExplorerComponent {
+export class FileExplorerComponent implements OnInit {
   @Input() directoryDetails: DirectoryDetailsModel;
   @Input() directorySizes: any[];
+  @Input() accessKey: string;
+  @Input() isFilePseudoDirectory: boolean;
   @Output() directoryChange = new EventEmitter();
 
   public externalSize: number;
@@ -31,7 +33,13 @@ export class FileExplorerComponent {
     private fileService: FileService,
     private directoryService: DirectoryService
   ) {}
-
+  ngOnInit() {
+    if (this.isFilePseudoDirectory) {
+      this.isFileDetails = true;
+      this.detailsMenuObject = this.directoryDetails.files[0];
+      this.menuCtrl.open('details-menu');
+    }
+  }
   openCurrentDirectoryDetailsMenu() {
     this.isFileDetails = false;
     this.fillDetailsAndOpenMenu(this.directoryDetails);
@@ -61,7 +69,7 @@ export class FileExplorerComponent {
       );
     } else {
       this.fileService
-        .getFileInfo(fileId)
+        .getFileInfo(fileId, this.accessKey)
         .pipe(take(1))
         .subscribe((fileDetails) => this.fillDetailsAndOpenMenu(fileDetails));
     }

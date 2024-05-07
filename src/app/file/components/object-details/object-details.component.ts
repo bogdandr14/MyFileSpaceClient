@@ -62,11 +62,18 @@ export class ObjectDetailsComponent {
   }
 
   copyAccessLinkToClipboard() {
-    this.clipboardService.copy(this.objectDetails.accessKey.key);
+    const baseUrl = window.location.origin;
+    const link = `${baseUrl}/browse/collection/${
+      this.objectDetails.ownerId
+    }?id=${this.objectDetails.id}&type=${
+      this.isFile ? ObjectType.File : ObjectType.Directory
+    }&accessKey=${this.objectDetails.accessKey.key}`;
+    debugger;
+    this.clipboardService.copy(link);
     this.alertService.showInfo('_message._information.accessKeyCopied');
   }
 
-  openEdit(){
+  openEdit() {
     if (this.isFile) {
       this.fileSystemHelper.openFileEdit(this.objectDetails);
     } else {
@@ -74,7 +81,7 @@ export class ObjectDetailsComponent {
     }
   }
 
-  addObjectCut(){
+  addObjectCut() {
     if (this.isFile) {
       this.fileSystemHelper.addFileCut(this.objectDetails);
     } else {
@@ -82,7 +89,7 @@ export class ObjectDetailsComponent {
     }
   }
 
-  confirmDelete(){
+  confirmDelete() {
     if (this.isFile) {
       this.fileSystemHelper.confirmDeleteFile(this.objectDetails);
     } else {

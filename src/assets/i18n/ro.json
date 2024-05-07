@@ -34,7 +34,8 @@
     "lastPasswordChange": "Ultima schimbare a parolei",
     "availableFiles": "Fișiere disponibile",
     "availableDirectories": "Foldere disponibile",
-    "storedContent":"Conținut stocat"
+    "storedContent": "Conținut stocat",
+    "collection": "Colecția lui {ownerName}"
   },
   "_updates": {
     "markAsChecked": "Marchează ca văzut",
@@ -55,7 +56,8 @@
     "otherProfile": "Profilul lui { name }",
     "settings": "Setări",
     "login": "Logare",
-    "register": "Înregistrare"
+    "register": "Înregistrare",
+    "collection": "Coleție utilzator"
   },
   "_links": {
     "backToLogin": "Înapoi la autentificare",
@@ -101,7 +103,7 @@
     "binSize": "Coșul conține în prezent { size }.",
     "empty": "Gol",
     "collection": "Colecție",
-    "options":"Opțiuni"
+    "options": "Opțiuni"
   },
   "_search": {
     "files": "Fișiere",
@@ -125,8 +127,8 @@
     "keyNoExpiry": "Link-ul nu expiră",
     "expiresAt": "Link-ul expiră la",
     "deleteKey": "Delete access link",
-    "noKey":"Nu există link de acces",
-    "addKey":"Creați link de acces",
+    "noKey": "Nu există link de acces",
+    "addKey": "Creați link de acces",
     "expirationDate": "Data expirării",
     "temporary": "Oferă acces temporar"
   },
