@@ -9,6 +9,7 @@ import { filter, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { combineLatest } from 'rxjs';
 import { RouteDescriptor } from '../core/models/route-descriptor';
+import { UserService } from '../user/user.service';
 
 export const DEFAULT_TITLE = 'MyFileSpace';
 
@@ -19,8 +20,6 @@ export const DEFAULT_TITLE = 'MyFileSpace';
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit {
-
-
   public labels; // = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
   fontSize = 'font-size-5';
@@ -41,6 +40,11 @@ export class AppComponent implements OnInit {
     { title: '_pages.browse', path: '/browse', icon: 'search' },
     { title: '_pages.settings', path: '/settings', icon: 'settings' },
   ];
+  public adminPage: RouteDescriptor = {
+    title: '_pages.management',
+    path: '/management',
+    icon: 'book',
+  };
 
   constructor(
     public authService: AuthService,

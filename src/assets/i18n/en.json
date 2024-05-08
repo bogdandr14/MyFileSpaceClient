@@ -57,7 +57,19 @@
     "settings": "Settings",
     "login": "Login",
     "register": "Register",
-    "collection": "User collection"
+    "collection": "User collection",
+    "management": "Administration"
+  },
+  "_management": {
+    "statistics": "Statistics",
+    "cacheUsage": "Cache usage",
+    "deleteCache": "Delete cache",
+    "pastRetention": "Storage space used for files that have exceeded their retention period",
+    "deletePastRetention": "Delete content past the retention period",
+    "count":"Total number of files",
+    "count30Days":"Files added in the last 30 days",
+    "storageUsage":"Total storage space utilization",
+    "storageUsage30Days":"Increase in space used since the last 30 days"
   },
   "_links": {
     "backToLogin": "Back to Login",

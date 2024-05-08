@@ -10,13 +10,19 @@ import { RegisterModel } from '../models/auth/register.model';
 import { BaseService } from './base.service';
 import { DataService } from './data.service';
 import { TokenModel } from '../models/auth/token.model';
+import { map } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService extends BaseService {
   private timerSubscription = new Subscription();
   private isLoggedIn = new BehaviorSubject<boolean>(null);
-  public isLoggedIn$ = this.isLoggedIn.asObservable().pipe(filter((val) => val !== null));
-
+  public isLoggedIn$ = this.isLoggedIn
+    .asObservable()
+    .pipe(filter((val) => val !== null));
+  public isAdmin$ = this.dataService.user$.pipe(
+    filter((val) => val !== null),
+    map((user) => user.role === 'Admin')
+  );
   constructor(
     public override http: HttpClient,
     private router: Router,
@@ -68,7 +74,7 @@ export class AuthService extends BaseService {
       userId: tokenInfo.jti,
       email: tokenInfo.email,
       role: tokenInfo.user_role,
-      tagName: tokenInfo.unique_name
+      tagName: tokenInfo.unique_name,
     });
   }
 

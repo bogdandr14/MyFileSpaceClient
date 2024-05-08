@@ -40,6 +40,7 @@
           </app-navigation-link>
 
           <ng-container *ngIf="authService.isLoggedIn$ | async">
+            <app-navigation-link *ngIf="authService.isAdmin$ | async"[link]="adminPage"></app-navigation-link>
             <app-navigation-link
               *ngFor="let link of connectedUserLinks; let i = index"
               [link]="link"

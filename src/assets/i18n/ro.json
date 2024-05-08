@@ -57,7 +57,19 @@
     "settings": "Setări",
     "login": "Logare",
     "register": "Înregistrare",
-    "collection": "Coleție utilzator"
+    "collection": "Coleție utilzator",
+    "management": "Administrare"
+  },
+  "_management": {
+    "statistics": "Statistici",
+    "cacheUsage": "Utilizare memorie cache",
+    "deleteCache": "Șterge cache",
+    "pastRetention": "Spațiu de stocare utilizat pentru fișierele care au depășit perioada de păstrare",
+    "deletePastRetention": "Șterge conținut peste perioada de păstrare",
+    "count": "Numărul total de fișiere",
+    "count30Days": "Fișiere adăugate în ultimele 30 de zile",
+    "storageUsage": "Utilizarea totală a spațiului de stocare",
+    "storageUsage30Days": "Creșterea spațiului utilizat din ultimele 30 de zile"
   },
   "_links": {
     "backToLogin": "Înapoi la autentificare",

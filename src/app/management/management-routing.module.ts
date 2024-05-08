@@ -1,17 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AdminGuard } from '../core/guards/admin.guard';
 
-import { FolderPage } from './folder.page';
+import { ManagementPage } from './page/management.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: FolderPage
-  }
+    component: ManagementPage,
+    canLoad: [AdminGuard],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class FolderPageRoutingModule {}
+export class ManagementPageRoutingModule {}
