@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  baseApiUrl: 'http://localhost:48889',//TODO modify
+  baseApiUrl: 'https://myfilespaceapi.azurewebsites.net/',
   defaultLanguage: 'en',
   appSettings: {
     version: '',
