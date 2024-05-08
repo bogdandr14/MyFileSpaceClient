@@ -1,0 +1,250 @@
+{
+  "welcomeText": "Bine ai venit la MyFileSpace versiunea { key }",
+  "appearance": "Aspect",
+  "darkMode": "Mod întunecat",
+  "invertColors": "Inversează culorile",
+  "grayscale": "Alb-negru",
+  "linkHighlight": "Evidențiază acțiuni",
+  "language": "Limba",
+  "_languages": {
+    "languageEN": "Engleză",
+    "languageRO": "Română"
+  },
+  "menu": "Meniu",
+  "preferences": "Preferinţe",
+  "register": "Înregistrare",
+  "login": "Autentificare",
+  "logout": "Deconectare",
+  "username": "Nume utilizator",
+  "password": "Parolă",
+  "contentType": "Tipul conţinutului",
+  "_password": {
+    "confirm": "Confirmă parola",
+    "current": "Parola curentă",
+    "new": "Noua parolă",
+    "change": "Schimbă parola"
+  },
+  "account": "Cont",
+  "accountInfo": "Informații cont",
+  "_user": {
+    "email": "E-Mail",
+    "emailAddress": "Adresă de e-Mail",
+    "tagName": "Nume unic",
+    "search": "Caută utilizatori",
+    "lastPasswordChange": "Ultima schimbare a parolei",
+    "availableFiles": "Fișiere disponibile",
+    "availableDirectories": "Foldere disponibile",
+    "storedContent": "Conținut stocat",
+    "collection": "Colecția lui {ownerName}"
+  },
+  "_updates": {
+    "markAsChecked": "Marchează ca văzut",
+    "fileCreated": "A fost creat un nou fişier: { fileName }",
+    "fileModified": "Fişierul { fileName } a fost modificat",
+    "directoryCreated": "Un nou folder { folderName } a fost creat",
+    "directoryModified": "Folderul { folderName } a fost modificat"
+  },
+  "_pages": {
+    "home": "Acasă",
+    "browse": "Caută",
+    "myFiles": "Fişierele mele",
+    "sharedFiles": "Împărtășit cu mine",
+    "profile": "Profil utilizator",
+    "yourProfile": "Profilul tău",
+    "accessible": "Accesibilitate",
+    "bin": "Coş de gunoi",
+    "otherProfile": "Profilul lui { name }",
+    "settings": "Setări",
+    "login": "Logare",
+    "register": "Înregistrare",
+    "collection": "Coleție utilzator",
+    "management": "Administrare"
+  },
+  "_management": {
+    "statistics": "Statistici",
+    "cacheUsage": "Utilizare memorie cache",
+    "deleteCache": "Șterge cache",
+    "pastRetention": "Spațiu de stocare utilizat pentru fișierele care au depășit perioada de păstrare",
+    "deletePastRetention": "Șterge conținut peste perioada de păstrare",
+    "count": "Numărul total de fișiere",
+    "count30Days": "Fișiere adăugate în ultimele 30 de zile",
+    "storageUsage": "Utilizarea totală a spațiului de stocare",
+    "storageUsage30Days": "Creșterea spațiului utilizat din ultimele 30 de zile"
+  },
+  "_links": {
+    "backToLogin": "Înapoi la autentificare",
+    "registerHere": "Înregistrează-te aici"
+  },
+  "_common": {
+    "you": "Tu",
+    "details": "Detalii",
+    "add": "Adaugă",
+    "edit": "Editează",
+    "delete": "Şterge",
+    "restore": "Restaurează",
+    "permanentDelete": "Șterge definitiv",
+    "save": "Salvează",
+    "submit": "Trimite",
+    "confirm": "Confirmă",
+    "cancel": "Anulează",
+    "back": "Înapoi",
+    "unknown": "Necunoscut",
+    "at": "la",
+    "present": "prezent",
+    "select": "Selectează",
+    "deselect": "Deselectează",
+    "skip": "Sari peste",
+    "continue": "Continuă",
+    "next": "Următorul",
+    "list": "Listă",
+    "search": "Caută",
+    "today": "Azi",
+    "accept": "Acceptă",
+    "decline": "Refuză",
+    "understood": "Am înţeles",
+    "name": "Nume",
+    "size": "Dimensiune",
+    "cut": "Mută",
+    "sound": "Sunet",
+    "dateAdded": "Data creării",
+    "dateModified": "Data ultimei modificări",
+    "dateDeleted": "Data ștergerii",
+    "owner": "Deţinător",
+    "accessibility": "Accesibilitate",
+    "noUserFound": "Niciun utilizator găsit",
+    "binSize": "Coșul conține în prezent { size }.",
+    "empty": "Gol",
+    "collection": "Colecție",
+    "options": "Opțiuni"
+  },
+  "_search": {
+    "files": "Fișiere",
+    "users": "Utilizatori",
+    "noResultsFound": "Niciun rezultat găsit",
+    "includeSelf": "Inclusiv eu"
+  },
+  "_accessLevel": {
+    "name": "Nivel acces",
+    "private": "Privat",
+    "restricted": "Restricţionat",
+    "public": "Public"
+  },
+  "_access": {
+    "allowedUsers": "Utilizatori permişi",
+    "noAllowedUsers": "Niciun utilizator nu a fost autorizat",
+    "editUsers": "Editează utilizatori permiși",
+    "accessKey": "Link de acces",
+    "removeUsers": "Șterge accesul utilizatorilor",
+    "copyLink": "Copiază link acces",
+    "keyNoExpiry": "Link-ul nu expiră",
+    "expiresAt": "Link-ul expiră la",
+    "deleteKey": "Delete access link",
+    "noKey": "Nu există link de acces",
+    "addKey": "Creați link de acces",
+    "expirationDate": "Data expirării",
+    "temporary": "Oferă acces temporar"
+  },
+  "_details": {
+    "user": "Utilizator",
+    "file": "Detalii fişier",
+    "directory": "Detalii folder"
+  },
+  "_add": {
+    "file": "Adaugă fişier",
+    "directory": "Adaugă folder",
+    "accessKey": "Creează link acces pentru { name }"
+  },
+  "_edit": {
+    "user": "Editează profil",
+    "file": "Editează fişier",
+    "directory": "Editează folder",
+    "userAccess": "Editează accesul utilizatorilor"
+  },
+  "_delete": {
+    "file": "Şterge fişierul",
+    "fileMessage": "Eşti sigur(ă) că vrei să ştergi fişierul { fileName }?",
+    "filePermanentMessage": "Această acțiune este ireversibilă. Sunteți sigur(ă) că doriți să ștergeți definitiv fișierul { fileName }?",
+    "directory": "Şterge folderul",
+    "directoryMessage": "Eşti sigur(ă) că vrei să ştergi folderul { folderName } şi tot conţinutul lui?",
+    "directoryPermanentMessage": "Această acțiune este ireversibilă. Sunteți sigur(ă) că doriți să ștergeți definitiv folderul { folderName } şi tot conţinutul lui?",
+    "accessKey": "Şterge link-ul de acces",
+    "accessKeyMessage": "Eşti sigur(ă) că vrei să ştergi link-ul de acces pentru { name }?",
+    "confirm": "Confirmă ştergerea",
+    "binAutomatic": "Fișierele și folderele vor fi șterse automat și definitiv după 30 de zile de păstrare în coșul de gunoi."
+  },
+  "_file": {
+    "properties": "Proprietăţi fişier",
+    "name": "Numele fişierului",
+    "upload": "Încarcă fişierul",
+    "reUpload": "Încarcă o nouă versiune",
+    "toUpload": "Fişierul de încărcat",
+    "download": "Descarcă fişierul",
+    "choose": "Alege fişierul",
+    "change": "Schimbă fişierul",
+    "usedStorage": "Ați folosit { currentUsage } din cei { maxUsage } disponibili",
+    "storageUsage": "Utilizare stocare fișiere"
+  },
+  "_directory": {
+    "properties": "Proprietăţi folder",
+    "name": "Numele folder-ului"
+  },
+  "_validation": {
+    "required": "Câmpul este obligatoriu",
+    "minlength": "Câmpul trebuie să aibă cel puțin { number } caractere.",
+    "maxlength": "Câmpul trebuie să aibă cel mult { number } caractere.",
+    "minValue": "Trebuie să fie cel puţin { number }.",
+    "maxValue": "Trebuie să fie cel mult { number }.",
+    "pattern": "Format invalid",
+    "invalidEmail": "Format de email invalid.",
+    "emailTaken": "E-mailul este deja folosit.",
+    "usernameTaken": "Utilizatorul este deja folosit.",
+    "invalidPassword": "Parola trebuie să aibă minimum 8 caractere, cel puțin o majusculă, 1 minusculă și 1 număr",
+    "passwordMismatch": "Parolele trebuie să se potrtivească",
+    "invalidImage": "Fişierul selectat nu este o imagine",
+    "maxSizeExceeded": "Fişierul depăşeste dimensiunea maximă admisă de { number } MB"
+  },
+  "_paginator": {
+    "itemsPerPage": "Articole pe pagină",
+    "currentPage": "Pagina { currentPage } din { numberOfPages }"
+  },
+  "_message": {
+    "loading": "Se încarcă...",
+    "information": "Informare",
+    "_information": {
+      "tagNameCopied": "Numele unic a fost copiat în clipboard",
+      "emailCopied": "Adresa de e-mail a fost copiată în clipboard",
+      "accessKeyCopied": "Link-ul de acces a fost copiat în clipboard",
+      "fileDeleted": "Fișierul a fost mutat în coșul de gunoi",
+      "filePermanentDeleted": "Fișierul a fost șters definitiv",
+      "fileRestored": "Fișierul a fost restaurat",
+      "directoryDeleted": "Folderul și tot conținutul lui a fost mutat în coșul de gunoi",
+      "directoryPermanentDeleted": "Directorul și tot conținutul său au fost șterse definitiv.",
+      "directoryRestored": "Directorul și tot conținutul său au fost restaurate",
+      "accessKeyDeleted": "Link-ul de acces a fost șters"
+    },
+    "success": "Succes",
+    "_success": {
+      "fileUpload": "Fişierul a fost încărcat cu succes",
+      "fileEdit": "Fişierul a fost actualizat cu succes",
+      "fileMove": "Fişierul a fost mutat cu succes",
+      "directoryAdd": "Folderul a fost creat cu succes",
+      "directoryEdit": "Folderul a fost actualizat cu succes",
+      "directoryMove": "Folderul a fost mutat cu succes",
+      "userAccessEdit": "Accesul utilizatorilor a fost editat cu succes",
+      "register": "Contul a fost creat cu success! Logează-te pentru a accesa contul",
+      "login": "Bine ai revenit!",
+      "changePassword": "Parola a fost schimbată cu succes!",
+      "preferencesSaved": "Preferințele au fost salvate cu succes!"
+    },
+    "warning": "Avertisment",
+    "_warning": {
+      "unsavedPreferences": "Nu ți-ai salvat preferințele!"
+    },
+    "error": "Eroare",
+    "_error": {
+      "wrongCredentials": "Credențialele sunt invalide, te rog incearcă din nou",
+      "wrongPassword": "Parola introdusă este incorectă. Încearcă din nou."
+    }
+  },
+  "others": "Altele"
+}

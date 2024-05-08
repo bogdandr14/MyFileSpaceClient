@@ -1,0 +1,42 @@
+<ion-card *ngIf="user" class="user">
+  <ion-card-header>
+    <ion-item lines="none">
+      <ion-label class="ion-text-center" text-wrap>
+        <h1>{{ user.tagName }}</h1>
+      </ion-label>
+    </ion-item>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list lines="none" class="ion-text-center">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button
+              color="secondary"
+              class="ion-text-center"
+              [routerLink]="['/browse/collection', user.userId]"
+            >
+              <ion-icon name="documents"> </ion-icon>
+              <ion-label>
+                {{ "_common.collection" | translate }}
+              </ion-label>
+            </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button
+              color="tertiary"
+              class="ion-text-center"
+              [routerLink]="['/user/profile', user.userId]"
+            >
+              <ion-icon name="person"> </ion-icon>
+
+              <ion-label>
+                {{ "_pages.profile" | translate }}
+              </ion-label>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-list>
+  </ion-card-content>
+</ion-card>

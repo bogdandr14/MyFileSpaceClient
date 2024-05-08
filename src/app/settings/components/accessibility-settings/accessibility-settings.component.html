@@ -1,0 +1,86 @@
+<ion-list lines="none">
+  <ion-list-header>
+    <h1>{{ "appearance" | translate }}</h1>
+  </ion-list-header>
+  <ion-row>
+    <ion-col size-lg="4" offset-md="1" offset-sm="0">
+      <ion-item class="ion-align-items-center">
+        <ion-icon name="moon" slot="start"></ion-icon>
+        <ion-label text-wrap>{{ "darkMode" | translate }}</ion-label>
+        <ion-toggle
+          color="tertiary"
+          [formControl]="darkCtrl"
+          slot="end"
+          (ngModelChange)="toggleDarkTheme($event)"
+        ></ion-toggle>
+      </ion-item>
+    </ion-col>
+    <ion-col size-lg="4"offset-md="1" offset-sm="0">
+      <ion-item class="ion-align-items-center">
+        <ion-icon name="invert-mode" slot="start"></ion-icon>
+        <ion-label text-wrap>{{ "invertColors" | translate }}</ion-label>
+        <ion-toggle
+          color="tertiary"
+          [formControl]="invertCtrl"
+          slot="end"
+          (ngModelChange)="toggleInvertColor($event)"
+        ></ion-toggle>
+      </ion-item>
+    </ion-col>
+    <ion-col size-lg="4" offset-md="1" offset-sm="0">
+      <ion-item class="ion-align-items-center">
+        <ion-icon name="color-filter" slot="start"></ion-icon>
+        <ion-label text-wrap>{{ "grayscale" | translate }}</ion-label>
+        <ion-toggle
+          color="tertiary"
+          [formControl]="grayCtrl"
+          slot="end"
+          (ngModelChange)="toggleGrayscale($event)"
+        ></ion-toggle>
+      </ion-item>
+    </ion-col>
+    <ion-col size-lg="4" offset-md="1" offset-sm="0">
+      <ion-item class="ion-align-items-center">
+        <ion-icon name="link" slot="start"></ion-icon>
+        <ion-label text-wrap>{{ "linkHighlight" | translate }}</ion-label>
+        <ion-toggle
+          color="tertiary"
+          [formControl]="highlightCtrl"
+          slot="end"
+          (ngModelChange)="toggleLinkHighlight($event)"
+        ></ion-toggle>
+      </ion-item>
+    </ion-col>
+    <ion-col size-lg="4" offset-md="1" offset-sm="0">
+      <ion-item class="ion-align-items-center">
+        <ion-icon name="volume-medium" slot="start"></ion-icon>
+        <ion-label text-wrap>{{ "_common.sound" | translate }}</ion-label>
+        <ion-toggle
+          color="tertiary"
+          [formControl]="audioCtrl"
+          slot="end"
+          (ngModelChange)="toggleAudio($event)"
+        ></ion-toggle>
+      </ion-item>
+    </ion-col>
+    <ion-col size="12" size-sm="4" offset-sm="1">
+      <app-language-select></app-language-select>
+    </ion-col>
+    <ion-col hidden size-sm="4" offset-sm="2">
+      <ion-item>
+        <ion-range
+          min="1"
+          max="9"
+          value="5"
+          color="success"
+          pin
+          snaps
+          (ionChange)="toggleFontSize($event)"
+        >
+          <ion-icon slot="start" size="small" name="text"></ion-icon>
+          <ion-icon slot="end" size="large" name="text"></ion-icon>
+        </ion-range>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-list>

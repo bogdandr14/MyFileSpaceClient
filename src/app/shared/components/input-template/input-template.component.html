@@ -1,0 +1,23 @@
+<ion-item-group>
+  <ion-item color="transparent">
+    <ion-label for="model" position="floating">
+      <b>
+        {{ name | translate }}
+        <span *ngIf="isRequired" class="required"> *</span>
+      </b>
+    </ion-label>
+    <ion-input
+      class="form-control"
+      [type]="type"
+      name="model"
+      #model="ngModel"
+      [(ngModel)]="field"
+      [required]="isRequired"
+      [minlength]="minLength"
+    ></ion-input>
+  </ion-item>
+  <app-validation-errors
+    [model]="model"
+    [number]="minLength"
+  ></app-validation-errors>
+</ion-item-group>

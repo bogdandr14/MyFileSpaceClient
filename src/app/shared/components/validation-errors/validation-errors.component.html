@@ -1,0 +1,13 @@
+<ion-item
+  *ngIf="model.touched && model.invalid"
+  color="transparent"
+  lines="none"
+  class="errors"
+>
+  <ion-label text-wrap class="error" *ngFor="let error of [model.errors]">
+    {{
+      "_validation." + getErrorKey(error)
+        | translate: getTranslationParameters(error)
+    }}
+  </ion-label>
+</ion-item>

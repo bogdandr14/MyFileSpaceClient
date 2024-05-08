@@ -1,0 +1,12 @@
+.chips-content {
+  overflow-y: auto;
+}
+.options ion-label, .options ion-icon {
+  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}

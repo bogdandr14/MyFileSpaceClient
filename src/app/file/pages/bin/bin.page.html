@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> {{'_pages.bin' | translate }} </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-breadcrumbs *ngIf="binPseudoDirectory">
+    <ion-breadcrumb>
+      <ion-chip>
+        <ion-icon name="trash"></ion-icon>
+        <ion-label>
+          {{('_common.binSize'| translate : {size: totalSize})}}
+        </ion-label>
+      </ion-chip>
+    </ion-breadcrumb>
+  </ion-breadcrumbs>
+</ion-header>
+
+<ion-content class="content" *ngIf="binPseudoDirectory">
+  <app-file-explorer
+    [directoryDetails]="binPseudoDirectory"
+    [directorySizes]="directorySizes"
+  ></app-file-explorer>
+</ion-content>

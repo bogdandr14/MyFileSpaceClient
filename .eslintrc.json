@@ -31,10 +31,11 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "app",
             "style": "camelCase"
           }
-        ]
+        ],
+        "@angular-eslint/use-lifecycle-interface": "error",
+        "no-debugger": "error"
       }
     },
     {

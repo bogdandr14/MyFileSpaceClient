@@ -1,0 +1,9 @@
+ion-chip {
+    --ion-color-base: var(--chip-background-color);
+  }
+
+  .search-result-content {
+    height: 100%;
+
+    overflow-y: auto;
+  }

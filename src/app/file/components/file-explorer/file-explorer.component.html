@@ -1,0 +1,57 @@
+<ion-grid *ngIf="directoryDetails" id="file-explorer-content">
+  <ion-row>
+    <ion-col
+      size-xl="3"
+      size-lg="4"
+      size-md="6"
+      size-sm="8"
+      size-xs="12"
+      *ngFor="let folder of directoryDetails.childDirectories"
+    >
+      <app-directory-item
+        (directoryChange)="directoryChange.emit($event)"
+        [directory]="folder"
+        (showDetails)="openDirectoryDetailsMenu(folder.id)"
+      >
+      </app-directory-item>
+    </ion-col>
+
+    <ion-col
+      size-xl="3"
+      size-lg="4"
+      size-md="6"
+      size-sm="8"
+      size-xs="12"
+      *ngFor="let file of directoryDetails.files"
+    >
+      <app-file-item
+        [file]="file"
+        (showDetails)="openFileDetailsMenu(file.id)"
+      ></app-file-item>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<ion-menu
+  id="object-details-menu"
+  side="end"
+  menuId="details-menu"
+  contentId="file-explorer-content"
+>
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title
+        >{{
+          (isFileDetails ? "_details.file" : "_details.directory") | translate
+        }}
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <app-object-details
+      [objectDetails]="detailsMenuObject"
+      [isFile]="isFileDetails"
+      [externalSize]="externalSize"
+    ></app-object-details>
+  </ion-content>
+</ion-menu>

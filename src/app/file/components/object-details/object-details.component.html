@@ -1,0 +1,245 @@
+<ion-accordion-group *ngIf="objectDetails" expand="inset" value="first">
+  <ion-accordion value="first">
+    <ion-item slot="header" color="primary">
+      <ion-label>
+        {{ (isFile ? "_file" : "_directory") + ".properties" | translate }}
+      </ion-label>
+    </ion-item>
+    <div slot="content">
+      <ion-item>
+        <ion-label text-wrap>
+          {{ (isFile ? "_file" : "_directory") + ".name" | translate }}:
+        </ion-label>
+        <ion-text readonly>{{ objectDetails.name }} </ion-text>
+      </ion-item>
+      <ion-item *ngIf="!objectDetails.isDeleted">
+        <ion-label> {{ "_common.owner" | translate }}: </ion-label>
+        <ion-chip
+          button
+          color="primary"
+          (click)="copyTagNameToClipboard(objectDetails.ownerTagName)"
+        >
+          <ion-icon name="person" color="primary"></ion-icon>
+          <ion-label>
+            {{ objectDetails.ownerTagName }}
+            {{ isOwner ? " (" + ("_common.you" | translate) + ")" : "" }}
+          </ion-label>
+        </ion-chip>
+      </ion-item>
+      <ion-item>
+        <ion-label text-wrap>
+          {{ "_common.dateAdded" | translate }}:
+        </ion-label>
+        <ion-text readonly>
+          {{
+            objectDetails.createdAt
+              | date: "medium":uiHelper.timeOffset:localeService.currentLocale
+          }}
+        </ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label text-wrap>
+          {{
+            "_common." +
+              (objectDetails.isDeleted ? "dateDeleted" : "dateModified")
+              | translate
+          }}:
+        </ion-label>
+        <ion-text readonly>
+          {{
+            objectDetails.createdAt !== objectDetails.modifiedAt
+              ? (objectDetails.modifiedAt
+                | date
+                  : "medium"
+                  : uiHelper.timeOffset
+                  : localeService.currentLocale)
+              : "-"
+          }}
+        </ion-text>
+      </ion-item>
+      <ion-item *ngIf="isFile || objectDetails.isDeleted">
+        <ion-label text-wrap> {{ "_common.size" | translate }}:</ion-label>
+        <ion-text readonly>{{ size }}</ion-text>
+      </ion-item>
+    </div>
+  </ion-accordion>
+  <ion-accordion value="second" [disabled]="!isFile && !isOwner">
+    <ion-item slot="header" color="primary">
+      <ion-label>{{ "_common.options" | translate }}</ion-label>
+    </ion-item>
+    <div class="options" slot="content">
+      <ng-container *ngIf="objectDetails.isDeleted; else objectActions">
+        <ion-item button (click)="restore()">
+          <ion-label class="secondary">
+            {{ "_common.restore" | translate }}
+          </ion-label>
+        </ion-item>
+        <ion-item button (click)="confirmPermanentDelete()">
+          <ion-label class="danger">
+            {{ "_common.permanentDelete" | translate }}
+          </ion-label>
+        </ion-item>
+      </ng-container>
+      <ng-template #objectActions>
+        <ion-item
+          button
+          *ngIf="isFile"
+          (click)="fileSystemHelper.downloadFile(objectDetails)"
+        >
+          <ion-label class="success">
+            {{ "_file.download" | translate }}
+          </ion-label>
+        </ion-item>
+        <ng-container *ngIf="isOwner">
+          <ion-item button (click)="openEdit()">
+            <ion-label class="secondary">
+              {{ "_common.edit" | translate }}
+            </ion-label>
+          </ion-item>
+          <ion-item
+            button
+            *ngIf="isFile"
+            (click)="fileSystemHelper.openFileUpload(objectDetails.id)"
+          >
+            <ion-label class="tertiary">
+              {{ "_file.reUpload" | translate }}
+            </ion-label>
+          </ion-item>
+          <ion-item button (click)="addObjectCut()">
+            <ion-label class="warning">
+              {{ "_common.cut" | translate }}
+            </ion-label>
+          </ion-item>
+          <ion-item button (click)="confirmDelete()">
+            <ion-label class="danger">
+              {{ "_common.delete" | translate }}
+            </ion-label>
+          </ion-item>
+        </ng-container>
+      </ng-template>
+    </div>
+  </ion-accordion>
+  <ion-accordion value="third" [disabled]="objectDetails.isDeleted">
+    <ion-item slot="header" color="primary">
+      <ion-label> {{ "_common.accessibility" | translate }} </ion-label>
+    </ion-item>
+    <div slot="content" *ngIf="!objectDetails.isDeleted">
+      <ion-item>
+        <ion-label>
+          <strong>{{ "_accessLevel.name" | translate }}</strong></ion-label
+        >
+        <ion-chip
+          [color]="uiHelper.accessibilityColor(objectDetails.accessLevel)"
+        >
+          <ion-icon
+            [name]="uiHelper.accessibilityIcon(objectDetails.accessLevel)"
+            [color]="uiHelper.accessibilityColor(objectDetails.accessLevel)"
+          ></ion-icon>
+          <ion-label>
+            {{
+              "_accessLevel." +
+                uiHelper.accessibilityName(objectDetails.accessLevel)
+                | translate
+            }}
+          </ion-label>
+        </ion-chip>
+      </ion-item>
+      <ion-item>
+        <ion-label
+          ><strong>
+            {{
+              !!objectDetails.allowedUsers.length
+                ? ("_access.allowedUsers" | translate) + ":"
+                : ("_access.noAllowedUsers" | translate)
+            }}
+          </strong>
+        </ion-label>
+      </ion-item>
+      <div class="chips-content" [style.max-height]="'22vh'">
+        <ion-chip
+          *ngFor="let allowedUser of objectDetails.allowedUsers"
+          button
+          (click)="copyTagNameToClipboard(allowedUser)"
+          color="primary"
+        >
+          <ion-icon name="person" color="primary"></ion-icon>
+          <ion-label>{{ allowedUser }}</ion-label>
+        </ion-chip>
+      </div>
+      <ng-container *ngIf="isOwner">
+        <ion-item button class="options" id="open-edit-access">
+          <ion-label class="warning">
+            {{ "_access.editUsers" | translate }}
+          </ion-label>
+        </ion-item>
+        <ion-modal trigger="open-edit-access">
+          <ng-template>
+            <app-edit-access
+              *ngIf="!!objectDetails"
+              [accessObject]="accessObject"
+              (userAccessChange)="reloadUserAccess()"
+            ></app-edit-access>
+          </ng-template>
+        </ion-modal>
+        <ng-container *ngIf="objectDetails.accessKey; else noAccessKey">
+          <ion-item
+            button
+            class="options"
+            (click)="copyAccessLinkToClipboard()"
+          >
+            <ion-label class="secondary" (click)="copyAccessLinkToClipboard()">{{
+              "_access.copyLink" | translate
+            }}</ion-label>
+          </ion-item>
+          <ion-item *ngIf="!objectDetails.accessKey.expiresAt">
+            <ion-label style="text-align: center">{{
+              "_access.keyNoExpiry" | translate
+            }}</ion-label>
+          </ion-item>
+          <ion-item *ngIf="objectDetails.accessKey.expiresAt">
+            <ion-label text-wrap>
+              {{ "_access.expiresAt" | translate }}:
+            </ion-label>
+            <ion-text readonly>
+              {{
+                objectDetails.accessKey.expiresAt
+                  | date
+                    : "medium"
+                    : uiHelper.timeOffset
+                    : localeService.currentLocale
+              }}
+            </ion-text>
+          </ion-item>
+          <ion-item class="options" button (click)="deleteAccessKey()">
+            <ion-label class="danger">
+              {{ "_access.deleteKey" | translate }}
+            </ion-label>
+          </ion-item>
+        </ng-container>
+
+        <ng-template #noAccessKey>
+          <ion-item>
+            <ion-label>
+              <strong>{{ "_access.noKey" | translate }}</strong>
+            </ion-label>
+          </ion-item>
+          <ion-item button class="options" id="open-add-access-key">
+            <ion-label class="success">
+              {{ "_access.addKey" | translate }}
+            </ion-label>
+          </ion-item>
+          <ion-modal trigger="open-add-access-key">
+            <ng-template>
+              <app-add-access-key
+                *ngIf="!!objectDetails"
+                [accessObject]="accessObject"
+                [objectName]="objectDetails.name"
+                (accessKeyAdded)="setAccessKey($event)"
+              ></app-add-access-key>
+            </ng-template>
+          </ion-modal>
+        </ng-template>
+      </ng-container>
+    </div>
+  </ion-accordion>
+</ion-accordion-group>

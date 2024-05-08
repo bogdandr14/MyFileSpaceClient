@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> {{ ('_pages.management' | translate )}} </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding-top ion-text-center" *ngIf="statistics">
+  <ion-grid class="custom-margin-bottom">
+    <ion-card>
+      <ion-card-header class="ion-text-center">
+        <ion-card-title text-wrap>
+          <h1>{{'_management.statistics'|translate}}</h1>
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <app-consumption-charts
+          [statistics]="statistics"
+        ></app-consumption-charts>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label text-wrap>
+                  {{ "_management.cacheUsage" | translate }}: {{ memoryUsed }}
+                </ion-label>
+              </ion-item>
+              <ion-button color="warning" (click)="clearCache()">
+                {{"_management.deleteCache" | translate}}
+              </ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label text-wrap>
+                  {{ "_management.pastRetention" | translate }}:
+                  {{statistics.sizeMbPastRetentionTime}}
+                </ion-label>
+              </ion-item>
+              <ion-button color="danger" (click)="deleteFilesPastRetention()">
+                <ion-icon name="trash"></ion-icon>
+                {{"_management.deletePastRetention" | translate}}
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </ion-grid>
+</ion-content>

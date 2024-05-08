@@ -1,0 +1,20 @@
+<ion-item-group>
+  <ion-item color="transparent">
+    <ion-label for="model" position="floating">
+      <b>
+        {{ name | translate }}
+      </b>
+    </ion-label>
+    <ion-select
+      name="model"
+      #model="ngModel"
+      [(ngModel)]="field"
+      interface="popover"
+      [interfaceOptions]="{ cssClass: 'custom-height-popover' }"
+    >
+      <ion-select-option *ngFor="let option of options" [value]="option.id">
+        {{ optionsPrefix + "." + option.name | lowercase | translate }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-item-group>

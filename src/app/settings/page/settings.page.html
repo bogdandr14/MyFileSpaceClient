@@ -1,0 +1,70 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{'_pages.settings' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row
+      class="absolute-center"
+      [ngClass]="(authService.isLoggedIn$ | async) ? '' : 'custom-margin-bottom'"
+    >
+      <ion-col
+        size-lg="8"
+        size-md="10"
+        size-sm="12"
+        offset-lg="2"
+        offset-md="1"
+        offset-sm="0"
+      >
+        <ion-card>
+          <ion-card-content>
+            <app-accessibility-settings> </app-accessibility-settings>
+
+            <ion-list *ngIf="authService.isLoggedIn$ | async">
+              <ion-list-header>
+                <h1>{{'account' | translate}}</h1>
+              </ion-list-header>
+              <ion-row>
+                <ion-col size="6" offset="3">
+                  <ion-button
+                    id="open-change-password"
+                    expand="block"
+                    fill="clear"
+                    color="warning"
+                  >
+                    <ion-icon slot="start" name="hammer"></ion-icon>
+                    {{ "_password.change" | translate }}
+                  </ion-button>
+
+                  &nbsp;
+
+                  <ion-button
+                    *ngIf="authService.isLoggedIn$ | async"
+                    expand="block"
+                    fill="clear"
+                    color="danger"
+                    (click)="onLogout()"
+                  >
+                    <ion-icon slot="start" name="log-out"></ion-icon>
+
+                    {{ "logout" | translate }}
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-modal trigger="open-change-password">
+    <ng-template>
+      <app-change-password></app-change-password>
+    </ng-template>
+  </ion-modal>
+</ion-content>

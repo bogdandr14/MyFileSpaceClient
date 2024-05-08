@@ -1,0 +1,37 @@
+.access-private.segment-button-checked.md::part(native) {
+  color: var(--ion-color-tertiary);
+}
+
+.access-private.ion-segment-button::part(indicator-background) {
+  background: var(--ion-color-tertiary);
+}
+
+
+.access-restricted.segment-button-checked.md::part(native) {
+  color: var(--ion-color-secondary);
+}
+
+.access-restricted.ion-segment-button::part(indicator-background) {
+  background: var(--ion-color-secondary);
+}
+
+.access-public.segment-button-checked.md::part(native) {
+  color: var(--ion-color-success);
+}
+
+.access-public.ion-segment-button::part(indicator-background) {
+  background: var(--ion-color-success);
+}
+
+
+
+.segment-button-checked.md::part(native) {
+  color: #08a391;
+}
+
+
+@media screen and (max-width: 768px) {
+  .hide-mobile {
+    display: none;
+  }
+}

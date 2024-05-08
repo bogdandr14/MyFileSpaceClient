@@ -1,0 +1,91 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-title>
+      {{ "_file.upload" | translate }}
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        {{ "_common.cancel" | translate }}
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="custom-margin-ends">
+  <ion-card>
+    <ion-card-content>
+      <form #form="ngForm" (ngSubmit)="submitFile()">
+        <ion-item-group id="changePhoto">
+          <ion-item color="transparent">
+            <ion-label for="file" position="stacked">
+              <b>
+                {{ "_file.toUpload" | translate }}
+                <span class="required"> *</span>
+              </b>
+            </ion-label>
+            <div
+              [class.dropzone]="!isMobile"
+              class="file-upload"
+              ngxFileDropzone
+              [readMode]="readMode"
+              (fileDrop)="addFile($event)"
+            >
+              <input
+                type="file"
+                name="file"
+                #file="ngModel"
+                ngModel
+                class="file-input"
+                (change)="onFileChange($event)"
+                #fileUpload
+                [required]="isMobile"
+              />
+              <ion-button
+                name="photoButton"
+                color="tertiary"
+                fill="solid"
+                expand="block"
+                (click)="fileUpload.click()"
+              >
+                {{
+                  (fileToUpload ? "_file.change" : "_file.choose") | translate
+                }}
+                <ion-icon name="document" slot="start"></ion-icon>
+              </ion-button>
+            </div>
+
+            <div *ngIf="!!fileToUpload" class="file-info">
+              <p class="small">
+                {{ "_file.name" | translate }}: {{ fileToUpload?.name }},
+                {{ "size" | translate }}: {{ size }}
+              </p>
+            </div>
+          </ion-item>
+
+          <app-validation-errors
+            [model]="file"
+            [number]="maxSizeMb"
+          ></app-validation-errors>
+          <app-select-access-level
+            *ngIf="!isUpdate"
+            id="access-level"
+            [(field)]="accessLevel"
+            name="_accessLevel"
+          ></app-select-access-level>
+        </ion-item-group>
+
+        <ion-button
+          type="submit"
+          class="submit-button"
+          color="success"
+          fill="clear"
+          expand="block"
+          [disabled]="form.invalid || !fileToUpload"
+        >
+          <ion-icon name="cloud-upload" slot="start"></ion-icon>
+          {{ "_common.confirm" | translate }}
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

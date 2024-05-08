@@ -1,0 +1,31 @@
+.file-input {
+  display: none;
+}
+
+.dropzone {
+  background: var(--ion-color-primary);
+  border: dashed 2px var(--ion-color-tertiary);
+  border-radius: 20px;
+  height: 320px;
+  width: 480px;
+}
+
+.dropzone:hover {
+  background: var(--ion-color-primary-tint);
+}
+
+.file-upload {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin:15px;
+}
+
+.file-info{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}

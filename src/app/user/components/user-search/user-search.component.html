@@ -1,0 +1,43 @@
+<ion-searchbar
+  placeholder="{{ '_user.search' | translate }}"
+  [debounce]="1000"
+  animated
+  (ionInput)="findUsers($event)"
+></ion-searchbar>
+<ion-list
+  *ngIf="usersFound"
+  class="search-result-content"
+  [style.max-height]="isModal ? (isMobile ? '30vh' : '12vh') : '90vh'"
+>
+  <ng-container *ngIf="!users || !!users.length; else noUsersFound">
+    <ion-item *ngFor="let user of users">
+      <ion-chip button color="primary" (click)="userClicked.emit(user)">
+        <ion-icon name="person"></ion-icon>
+        <ion-label>
+          {{ user.tagName }}
+        </ion-label>
+        <ion-icon
+          *ngIf="extraIcon"
+          [name]="extraIcon.name"
+          [color]="extraIcon.color"
+        ></ion-icon>
+      </ion-chip>
+    </ion-item>
+  </ng-container>
+  <ng-template #noUsersFound>
+    <ion-item>
+      {{ "_common.noResultsFound" | translate }}
+    </ion-item>
+  </ng-template>
+  <ion-infinite-scroll
+    threshold="100px"
+    #infiniteScroll
+    (ionInfinite)="loadMoreUsers()"
+  >
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data..."
+    >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-list>

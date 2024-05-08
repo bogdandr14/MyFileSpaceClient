@@ -1,0 +1,47 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>
+      {{ "_add.accessKey" | translate: { name: objectName } }}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        {{ "_common.cancel" | translate }}
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row class="custom-margin-bottom">
+      <ion-col>
+        <ion-card>
+          <ion-card-content *ngIf="accessObject">
+            <ion-item class="ion-align-items-center">
+              <ion-icon name="calendar-number" slot="start"></ion-icon>
+              <ion-label text-wrap>{{
+                "_access.temporary" | translate
+              }}</ion-label>
+              <ion-toggle #toggleRef color="tertiary" slot="end"> </ion-toggle>
+            </ion-item>
+
+            <app-date-select-template
+              *ngIf="toggleRef.checked"
+              name="_access.expirationDate"
+              [(date)]="expiresAt"
+            ></app-date-select-template>
+            <ion-button
+              color="success"
+              type="submit"
+              class="submit-button"
+              expand="block"
+              [disabled]="toggleRef.checked && !expiresAt"
+              (click)="onSubmit()"
+            >
+              {{ "_common.save" | translate }}
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

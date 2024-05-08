@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title
+      *ngIf="currentDirectoryDetails && currentDirectoryDetails.ownerTagName"
+    >
+      {{'_user.collection' |
+      translate:{ownerName:currentDirectoryDetails.ownerTagName} }}
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-breadcrumbs *ngIf="!!currentDirectoryDetails">
+    <ion-breadcrumb *ngIf="currentDirectoryDetails.name==='$COLLECTION_ROOT'">
+      <ion-chip>
+        <ion-icon name="person"></ion-icon>
+        <ion-label> {{currentDirectoryDetails.ownerTagName}} </ion-label>
+      </ion-chip>
+    </ion-breadcrumb>
+
+    <ng-container *ngIf="currentDirectoryDetails.name !=='$COLLECTION_ROOT'">
+      <ion-breadcrumb>
+        <ion-chip button color="success" (click)="loadCollectionDirectory()">
+          <ion-icon name="person"></ion-icon>
+          <ion-label> {{currentDirectoryDetails.ownerTagName}} </ion-label>
+        </ion-chip>
+        <ion-icon
+          *ngIf="!!currentDirectoryDetails.pathParentDirectories.length"
+          slot="separator"
+          name="chevron-forward"
+        ></ion-icon>
+      </ion-breadcrumb>
+
+      <ion-breadcrumb
+        *ngFor="let parentDirectory of currentDirectoryDetails.pathParentDirectories"
+      >
+        <ion-chip
+          button
+          [color]="uiHelper.accessibilityColor(parentDirectory.accessLevel)"
+          (click)="loadDirectory(parentDirectory.id)"
+        >
+          <ion-icon
+            *ngIf="parentDirectory.name==='$USER_ROOT'"
+            name="home"
+          ></ion-icon>
+          <ion-label>
+            {{ parentDirectory.name==='$USER_ROOT' ? ('_pages.home'| translate)
+            : parentDirectory.name}}
+          </ion-label>
+        </ion-chip>
+        <ion-icon slot="separator" name="chevron-forward"></ion-icon>
+      </ion-breadcrumb>
+      <ion-breadcrumb>
+        <ion-chip> {{currentDirectoryDetails.name}} </ion-chip>
+      </ion-breadcrumb>
+    </ng-container>
+  </ion-breadcrumbs>
+</ion-header>
+
+<ion-content class="content" *ngIf="currentDirectoryDetails">
+  <app-file-explorer
+    [directoryDetails]="currentDirectoryDetails"
+    [accessKey]="accessKey"
+    [isFilePseudoDirectory]="isFile"
+    (directoryChange)="loadDirectory($event)"
+  ></app-file-explorer>
+</ion-content>
