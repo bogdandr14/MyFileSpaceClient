@@ -58,7 +58,8 @@
     "login": "Logare",
     "register": "Înregistrare",
     "collection": "Coleție utilzator",
-    "management": "Administrare"
+    "management": "Administrare",
+    "favorites": "Fişiere favorite"
   },
   "_management": {
     "statistics": "Statistici",
@@ -115,7 +116,8 @@
     "binSize": "Coșul conține în prezent { size }.",
     "empty": "Gol",
     "collection": "Colecție",
-    "options": "Opțiuni"
+    "options": "Opțiuni",
+    "favoriteSize": "În prezent ai { size } la favorite"
   },
   "_search": {
     "files": "Fișiere",
@@ -182,7 +184,10 @@
     "choose": "Alege fişierul",
     "change": "Schimbă fişierul",
     "usedStorage": "Ați folosit { currentUsage } din cei { maxUsage } disponibili",
-    "storageUsage": "Utilizare stocare fișiere"
+    "storageUsage": "Utilizare stocare fișiere",
+    "addFavorite": "Adaugă la favorite",
+    "removeFavorite": "Şterge de la favorite",
+    "likedBy": "Numărul de aprecieri"
   },
   "_directory": {
     "properties": "Proprietăţi folder",

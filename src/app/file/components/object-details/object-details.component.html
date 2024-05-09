@@ -33,7 +33,10 @@
         <ion-text readonly>
           {{
             objectDetails.createdAt
-              | date: "medium":uiHelper.timeOffset:localeService.currentLocale
+              | date
+                : "medium"
+                : uiHelper.timeOffset
+                : localeService.currentLocale
           }}
         </ion-text>
       </ion-item>
@@ -60,6 +63,11 @@
       <ion-item *ngIf="isFile || objectDetails.isDeleted">
         <ion-label text-wrap> {{ "_common.size" | translate }}:</ion-label>
         <ion-text readonly>{{ size }}</ion-text>
+      </ion-item>
+
+      <ion-item *ngIf="isFile && !objectDetails.isDeleted">
+        <ion-label text-wrap> {{ "_file.likedBy" | translate }}:</ion-label>
+        <ion-text readonly>{{ objectDetails.watchingUsers.length }}</ion-text>
       </ion-item>
     </div>
   </ion-accordion>
@@ -90,6 +98,24 @@
             {{ "_file.download" | translate }}
           </ion-label>
         </ion-item>
+        <!-- <ion-item
+          *ngIf="isFavorite"
+          button
+          (click)="fileSystemHelper.removeFavorite(objectDetails)"
+        >
+          <ion-label class="danger">
+            {{ "_file.removeFavorite" | translate }}
+          </ion-label>
+        </ion-item>
+        <ion-item
+          *ngIf="!isFavorite"
+          button
+          (click)="fileSystemHelper.addFavorite(objectDetails)"
+        >
+          <ion-label class="danger">
+            {{ "_file.addFavorite" | translate }}
+          </ion-label>
+        </ion-item> -->
         <ng-container *ngIf="isOwner">
           <ion-item button (click)="openEdit()">
             <ion-label class="secondary">
@@ -187,9 +213,11 @@
             class="options"
             (click)="copyAccessLinkToClipboard()"
           >
-            <ion-label class="secondary" (click)="copyAccessLinkToClipboard()">{{
-              "_access.copyLink" | translate
-            }}</ion-label>
+            <ion-label
+              class="secondary"
+              (click)="copyAccessLinkToClipboard()"
+              >{{ "_access.copyLink" | translate }}</ion-label
+            >
           </ion-item>
           <ion-item *ngIf="!objectDetails.accessKey.expiresAt">
             <ion-label style="text-align: center">{{

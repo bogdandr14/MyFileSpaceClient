@@ -7,6 +7,7 @@
     interface="popover"
     [selectedText]="selectedLaguage.value | uppercase"
     (ngModelChange)="onLanguageChange($event)"
+    aria-label="Language select"
   >
     <ion-select-option
       *ngFor="let option of languageOptions"

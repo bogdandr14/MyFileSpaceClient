@@ -29,8 +29,6 @@ const routes: Routes = [
     loadChildren: () => import('./management/management.module').then( m => m.ManagementPageModule)
   },
 
-
-
 ];
 
 @NgModule({

@@ -58,7 +58,8 @@
     "login": "Login",
     "register": "Register",
     "collection": "User collection",
-    "management": "Administration"
+    "management": "Administration",
+    "favorites": "Favorite files"
   },
   "_management": {
     "statistics": "Statistics",
@@ -66,10 +67,10 @@
     "deleteCache": "Delete cache",
     "pastRetention": "Storage space used for files that have exceeded their retention period",
     "deletePastRetention": "Delete content past the retention period",
-    "count":"Total number of files",
-    "count30Days":"Files added in the last 30 days",
-    "storageUsage":"Total storage space utilization",
-    "storageUsage30Days":"Increase in space used since the last 30 days"
+    "count": "Total number of files",
+    "count30Days": "Files added in the last 30 days",
+    "storageUsage": "Total storage space utilization",
+    "storageUsage30Days": "Increase in space used since the last 30 days"
   },
   "_links": {
     "backToLogin": "Back to Login",
@@ -115,7 +116,9 @@
     "binSize": "The bin currently contains { size }.",
     "empty": "Empty",
     "collection": "Collection",
-    "options": "Options"
+    "options": "Options",
+    "favoriteSize": "You have { size } to your favorites"
+
   },
   "_search": {
     "files": "Files",
@@ -182,7 +185,10 @@
     "choose": "Choose file",
     "change": "Change file",
     "usedStorage": "You have used { currentUsage } of the { maxUsage } available",
-    "storageUsage": "File storage usage"
+    "storageUsage": "File storage usage",
+    "addFavorite": "Add to favorites",
+    "removeFavorite": "Remove from favorites",
+    "likedBy": "Number of ratings"
   },
   "_directory": {
     "properties": "Directory properties",

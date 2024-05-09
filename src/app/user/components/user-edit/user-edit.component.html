@@ -30,6 +30,7 @@
                     [(ngModel)]="userEdit.tagName"
                     tagnameCheck
                     required
+                    aria-label="Tagname"
                   ></ion-input>
                 </ion-item>
                 <app-validation-errors
@@ -50,6 +51,7 @@
                     #cpsw="ngModel"
                     [(ngModel)]="userEdit.password"
                     required
+                    aria-label="Password"
                   ></ion-input>
                 </ion-item>
                 <app-validation-errors [model]="cpsw"></app-validation-errors>

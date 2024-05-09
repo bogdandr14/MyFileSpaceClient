@@ -8,6 +8,7 @@ export class FileModel {
   sizeInBytes: number;
   contentType: string;
   directoryId: Guid;
+  watchingUsers: Guid[];
   ownerId: Guid;
   createdAt: Date;
   modifiedAt: Date;

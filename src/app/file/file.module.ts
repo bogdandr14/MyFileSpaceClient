@@ -16,6 +16,7 @@ import { AddAccessKeyComponent } from './components/add-access-key/add-access-ke
 import { SharedFilesPage } from './pages/shared-files/shared-files.page';
 import { MyFilesPage } from './pages/my-files/my-files.page';
 import { BinPage } from './pages/bin/bin.page';
+import { FavoritePage } from './pages/favorite/favorite.page';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { BinPage } from './pages/bin/bin.page';
     SharedFilesPage,
     MyFilesPage,
     BinPage,
+    FavoritePage,
     FileExplorerComponent,
     FileItemComponent,
     FileUploadComponent,

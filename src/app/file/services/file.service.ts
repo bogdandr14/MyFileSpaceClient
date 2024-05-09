@@ -27,7 +27,9 @@ export class FileService extends BaseService {
   }
 
   public findFiles(filter: InfiniteScrollFilter) {
-    return super.getOneByPath<FoundFilesModel>(`search/${this.turnFilterIntoUrl(filter)}`);
+    return super.getOneByPath<FoundFilesModel>(
+      `search/${this.turnFilterIntoUrl(filter)}`
+    );
   }
 
   public getFileInfo(
@@ -78,6 +80,24 @@ export class FileService extends BaseService {
     return super.update(null, `move/${fileId.toString()}`, {
       directoryId: directoryId.toString(),
     });
+  }
+
+  public addFavorite(fileId: Guid) {
+    return super.add(
+      null,
+      `favorite/${fileId.toString()}`,
+      null,
+      BaseService.noLoadingConfig
+    );
+  }
+
+  public removeFavorite(fileId: Guid) {
+    return super.remove(
+      fileId,
+      `favorite`,
+      null,
+      BaseService.noLoadingConfig
+    );
   }
 
   public restoreFile(fileId: Guid, directoryId?: Guid) {

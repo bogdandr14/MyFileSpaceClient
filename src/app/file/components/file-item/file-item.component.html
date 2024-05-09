@@ -1,5 +1,15 @@
 <ion-chip class="container">
   <ion-icon
+    button
+    *ngIf="isFavorite"
+    name="heart"
+    size="large"
+    class="favorite"
+    color="danger"
+    (click)="fileSystemHelper.removeFavorite(file)"
+  ></ion-icon>
+
+  <ion-icon
     id="{{ file.name }}-trigger"
     size="large"
     class="file-icon"
@@ -43,6 +53,15 @@
         >
           <ion-label class="success">
             {{ "_file.download" | translate }}
+          </ion-label>
+        </ion-item>
+        <ion-item
+          button
+          *ngIf="!isFavorite && (authService.isLoggedIn$ | async)"
+          (click)="fileSystemHelper.addFavorite(file)"
+        >
+          <ion-label class="danger">
+            {{ "_file.addFavorite" | translate }}
           </ion-label>
         </ion-item>
         <ion-item button (click)="showDetails.emit()">

@@ -4,32 +4,44 @@ import { BinPage } from './pages/bin/bin.page';
 
 import { MyFilesPage } from './pages/my-files/my-files.page';
 import { SharedFilesPage } from './pages/shared-files/shared-files.page';
+import { FavoritePage } from './pages/favorite/favorite.page';
+import { AuthGuard } from '../core/guards/auth.guard';
 
 const routes: Routes = [
-
   {
     path: 'shared',
     component: SharedFilesPage,
-    data: { title: '_pages.sharedFiles' }
+    canLoad: [AuthGuard],
+    data: { title: '_pages.sharedFiles' },
   },
   {
     path: 'bin',
     component: BinPage,
-    data: { title: '_pages.bin' }
+    canLoad: [AuthGuard],
+    data: { title: '_pages.bin' },
+  },
+  {
+    path: 'favorite',
+    component: FavoritePage,
+    canLoad: [AuthGuard],
+    data: { title: '_pages.favorites' },
   },
   {
     path: 'mine',
     component: MyFilesPage,
-    data: { title: '_pages.myFiles' }
+    canLoad: [AuthGuard],
+    data: { title: '_pages.myFiles' },
   },
   {
     path: 'mine/:id',
     component: MyFilesPage,
-    data: { title: '_pages.myFiles' }
+    canLoad: [AuthGuard],
+    data: { title: '_pages.myFiles' },
   },
   {
     path: '',
     component: MyFilesPage,
+    canLoad: [AuthGuard],
     data: { title: '_pages.myFiles' },
   },
 ];
