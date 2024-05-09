@@ -4,6 +4,8 @@ export const environment = {
   defaultLanguage: 'en',
   appSettings: {
     version: '',
-    languages: [],
+    languages: [
+      { translationKey: "languageEN", iso: "en-US", languageKey: "en" },
+      { translationKey: "languageRO", iso: "ro-RO", languageKey: "ro" }],
   },
 };
