@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" >
+<ion-content [fullscreen]="true">
   <ion-card id="fixed-search-card" class="search-input">
     <ion-grid>
       <ion-row>
@@ -20,9 +20,7 @@
             >
               <ion-segment-button layout="icon-start" [value]="1">
                 <ion-icon name="document"></ion-icon>
-                <ion-label class="hide-mobile">
-                  {{ "_search.files" | translate }}
-                </ion-label>
+                <ion-label> {{ "_search.files" | translate }} </ion-label>
               </ion-segment-button>
               <ion-segment-button
                 layout="icon-start"
@@ -30,9 +28,7 @@
                 backgroundcolor="secondary"
               >
                 <ion-icon name="person"></ion-icon>
-                <ion-label class="hide-mobile">
-                  {{ "_search.users" | translate }}
-                </ion-label>
+                <ion-label> {{ "_search.users" | translate }} </ion-label>
               </ion-segment-button>
             </ion-segment>
           </ion-item>
@@ -53,6 +49,7 @@
             <ion-checkbox
               color="tertiary"
               slot="start"
+              aria-label="include self"
               (ionChange)="toggleIncludeOwn($event)"
             ></ion-checkbox>
             <ion-label text-wrap>
@@ -64,9 +61,13 @@
     </ion-grid>
   </ion-card>
 
-  <ion-grid id="search-content" class="search-result" [style.margin-top.px]="fixedCardHeight">
+  <ion-grid
+    id="search-content"
+    class="search-result"
+    [style.margin-top.px]="fixedCardHeight"
+  >
     <ion-row>
-      <ng-container *ngIf="searchType == 1 && files && files.length">
+      <ng-container *ngIf="searchFiles && files && files.length">
         <ion-col size="12" size-lg="6" size-xl="4" *ngFor="let file of files">
           <app-file-card
             (click)="openFileDetailsMenu(file.id)"
@@ -75,13 +76,13 @@
         </ion-col>
       </ng-container>
 
-      <ng-container *ngIf="searchType == 2 && users && users.length">
+      <ng-container *ngIf="!searchFiles && users && users.length">
         <ion-col size="12" size-lg="6" size-xl="4" *ngFor="let user of users">
           <app-user-card [user]="user"></app-user-card>
         </ion-col>
       </ng-container>
       <ng-container
-        *ngIf="(searchType == 1 && files && !files.length) || (searchType == 2 && users && !users.length)"
+        *ngIf="(searchFiles && files && !files.length) || (!searchFiles && users && !users.length)"
       >
         <ion-col
           size="12"

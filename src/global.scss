@@ -195,3 +195,9 @@ ion-card.user {
     var(--ion-color-warning-shade)
   );
 }
+
+@media screen and (max-width: 768px) {
+  .hide-mobile {
+    display: none;
+  }
+}

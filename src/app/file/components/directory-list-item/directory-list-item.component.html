@@ -1,15 +1,31 @@
 <ion-chip button (click)="directoryChange.emit(directory.id)">
-  <ion-icon
-    id="{{ directory.name }}-trigger"
-    size="large"
-    class="file-icon"
-    name="folder"
-    [color]="uiHelper.accessibilityColor(directory.accessLevel)"
-    (click)="directoryChange.emit(directory.id)"
-  ></ion-icon>
-  <ion-label (click)="directoryChange.emit(directory.id)">
-    {{ directory.name }}
-  </ion-label>
+  <div class="chip-content">
+    <ion-icon
+      id="{{ directory.name }}-trigger"
+      size="large"
+      class="file-icon"
+      name="folder"
+      [color]="uiHelper.accessibilityColor(directory.accessLevel)"
+      (click)="directoryChange.emit(directory.id)"
+    ></ion-icon>
+    <div class="details">
+      <ion-label
+        class="directory-name"
+        (click)="directoryChange.emit(directory.id)"
+      >
+        {{ directory.name }}
+      </ion-label>
+      <ion-label class="directory-path">
+        {{
+          directory.modifiedAt
+            | date
+              : "medium"
+              : uiHelper.timeOffset
+              : localeService.currentLocale
+        }}
+      </ion-label>
+    </div>
+  </div>
 </ion-chip>
 
 <ion-popover

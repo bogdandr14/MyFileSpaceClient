@@ -17,6 +17,9 @@ import { SharedFilesPage } from './pages/shared-files/shared-files.page';
 import { MyFilesPage } from './pages/my-files/my-files.page';
 import { BinPage } from './pages/bin/bin.page';
 import { FavoritePage } from './pages/favorite/favorite.page';
+import { FileListItemComponent } from './components/file-list-item/file-list-item.component';
+import { ListExplorerComponent } from './components/list-explorer/list-explorer.component';
+import { DirectoryListItemComponent } from './components/directory-list-item/directory-list-item.component';
 
 @NgModule({
   imports: [
@@ -39,7 +42,14 @@ import { FavoritePage } from './pages/favorite/favorite.page';
     ObjectDetailsComponent,
     EditAccessComponent,
     AddAccessKeyComponent,
+    FileListItemComponent,
+    ListExplorerComponent,
+    DirectoryListItemComponent,
   ],
-  exports: [FileExplorerComponent, ObjectDetailsComponent],
+  exports: [
+    FileExplorerComponent,
+    ListExplorerComponent,
+    ObjectDetailsComponent,
+  ],
 })
 export class FilePageModule {}

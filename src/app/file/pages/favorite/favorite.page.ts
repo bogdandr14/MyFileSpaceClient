@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FileModel } from '../../models/file.model';
 import { DirectoryDetailsModel } from '../../models/directory-details.model';
-import { forkJoin } from 'rxjs';
 import { ActionType } from 'src/app/core/models/action-type.enum';
 import { ObjectChangeModel } from 'src/app/core/models/object-change.model';
-import { ObjectType } from 'src/app/core/models/object-type.enum';
 import { DataService } from 'src/app/core/services/data.service';
 import { UiHelperService } from 'src/app/core/services/ui-helper.service';
 import { AccessLevel } from 'src/app/shared/models/access-level.enum';
-import { DirectoryModel } from '../../models/directory.model';
 import { FileService } from '../../services/file.service';
 import { UserService } from 'src/app/user/user.service';
 

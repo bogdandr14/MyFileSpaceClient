@@ -123,7 +123,10 @@
     "files": "Fișiere",
     "users": "Utilizatori",
     "noResultsFound": "Niciun rezultat găsit",
-    "includeSelf": "Inclusiv eu"
+    "includeSelf": "Inclusiv eu",
+    "hierarchy":"Ierarhie în foldere",
+    "list":"Listă cu toate",
+    "includeDirectories":"Inclusiv foldere"
   },
   "_accessLevel": {
     "name": "Nivel acces",

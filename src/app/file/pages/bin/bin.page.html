@@ -5,21 +5,48 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
-  <ion-breadcrumbs *ngIf="binPseudoDirectory">
-    <ion-breadcrumb>
-      <ion-chip>
-        <ion-icon name="trash"></ion-icon>
-        <ion-label>
-          {{('_common.binSize'| translate : {size: totalSize})}}
-        </ion-label>
-      </ion-chip>
-    </ion-breadcrumb>
-  </ion-breadcrumbs>
+  <ion-segment value="1" color="tertiary" (ionChange)="toggleViewType($event)">
+    <ion-segment-button layout="icon-start" value="1">
+      <ion-icon name="folder-open"></ion-icon>
+      <ion-label class="hide-mobile">
+        {{ "_search.hierarchy" | translate }}
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button
+      layout="icon-start"
+      value="2"
+      backgroundcolor="secondary"
+    >
+      <ion-icon name="list"></ion-icon>
+      <ion-label class="hide-mobile">
+        {{ "_search.list" | translate }}
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
 </ion-header>
 
 <ion-content class="content" *ngIf="binPseudoDirectory">
-  <app-file-explorer
-    [directoryDetails]="binPseudoDirectory"
-    [directorySizes]="directorySizes"
-  ></app-file-explorer>
+  <ng-container *ngIf="viewHierarchy; else listView">
+    <ion-breadcrumbs *ngIf="binPseudoDirectory">
+      <ion-breadcrumb>
+        <ion-chip>
+          <ion-icon name="trash"></ion-icon>
+          <ion-label>
+            {{('_common.binSize'| translate : {size: totalSize})}}
+          </ion-label>
+        </ion-chip>
+      </ion-breadcrumb>
+    </ion-breadcrumbs>
+    <app-file-explorer
+      [directoryDetails]="binPseudoDirectory"
+      [directorySizes]="directorySizes"
+    ></app-file-explorer>
+  </ng-container>
+  <ng-template #listView>
+    <app-list-explorer
+      [allDirectories]="deletedDirectories"
+      [allFiles]="deletedFiles"
+    >
+    </app-list-explorer>
+  </ng-template>
 </ion-content>

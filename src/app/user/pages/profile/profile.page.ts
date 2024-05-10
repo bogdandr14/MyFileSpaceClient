@@ -9,6 +9,7 @@ import { UiHelperService } from 'src/app/core/services/ui-helper.service';
 import { CurrentUserModel } from '../../models/current-user.model';
 import { UserDetailsModel } from '../../models/user-details.model';
 import { UserService } from '../../user.service';
+import { ManagementService } from 'src/app/management/management.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +17,8 @@ import { UserService } from '../../user.service';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  public readonly maxStorage = 4294967296; //4GB
+  private readonly bytesInGB = 1073741824;
+  public maxStorage = 4294967296; //4GB
   public userInfo: CurrentUserModel | UserDetailsModel;
 
   get isAdmin() {
@@ -56,10 +58,15 @@ export class ProfilePage implements OnInit {
     private clipboardService: ClipboardService,
     private alertService: AlertService,
     public localeService: LocaleService,
+    public managementService: ManagementService,
     public uiHelper: UiHelperService
   ) {}
 
   ngOnInit() {
+    this.managementService
+      .getAllowedStorage()
+      .pipe(take(1))
+      .subscribe((storage) => (this.maxStorage = storage.size * 1073741824));
     this.route.paramMap
       .pipe(
         switchMap((params) => {

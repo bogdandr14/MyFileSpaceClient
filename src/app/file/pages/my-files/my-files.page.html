@@ -5,95 +5,124 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
-  <ion-breadcrumbs *ngIf="!!directoryDetails">
-    <ion-breadcrumb *ngIf="directoryDetails.name==='$USER_ROOT'">
-      <ion-chip>
-        <ion-icon name="home"></ion-icon>
-        <ion-label> {{'_pages.home'| translate}} </ion-label>
-      </ion-chip>
-    </ion-breadcrumb>
-    <ng-container *ngIf="directoryDetails.name !=='$USER_ROOT'">
-      <ion-breadcrumb
-        *ngFor="let parentDirectory of directoryDetails.pathParentDirectories"
-      >
-        <ion-chip
-          button
-          [color]="uiHelper.accessibilityColor(parentDirectory.accessLevel)"
-          (click)="loadDirectory(parentDirectory.id)"
-        >
-          <ion-icon
-            *ngIf="parentDirectory.name==='$USER_ROOT'"
-            name="home"
-          ></ion-icon>
-          <ion-label>
-            {{ parentDirectory.name==='$USER_ROOT' ? ('_pages.home'| translate)
-            : parentDirectory.name}}
-          </ion-label>
-        </ion-chip>
-        <ion-icon slot="separator" name="chevron-forward"></ion-icon>
-      </ion-breadcrumb>
-      <ion-breadcrumb>
-        <ion-chip> {{directoryDetails.name}} </ion-chip>
-      </ion-breadcrumb>
-    </ng-container>
-  </ion-breadcrumbs>
+
+  <ion-segment value="1" color="tertiary" (ionChange)="toggleViewType($event)">
+    <ion-segment-button layout="icon-start" value="1">
+      <ion-icon name="folder-open"></ion-icon>
+      <ion-label class="hide-mobile">
+        {{ "_search.hierarchy" | translate }}
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button
+      layout="icon-start"
+      value="2"
+      backgroundcolor="secondary"
+    >
+      <ion-icon name="list"></ion-icon>
+      <ion-label class="hide-mobile">
+        {{ "_search.list" | translate }}
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
 </ion-header>
 
 <ion-content class="content" *ngIf="directoryDetails">
-  <ion-fab slot="fixed" vertical="top" horizontal="end" [edge]="true">
-    <ion-fab-button [color]="isObjectCut ? 'warning':'success'">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="bottom">
-      <ion-fab-button id="open-file-upload" color="success" title="Add file">
-        <ion-icon name="document"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button
-        id="open-directory-edit"
-        color="success"
-        title="Add directory"
-      >
-        <ion-icon name="folder"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button
-        (click)="pasteHere()"
-        *ngIf="!!isObjectCut"
-        [color]="canPasteHere ? 'warning':'step-500'"
-        [disabled]="!canPasteHere"
-        [title]="canPasteHere? 'Paste here': 'Can not paste here'"
-      >
-        <ion-icon [name]="objectCutType === 1 ? 'document':'folder'"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button
-        *ngIf="directoryDetails.accessLevel !== 1 && directoryDetails.accessKey"
-        color="secondary"
-        title="Copy access link"
-        (click)="copyAccessLinkToClipboard()"
-      >
-        <ion-icon name="link"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
-  <app-file-explorer
-    [directoryDetails]="directoryDetails"
-    (directoryChange)="loadDirectory($event)"
-  ></app-file-explorer>
+  <ng-container *ngIf="viewHierarchy; else listView">
+    <ion-breadcrumbs *ngIf="!!directoryDetails">
+      <ion-breadcrumb *ngIf="directoryDetails.name==='$USER_ROOT'">
+        <ion-chip>
+          <ion-icon name="home"></ion-icon>
+          <ion-label> {{'_pages.home'| translate}} </ion-label>
+        </ion-chip>
+      </ion-breadcrumb>
+      <ng-container *ngIf="directoryDetails.name !=='$USER_ROOT'">
+        <ion-breadcrumb
+          *ngFor="let parentDirectory of directoryDetails.pathParentDirectories"
+        >
+          <ion-chip
+            button
+            [color]="uiHelper.accessibilityColor(parentDirectory.accessLevel)"
+            (click)="loadDirectory(parentDirectory.id)"
+          >
+            <ion-icon
+              *ngIf="parentDirectory.name==='$USER_ROOT'"
+              name="home"
+            ></ion-icon>
+            <ion-label>
+              {{ parentDirectory.name==='$USER_ROOT' ? ('_pages.home'|
+              translate) : parentDirectory.name}}
+            </ion-label>
+          </ion-chip>
+          <ion-icon slot="separator" name="chevron-forward"></ion-icon>
+        </ion-breadcrumb>
+        <ion-breadcrumb>
+          <ion-chip> {{directoryDetails.name}} </ion-chip>
+        </ion-breadcrumb>
+      </ng-container>
+    </ion-breadcrumbs>
 
-  <ion-modal trigger="open-file-upload">
-    <ng-template>
-      <app-file-upload
-        *ngIf="!!directoryDetails"
-        [directoryId]="directoryDetails.id"
-      ></app-file-upload>
-    </ng-template>
-  </ion-modal>
+    <ion-fab slot="fixed" vertical="top" horizontal="end" [edge]="true">
+      <ion-fab-button [color]="isObjectCut ? 'warning':'success'">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-list side="bottom">
+        <ion-fab-button id="open-file-upload" color="success" title="Add file">
+          <ion-icon name="document"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button
+          id="open-directory-edit"
+          color="success"
+          title="Add directory"
+        >
+          <ion-icon name="folder"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button
+          (click)="pasteHere()"
+          *ngIf="!!isObjectCut"
+          [color]="canPasteHere ? 'warning':'step-500'"
+          [disabled]="!canPasteHere"
+          [title]="canPasteHere? 'Paste here': 'Can not paste here'"
+        >
+          <ion-icon
+            [name]="objectCutType === 1 ? 'document':'folder'"
+          ></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button
+          *ngIf="directoryDetails.accessLevel !== 1 && directoryDetails.accessKey"
+          color="secondary"
+          title="Copy access link"
+          (click)="copyAccessLinkToClipboard()"
+        >
+          <ion-icon name="link"></ion-icon>
+        </ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>
 
-  <ion-modal trigger="open-directory-edit">
-    <ng-template>
-      <app-object-edit
-        *ngIf="directoryDetails"
-        [parentDirectoryId]="directoryDetails.id"
-      ></app-object-edit>
-    </ng-template>
-  </ion-modal>
+    <app-file-explorer
+      [directoryDetails]="directoryDetails"
+      (directoryChange)="loadDirectory($event)"
+    ></app-file-explorer>
+
+    <ion-modal trigger="open-file-upload">
+      <ng-template>
+        <app-file-upload
+          *ngIf="!!directoryDetails"
+          [directoryId]="directoryDetails.id"
+        ></app-file-upload>
+      </ng-template>
+    </ion-modal>
+
+    <ion-modal trigger="open-directory-edit">
+      <ng-template>
+        <app-object-edit
+          *ngIf="directoryDetails"
+          [parentDirectoryId]="directoryDetails.id"
+        ></app-object-edit>
+      </ng-template>
+    </ion-modal>
+  </ng-container>
+  <ng-template #listView>
+    <app-list-explorer [allDirectories]="allDirectories" [allFiles]="allFiles">
+    </app-list-explorer>
+  </ng-template>
 </ion-content>

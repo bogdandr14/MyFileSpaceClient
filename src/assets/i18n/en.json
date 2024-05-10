@@ -124,7 +124,10 @@
     "files": "Files",
     "users": "Users",
     "noResultsFound": "No results found",
-    "includeSelf": "Myself included"
+    "includeSelf": "Myself included",
+    "hierarchy":"Directory hierarchy",
+    "list":"List with all",
+    "includeDirectories":"Directories included"
   },
   "_accessLevel": {
     "name": "Access level",

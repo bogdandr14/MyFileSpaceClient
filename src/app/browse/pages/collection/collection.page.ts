@@ -1,15 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
-import {
-  combineLatest,
-  iif,
-  mergeMap,
-  of,
-  switchMap,
-  take,
-  tap,
-} from 'rxjs';
+import { combineLatest, iif, mergeMap, of, switchMap, take } from 'rxjs';
 import { ObjectType } from 'src/app/core/models/object-type.enum';
 import { UiHelperService } from 'src/app/core/services/ui-helper.service';
 import { DirectoryDetailsModel } from 'src/app/file/models/directory-details.model';
@@ -25,7 +17,6 @@ import { UserService } from 'src/app/user/user.service';
   styleUrls: ['./collection.page.scss'],
 })
 export class CollectionPage implements OnInit {
-  private collectionOwner: UserDetailsModel;
   private readonly collectionDirectory = {
     id: Guid.createEmpty(),
     name: '$COLLECTION_ROOT',
@@ -35,13 +26,15 @@ export class CollectionPage implements OnInit {
   } as DirectoryDetailsModel;
   private accessedDirectories: DirectoryDetailsModel[];
   private objectType = ObjectType.Directory;
+  public collectionOwner: UserDetailsModel;
   public currentDirectoryDetails: DirectoryDetailsModel;
   public accessKey: string;
+  public viewHierarchy = true;
 
   public get isFile() {
     return this.objectType == ObjectType.File;
   }
-  
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -124,6 +117,7 @@ export class CollectionPage implements OnInit {
     const accessedDirectory = this.accessedDirectories.find(
       (x) => x.id == directoryId
     );
+    this.viewHierarchy = true;
     if (accessedDirectory) {
       this.router.navigate(
         ['browse/collection/', this.collectionOwner.userId],
@@ -147,6 +141,10 @@ export class CollectionPage implements OnInit {
         this.currentDirectoryDetails = directory;
         this.accessedDirectories.push(directory);
       });
+  }
+
+  toggleViewType($event) {
+    this.viewHierarchy = $event.detail.value == '1';
   }
 
   getGuid(id) {

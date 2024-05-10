@@ -27,7 +27,7 @@ export class SearchPage implements AfterViewInit {
   private filter: InfiniteScrollFilter;
   private searchText: string;
   private lastTaken: number;
-  public searchType = 1;
+  public searchFiles = true;
 
   public includeOwn: boolean = false;
   public files: FileModel[];
@@ -62,7 +62,7 @@ export class SearchPage implements AfterViewInit {
   }
 
   toggleSearchType($event) {
-    this.searchType = $event.detail.value as number;
+    this.searchFiles = $event.detail.value == '1';
     if (!!this.searchText) {
       this.findFirst();
     }
@@ -87,7 +87,7 @@ export class SearchPage implements AfterViewInit {
 
   private findFirst() {
     this.resetFilter();
-    if (this.searchType == 1) {
+    if (this.searchFiles) {
       this.fileService
         .findFiles(this.filter)
         .pipe(take(1))
@@ -117,7 +117,7 @@ export class SearchPage implements AfterViewInit {
 
   loadMore() {
     this.filter.skip += this.lastTaken;
-    if (this.searchType == 1) {
+    if (this.searchFiles) {
       this.fileService
         .findFiles(this.filter)
         .pipe(take(1))

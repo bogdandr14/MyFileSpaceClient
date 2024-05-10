@@ -22,13 +22,13 @@ export class UiHelperService {
     const offsetFormatted = `UTC${offsetSign}${offsetHours * 2}`;
     return offsetFormatted;
   }
-  
+
   public computeSize(size: number) {
     if (!size) {
       size = 0;
     }
     let i = 0;
-    while (size > 1024) {
+    while (size >= 1024) {
       size /= 1024;
       ++i;
     }
@@ -73,5 +73,4 @@ export class UiHelperService {
     }
     return 'document';
   }
-
 }

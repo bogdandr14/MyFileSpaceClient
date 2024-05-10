@@ -3,7 +3,7 @@ import { DataService } from './../../../core/services/data.service';
 import { Component, OnInit } from '@angular/core';
 import { DirectoryService } from '../../services/directory.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, iif, take, tap, of } from 'rxjs';
+import { switchMap, iif, take, tap, of, forkJoin } from 'rxjs';
 import { DirectoryDetailsModel } from '../../models/directory-details.model';
 import { Guid } from 'guid-typescript';
 import { ObjectType } from '../../../core/models/object-type.enum';
@@ -25,6 +25,10 @@ export class MyFilesPage implements OnInit {
   public directoryDetails: DirectoryDetailsModel;
   private accessedDirectories: DirectoryDetailsModel[] = [];
   private objectCut: ObjectMoveModel;
+
+  public allFiles: FileModel[];
+  public allDirectories: DirectoryModel[];
+  public viewHierarchy = true;
 
   get isObjectCut() {
     return !!this.objectCut;
@@ -147,6 +151,9 @@ export class MyFilesPage implements OnInit {
   handleFileChange(fileChange: ObjectChangeModel) {
     const file = fileChange.changedObject as FileModel;
     if (fileChange.action == ActionType.Add) {
+      if (this.allFiles) {
+        this.allFiles.push(file);
+      }
       this.directoryDetails.files.push(file);
     } else if (fileChange.action == ActionType.Edit) {
       const index = this.directoryDetails.files.findIndex(
@@ -158,6 +165,9 @@ export class MyFilesPage implements OnInit {
         this.directoryDetails.files.push(file);
       }
     } else if (fileChange.action == ActionType.Delete) {
+      if (this.allFiles) {
+        this.allFiles = this.allFiles.filter((x) => x.id !== file.id);
+      }
       const index = this.directoryDetails.files.findIndex(
         (obj) => obj.id === file.id
       );
@@ -182,6 +192,9 @@ export class MyFilesPage implements OnInit {
   handleDirectoryChange(directoryChange: ObjectChangeModel) {
     const directory = directoryChange.changedObject as DirectoryModel;
     if (directoryChange.action == ActionType.Add) {
+      if (this.allDirectories) {
+        this.allDirectories.push(directory);
+      }
       this.directoryDetails.childDirectories.push(directory);
     } else if (directoryChange.action == ActionType.Edit) {
       let updatedChildDirectoryIndex =
@@ -222,6 +235,11 @@ export class MyFilesPage implements OnInit {
         }
       }
     } else if (directoryChange.action == ActionType.Delete) {
+      if (this.allDirectories) {
+        this.allDirectories = this.allDirectories.filter(
+          (x) => x.id !== directory.id
+        );
+      }
       const index = this.directoryDetails.childDirectories.findIndex(
         (obj) => obj.id === directory.id
       );
@@ -266,11 +284,31 @@ export class MyFilesPage implements OnInit {
     }
   }
 
+  toggleViewType($event) {
+    const newVal = $event.detail.value == '1';
+    if (!newVal && !this.allFiles) {
+      forkJoin([
+        this.fileService.getAllFiles(),
+        this.directoryService.getAllDirectories(),
+      ]).subscribe(([files, directories]) => {
+        this.allFiles = files;
+        this.allDirectories = directories.filter(
+          (x) => x.name !== '$USER_ROOT'
+        );
+        this.viewHierarchy = newVal;
+      });
+    } else {
+      this.viewHierarchy = newVal;
+    }
+  }
+
   loadDirectory(directoryId: Guid) {
     const accessedDirectory = this.accessedDirectories.find(
       (x) => x.id === directoryId
     );
-    
+
+    this.viewHierarchy = true;
+
     if (accessedDirectory) {
       this.router.navigate(['/file/mine'], {
         queryParams: { id: directoryId },
