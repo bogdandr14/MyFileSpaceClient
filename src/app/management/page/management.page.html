@@ -35,7 +35,7 @@
               <ion-item>
                 <ion-label text-wrap>
                   {{ "_management.pastRetention" | translate }}:
-                  {{statistics.sizeMbPastRetentionTime}}
+                  {{statistics.sizeMbPastRetentionTime.toFixed(2)}} MB
                 </ion-label>
               </ion-item>
               <ion-button color="danger" (click)="deleteFilesPastRetention()">

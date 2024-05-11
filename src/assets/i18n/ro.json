@@ -35,7 +35,8 @@
     "availableFiles": "Fișiere disponibile",
     "availableDirectories": "Foldere disponibile",
     "storedContent": "Conținut stocat",
-    "collection": "Colecția lui {ownerName}"
+    "collection": "Colecția lui {ownerName}",
+    "invalidLink": "Linkul pe care l-ați accesat este invalid"
   },
   "_updates": {
     "markAsChecked": "Marchează ca văzut",
@@ -59,7 +60,12 @@
     "register": "Înregistrare",
     "collection": "Coleție utilzator",
     "management": "Administrare",
-    "favorites": "Fişiere favorite"
+    "favorites": "Fişiere favorite",
+    "sendConfirmation": "Retrimite confirmare email",
+    "sendResetPassword": "Trimite link de resetare parolă",
+    "sendMail": "Trimite e-mail",
+    "confirmMail": "Confirmare e-mail",
+    "resetPassword":"Resetare parolă"
   },
   "_management": {
     "statistics": "Statistici",
@@ -74,7 +80,10 @@
   },
   "_links": {
     "backToLogin": "Înapoi la autentificare",
-    "registerHere": "Înregistrează-te aici"
+    "registerHere": "Înregistrează-te aici",
+    "confirmEmail": "Retrimite confirmare email",
+    "resetPassword": "Ai auitat parola?",
+    "sendResetPassword": "Trimite link resetare"
   },
   "_common": {
     "you": "Tu",
@@ -124,9 +133,9 @@
     "users": "Utilizatori",
     "noResultsFound": "Niciun rezultat găsit",
     "includeSelf": "Inclusiv eu",
-    "hierarchy":"Ierarhie în foldere",
-    "list":"Listă cu toate",
-    "includeDirectories":"Inclusiv foldere"
+    "hierarchy": "Ierarhie în foldere",
+    "list": "Listă cu toate",
+    "includeDirectories": "Inclusiv foldere"
   },
   "_accessLevel": {
     "name": "Nivel acces",
@@ -228,7 +237,8 @@
       "directoryDeleted": "Folderul și tot conținutul lui a fost mutat în coșul de gunoi",
       "directoryPermanentDeleted": "Directorul și tot conținutul său au fost șterse definitiv.",
       "directoryRestored": "Directorul și tot conținutul său au fost restaurate",
-      "accessKeyDeleted": "Link-ul de acces a fost șters"
+      "accessKeyDeleted": "Link-ul de acces a fost șters",
+      "mailSent": "Cererea a fost trimisă. Verificaţi căsuţa de e-mail"
     },
     "success": "Succes",
     "_success": {
@@ -239,10 +249,12 @@
       "directoryEdit": "Folderul a fost actualizat cu succes",
       "directoryMove": "Folderul a fost mutat cu succes",
       "userAccessEdit": "Accesul utilizatorilor a fost editat cu succes",
-      "register": "Contul a fost creat cu success! Logează-te pentru a accesa contul",
+      "register": "Contul a fost creat! Vă rugăm să verificați căsuţa de e-mail pentru validarea contului",
       "login": "Bine ai revenit!",
       "changePassword": "Parola a fost schimbată cu succes!",
-      "preferencesSaved": "Preferințele au fost salvate cu succes!"
+      "preferencesSaved": "Preferințele au fost salvate cu succes!",
+      "emailConfirmed": "Adresa de E-mail a fost confirmată. Acum vă puteți conecta!",
+      "resetPassword": "Parola a fost resetată. Logează-te pentru a accesa contul"
     },
     "warning": "Avertisment",
     "_warning": {

@@ -60,6 +60,10 @@ export class AuthService extends BaseService {
     return super.update<void>(changePassword, 'changePassword');
   }
 
+  public confirmEmail(key: string) {
+    return super.update(key, 'confirmMail');
+  }
+
   public logout(): void {
     this.timerSubscription.unsubscribe();
     this.dataService.removeToken();

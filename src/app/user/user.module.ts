@@ -12,6 +12,9 @@ import { UserSearchComponent } from './components/user-search/user-search.compon
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { StorageUsageComponent } from './components/storage-usage/storage-usage.component';
 import { SettingsModule } from '../settings/settings.module';
+import { SendMailPage } from './pages/send-mail/send-mail.page';
+import { ConfirmPage } from './pages/confirm/confirm.page';
+import { ResetPasswordPage } from './pages/reset-password/reset-password.page';
 
 @NgModule({
   declarations: [
@@ -22,10 +25,13 @@ import { SettingsModule } from '../settings/settings.module';
     EmailCheckDirective,
     UserSearchComponent,
     UserEditComponent,
-    StorageUsageComponent
+    StorageUsageComponent,
+    SendMailPage,
+    ConfirmPage,
+    ResetPasswordPage,
   ],
   imports: [SharedModule, UserPageRoutingModule, SettingsModule],
-  exports:[UserSearchComponent],
+  exports: [UserSearchComponent],
   providers: [Clipboard],
 })
 export class UserPageModule {}

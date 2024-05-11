@@ -1,3 +1,4 @@
+import { MailRequestModel } from './models/mail-request.model';
 import { UserEditModel } from './models/user-edit.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -45,18 +46,24 @@ export class UserService extends BaseService {
 
   public checkTagnameTaken(tagName: string): Observable<boolean> {
     return super.getOneByPath<boolean>(
-      `availability/tagname/${tagName}`, null, BaseService.noLoadingConfig
+      `availability/tagname/${tagName}`,
+      null,
+      BaseService.noLoadingConfig
     );
   }
 
   public checkEmailTaken(email: string): Observable<boolean> {
     return super.getOneByPath<boolean>(
-      `availability/email/${email}`, null, BaseService.noLoadingConfig
+      `availability/email/${email}`,
+      null,
+      BaseService.noLoadingConfig
     );
   }
 
   public findUsers(filter: InfiniteScrollFilter) {
-    return super.getOneByPath<FoundUsersModel>(`search/${this.turnFilterIntoUrl(filter)}`);
+    return super.getOneByPath<FoundUsersModel>(
+      `search/${this.turnFilterIntoUrl(filter)}`
+    );
   }
 
   public getPersonalInfo(): Observable<CurrentUserModel> {
@@ -68,6 +75,10 @@ export class UserService extends BaseService {
   }
 
   public updateUser(userEdit: UserEditModel) {
-    return  super.update<UserEditModel>(userEdit);
+    return super.update<UserEditModel>(userEdit);
+  }
+
+  public sendMail(mailRequest: MailRequestModel) {
+    return super.add(mailRequest, 'sendMail');
   }
 }

@@ -84,6 +84,31 @@
                 >
                   {{ "_links.registerHere" | translate }}
                 </ion-button>
+
+                <ion-button
+                  type="button"
+                  color="secondary"
+                  fill="clear"
+                  expand="block"
+                  [routerLink]="['/user/sendmail']"
+                  [queryParams]="{ type: 'confirmation' }"
+                  routerLinkActive="selected"
+                  routerDirection="root"
+                >
+                  {{ "_links.confirmEmail" | translate }}
+                </ion-button>
+                <ion-button
+                  type="button"
+                  color="secondary"
+                  fill="clear"
+                  expand="block"
+                  [routerLink]="['/user/sendmail']"
+                  [queryParams]="{ type: 'resetpassword' }"
+                  routerLinkActive="selected"
+                  routerDirection="root"
+                >
+                  {{ "_links.resetPassword" | translate }}
+                </ion-button>
               </ion-col>
             </ion-row>
           </ion-card-content>

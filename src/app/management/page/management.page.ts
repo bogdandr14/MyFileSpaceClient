@@ -19,7 +19,7 @@ export class ManagementPage implements OnInit, OnDestroy {
   public cacheUsage: MemoryUsedModel;
   public get memoryUsed() {
     return this.cacheUsage
-      ? `${this.cacheUsage.size} ${this.cacheUsage.scale}`
+      ? `${this.cacheUsage.size.toFixed(2)} ${this.cacheUsage.scale}`
       : '';
   }
   constructor(
