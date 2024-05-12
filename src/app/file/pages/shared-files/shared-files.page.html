@@ -26,6 +26,9 @@
 </ion-header>
 
 <ion-content class="content" *ngIf="currentDirectoryDetails">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ng-container *ngIf="viewHierarchy; else listView">
     <ion-breadcrumbs *ngIf="!!currentDirectoryDetails">
       <ion-breadcrumb *ngIf="currentDirectoryDetails.name==='$SHARED_ROOT'">
@@ -72,6 +75,7 @@
     <app-list-explorer
       [allDirectories]="currentUser.allowedDirectories"
       [allFiles]="currentUser.allowedFiles"
+      [isReloading]="isReloading"
     >
     </app-list-explorer>
   </ng-template>

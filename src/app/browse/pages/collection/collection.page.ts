@@ -44,11 +44,12 @@ export class CollectionPage implements OnInit {
     public uiHelper: UiHelperService
   ) {}
 
-  ngOnInit() {
-    combineLatest([this.route.queryParams, this.route.paramMap])
-      .pipe(
-        switchMap(([queryParams, paramMap]) => {
-          return this.userService.getUser(paramMap.get('id')).pipe(
+  private initialLoadObservable(internalRefresh: boolean) {
+    return combineLatest([this.route.queryParams, this.route.paramMap]).pipe(
+      switchMap(([queryParams, paramMap]) => {
+        return this.userService
+          .getUser(paramMap.get('id'), internalRefresh)
+          .pipe(
             mergeMap((user) => {
               const objectId = queryParams['id'];
               this.accessKey = queryParams['accessKey'];
@@ -60,7 +61,7 @@ export class CollectionPage implements OnInit {
                 iif<DirectoryDetailsModel, DirectoryDetailsModel>(
                   () => this.objectType == ObjectType.File,
                   this.fileService
-                    .getFileInfo(objectId, this.accessKey)
+                    .getFileInfo(objectId, this.accessKey, internalRefresh)
                     .pipe(
                       switchMap((file) =>
                         of(this.createFilePseudoDirectory(file))
@@ -68,30 +69,19 @@ export class CollectionPage implements OnInit {
                     ),
                   this.directoryService.getDirectoryInfo(
                     objectId,
-                    this.accessKey
+                    this.accessKey,
+                    internalRefresh
                   )
                 )
               );
             })
           );
-        }),
-        take(1)
-      )
-      .subscribe((directory) => {
-        this.currentDirectoryDetails = directory;
-        this.accessedDirectories = [directory];
-      });
+      }),
+      take(1)
+    );
   }
 
-  createFilePseudoDirectory(file: FileDetailsModel) {
-    const filePseudoDirectory = this.collectionDirectory;
-    filePseudoDirectory.name = '-';
-    filePseudoDirectory.files = [file];
-    filePseudoDirectory.childDirectories = [];
-    return filePseudoDirectory;
-  }
-
-  createCollectionDirectory(user: UserDetailsModel) {
+  private createCollectionDirectory(user: UserDetailsModel) {
     this.collectionOwner = user;
     this.collectionDirectory.ownerId = user.userId;
     this.collectionDirectory.ownerTagName = user.tagName;
@@ -110,10 +100,34 @@ export class CollectionPage implements OnInit {
     return this.collectionDirectory;
   }
 
-  loadCollectionDirectory() {
+  ngOnInit() {
+    this.initialLoadObservable(false).subscribe((directory) => {
+      this.currentDirectoryDetails = directory;
+      this.accessedDirectories = [directory];
+    });
+  }
+
+  handleRefresh(event) {
+    this.initialLoadObservable(true).subscribe((directory) => {
+      this.currentDirectoryDetails = directory;
+      this.accessedDirectories = [directory];
+      event.target.complete();
+    });
+  }
+
+  createFilePseudoDirectory(file: FileDetailsModel) {
+    const filePseudoDirectory = this.collectionDirectory;
+    filePseudoDirectory.name = '-';
+    filePseudoDirectory.files = [file];
+    filePseudoDirectory.childDirectories = [];
+    return filePseudoDirectory;
+  }
+
+  public loadCollectionDirectory() {
     this.currentDirectoryDetails = this.collectionDirectory;
   }
-  loadDirectory(directoryId: Guid) {
+
+  public loadDirectory(directoryId: Guid) {
     const accessedDirectory = this.accessedDirectories.find(
       (x) => x.id == directoryId
     );
@@ -143,11 +157,7 @@ export class CollectionPage implements OnInit {
       });
   }
 
-  toggleViewType($event) {
+  public toggleViewType($event) {
     this.viewHierarchy = $event.detail.value == '1';
-  }
-
-  getGuid(id) {
-    return id ? Guid.parse(id) : Guid.createEmpty();
   }
 }

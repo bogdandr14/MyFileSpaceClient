@@ -23,9 +23,10 @@ import { UiHelperService } from 'src/app/core/services/ui-helper.service';
 })
 export class MyFilesPage implements OnInit {
   public directoryDetails: DirectoryDetailsModel;
+  public isReloading = false;
   private accessedDirectories: DirectoryDetailsModel[] = [];
   private objectCut: ObjectMoveModel;
-
+  private countRefresh: number = 0;
   public allFiles: FileModel[];
   public allDirectories: DirectoryModel[];
   public viewHierarchy = true;
@@ -64,15 +65,15 @@ export class MyFilesPage implements OnInit {
     public uiHelper: UiHelperService
   ) {}
 
-  ngOnInit() {
-    this.route.queryParams
+  private initialLoadObservable(internalRefresh: boolean) {
+    return this.route.queryParams
       .pipe(
         switchMap((params) =>
           iif<Guid, Guid>(
             () => !!params['id'],
             of(this.getGuid(params['id'])),
             this.directoryService
-              .getAllDirectories()
+              .getAllDirectories(null, internalRefresh)
               .pipe(
                 switchMap((directories) =>
                   of(
@@ -85,14 +86,24 @@ export class MyFilesPage implements OnInit {
           )
         ),
         switchMap((directoryGuid) =>
-          this.directoryService.getDirectoryInfo(directoryGuid)
+          this.directoryService.getDirectoryInfo(
+            directoryGuid,
+            null,
+            internalRefresh
+          )
         )
       )
-      .pipe(take(1))
-      .subscribe((directory) => {
-        this.directoryDetails = directory;
-        this.accessedDirectories.push(directory);
-      });
+      .pipe(
+        take(1),
+        tap((directory) => {
+          this.directoryDetails = directory;
+          this.accessedDirectories = [directory];
+        })
+      );
+  }
+
+  ngOnInit() {
+    this.initialLoadObservable(false).subscribe();
 
     this.dataService.objectChange$.subscribe((objectChange) => {
       this.handleObjectChange(objectChange);
@@ -101,6 +112,32 @@ export class MyFilesPage implements OnInit {
     this.dataService.objectCut$.subscribe((objectCut) => {
       this.objectCut = objectCut;
     });
+  }
+
+  handleRefresh(event) {
+    this.isReloading = true;
+    this.initialLoadObservable(true).subscribe(() => {
+      this.determineReloadStop(event);
+    });
+
+    forkJoin([
+      this.fileService.getAllFiles(null, true),
+      this.directoryService.getAllDirectories(null, true),
+    ]).subscribe(([files, directories]) => {
+      this.allFiles = files;
+      this.allDirectories = directories.filter((x) => x.name !== '$USER_ROOT');
+      this.determineReloadStop(event);
+    });
+  }
+
+  private determineReloadStop(event) {
+    if (this.countRefresh === 1) {
+      this.isReloading = false;
+      event.target.complete();
+      this.countRefresh = 0;
+    } else {
+      this.countRefresh = 1;
+    }
   }
 
   copyAccessLinkToClipboard() {
@@ -295,11 +332,9 @@ export class MyFilesPage implements OnInit {
         this.allDirectories = directories.filter(
           (x) => x.name !== '$USER_ROOT'
         );
-        this.viewHierarchy = newVal;
       });
-    } else {
-      this.viewHierarchy = newVal;
     }
+    this.viewHierarchy = newVal;
   }
 
   loadDirectory(directoryId: Guid) {

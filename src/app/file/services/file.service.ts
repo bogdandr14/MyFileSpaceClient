@@ -17,13 +17,19 @@ export class FileService extends BaseService {
     super(httpClient, 'api/storedfile', environment.baseApiUrl);
   }
 
-  public getAllFiles(deleted?: boolean): Observable<FileModel[]> {
+  public getAllFiles(
+    deleted?: boolean,
+    internalRefresh: boolean = false
+  ): Observable<FileModel[]> {
     const params = !!deleted
       ? {
           deleted,
         }
       : {};
-    return super.getAll<FileModel>(params);
+    return super.getAll<FileModel>(
+      params,
+      internalRefresh ? BaseService.noLoadingConfig : null
+    );
   }
 
   public findFiles(filter: InfiniteScrollFilter) {
@@ -34,11 +40,17 @@ export class FileService extends BaseService {
 
   public getFileInfo(
     fileId: Guid,
-    accessKey?: string
+    accessKey?: string,
+    internalRefresh: boolean = false
   ): Observable<FileDetailsModel> {
-    return super.getOneById<FileDetailsModel>(fileId, null, {
-      accessKey: accessKey,
-    });
+    return super.getOneById<FileDetailsModel>(
+      fileId,
+      null,
+      {
+        accessKey: accessKey,
+      },
+      internalRefresh ? BaseService.noLoadingConfig : null
+    );
   }
 
   public uploadFile(
@@ -92,12 +104,7 @@ export class FileService extends BaseService {
   }
 
   public removeFavorite(fileId: Guid) {
-    return super.remove(
-      fileId,
-      `favorite`,
-      null,
-      BaseService.noLoadingConfig
-    );
+    return super.remove(fileId, `favorite`, null, BaseService.noLoadingConfig);
   }
 
   public restoreFile(fileId: Guid, directoryId?: Guid) {

@@ -66,12 +66,26 @@ export class UserService extends BaseService {
     );
   }
 
-  public getPersonalInfo(): Observable<CurrentUserModel> {
-    return super.getOneByPath<CurrentUserModel>('');
+  public getPersonalInfo(
+    internalRefresh: boolean = false
+  ): Observable<CurrentUserModel> {
+    return super.getOneByPath<CurrentUserModel>(
+      '',
+      null,
+      internalRefresh ? BaseService.noLoadingConfig : null
+    );
   }
 
-  public getUser(userId: Guid | string): Observable<UserDetailsModel> {
-    return super.getOneById<UserDetailsModel>(userId);
+  public getUser(
+    userId: Guid | string,
+    internalRefresh: boolean = false
+  ): Observable<UserDetailsModel> {
+    return super.getOneById<UserDetailsModel>(
+      userId,
+      null,
+      null,
+      internalRefresh ? BaseService.noLoadingConfig : null
+    );
   }
 
   public updateUser(userEdit: UserEditModel) {

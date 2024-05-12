@@ -20,8 +20,15 @@ export class ManagementService extends BaseService {
       BaseService.noLoadingConfig
     );
   }
-  public getStatistics(): Observable<StatisticsModel> {
-    return super.getOneByPath<StatisticsModel>('statistics');
+
+  public getStatistics(
+    internalRefresh: boolean = false
+  ): Observable<StatisticsModel> {
+    return super.getOneByPath<StatisticsModel>(
+      'statistics',
+      null,
+      internalRefresh ? BaseService.noLoadingConfig : null
+    );
   }
 
   public getCacheUsage(): Observable<MemoryUsedModel> {

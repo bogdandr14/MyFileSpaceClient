@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { IonInfiniteScroll, MenuController } from '@ionic/angular';
+import { IonInfiniteScroll, IonSearchbar, MenuController } from '@ionic/angular';
 import { Guid } from 'guid-typescript';
 import { take } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -23,6 +23,7 @@ import { UserService } from 'src/app/user/user.service';
 })
 export class SearchPage implements AfterViewInit {
   @ViewChild('infiniteScroll') infiniteScroll: IonInfiniteScroll;
+  @ViewChild('searchBar') searchBar: IonSearchbar;
 
   private filter: InfiniteScrollFilter;
   private searchText: string;
@@ -59,6 +60,14 @@ export class SearchPage implements AfterViewInit {
     if (fixedCardElement) {
       this.fixedCardHeight = fixedCardElement.offsetHeight;
     }
+  }
+
+  handleRefresh(event) {
+    this.files = null;
+    this.users = null;
+    this.searchBar.value = null;
+    this.searchText = null;
+    event.target.complete();
   }
 
   toggleSearchType($event) {

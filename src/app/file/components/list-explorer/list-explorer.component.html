@@ -6,6 +6,7 @@
           placeholder="{{ '_common.search' | translate }}"
           [debounce]="100"
           animated
+          #searchBar
           (ionInput)="filterItems($event)"
         ></ion-searchbar>
       </ion-col>

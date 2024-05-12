@@ -6,8 +6,9 @@ import {
   Input,
   OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { IonSearchbar, MenuController } from '@ionic/angular';
 import { Guid } from 'guid-typescript';
 import { take } from 'rxjs';
 import { DirectoryDetailsModel } from '../../models/directory-details.model';
@@ -25,10 +26,22 @@ import { FileService } from '../../services/file.service';
 export class ListExplorerComponent implements AfterViewInit {
   @Input() allFiles: FileModel[];
   @Input() allDirectories: DirectoryModel[];
+  @Input() set isReloading(value: boolean) {
+    if (value === false && this._isReloading === true) {
+      this.searchBar.value = null;
+      this.searchText = null;
+      this.filteredFiles = this.allFiles;
+      this.filteredDirectories = this.allDirectories;
+    }
+    this._isReloading = value;
+  }
+
   @Output() directoryChange = new EventEmitter();
 
-  private searchText: string;
+  @ViewChild('searchBar') searchBar: IonSearchbar;
 
+  private _isReloading = false;
+  private searchText: string;
   public isFileDetails = false;
   public showDirectories = false;
   public detailsMenuObject:

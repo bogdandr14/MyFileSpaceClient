@@ -8,6 +8,7 @@ import { UiHelperService } from 'src/app/core/services/ui-helper.service';
 import { AccessLevel } from 'src/app/shared/models/access-level.enum';
 import { FileService } from '../../services/file.service';
 import { UserService } from 'src/app/user/user.service';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-favorite',
@@ -31,22 +32,30 @@ export class FavoritePage implements OnInit {
     return this.uiHelper.computeSize(size);
   }
 
-  ngOnInit() {
-    this.fileService.getAllFiles().subscribe((files) => {
-      this.createFavoriteDirectory(files);
-    });
-    this.dataService.objectChange$.subscribe((objectChange) => {
-      this.handleFileChange(objectChange);
-    });
+  private initialLoadObservable(internalRefresh: boolean) {
+    return this.fileService
+      .getAllFiles(null, internalRefresh)
+      .pipe(tap((files) => this.createFavoriteDirectory(files)));
   }
 
-  createFavoriteDirectory(files: FileModel[]) {
+  private createFavoriteDirectory(files: FileModel[]) {
     this.favoritePseudoDirectory = new DirectoryDetailsModel();
     this.favoritePseudoDirectory.accessLevel = AccessLevel.Private;
     const currentUserId = this.userService.getUserId();
     this.favoritePseudoDirectory.files = files.filter((x) =>
       x.watchingUsers.some((y) => y == currentUserId)
     );
+  }
+
+  ngOnInit() {
+    this.initialLoadObservable(false).subscribe();
+    this.dataService.objectChange$.subscribe((objectChange) => {
+      this.handleFileChange(objectChange);
+    });
+  }
+
+  handleRefresh(event) {
+    this.initialLoadObservable(true).subscribe(() => event.target.complete());
   }
 
   handleFileChange(fileChange: ObjectChangeModel) {

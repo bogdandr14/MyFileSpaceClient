@@ -11,6 +11,9 @@
 </ion-header>
 
 <ion-content class="ion-padding-top ion-text-center" *ngIf="userInfo">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-card *ngIf="isCurrentUser">
     <ion-card-header class="ion-text-center">
       <ion-card-title text-wrap>

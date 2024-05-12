@@ -45,7 +45,7 @@ export class SendMailPage implements OnDestroy, OnInit {
       .subscribe(
         (data) => {
           this.alertService.showSuccess('_message._information.mailSent');
-          this.router.navigate(['user', 'login']);
+          //this.router.navigate(['user', 'login']);
         },
         (error) => this.alertService.showError(error)
       );

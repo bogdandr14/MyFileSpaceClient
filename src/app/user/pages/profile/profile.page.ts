@@ -62,24 +62,35 @@ export class ProfilePage implements OnInit {
     public uiHelper: UiHelperService
   ) {}
 
+  private initialLoadObservable(internalRefresh: boolean) {
+    return this.route.paramMap.pipe(
+      switchMap((params) => {
+        return iif<UserDetailsModel, CurrentUserModel>(
+          () => !!params.get('id'),
+          this.userService.getUser(
+            this.getGuid(params.get('id')),
+            internalRefresh
+          ),
+          this.userService.getPersonalInfo(internalRefresh)
+        );
+      }),
+      tap((res) => (this.userInfo = res)),
+      take(1)
+    );
+  }
+
   ngOnInit() {
     this.managementService
       .getAllowedStorage()
       .pipe(take(1))
       .subscribe((storage) => (this.maxStorage = storage.size * 1073741824));
-    this.route.paramMap
-      .pipe(
-        switchMap((params) => {
-          return iif<UserDetailsModel, CurrentUserModel>(
-            () => !!params.get('id'),
-            this.userService.getUser(this.getGuid(params.get('id'))),
-            this.userService.getPersonalInfo()
-          );
-        }),
-        tap((res) => (this.userInfo = res)),
-        take(1)
-      )
-      .subscribe();
+    this.initialLoadObservable(false).subscribe();
+  }
+
+  handleRefresh(event) {
+    this.initialLoadObservable(true).subscribe(() => {
+      event.target.complete();
+    });
   }
 
   isDirectoryEmpty(directoryId: Guid) {
@@ -89,6 +100,7 @@ export class ProfilePage implements OnInit {
       ) || this.userInfo.files.some((f) => f.directoryId === directoryId)
     );
   }
+
   copyTagNameToClipboard(tagName: string) {
     this.clipboardService.copy(tagName);
     this.alertService.showInfo('_message._information.tagNameCopied');

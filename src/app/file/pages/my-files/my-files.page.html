@@ -27,6 +27,9 @@
 </ion-header>
 
 <ion-content class="content" *ngIf="directoryDetails">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ng-container *ngIf="viewHierarchy; else listView">
     <ion-breadcrumbs *ngIf="!!directoryDetails">
       <ion-breadcrumb *ngIf="directoryDetails.name==='$USER_ROOT'">
@@ -122,7 +125,11 @@
     </ion-modal>
   </ng-container>
   <ng-template #listView>
-    <app-list-explorer [allDirectories]="allDirectories" [allFiles]="allFiles">
+    <app-list-explorer
+      [allDirectories]="allDirectories"
+      [allFiles]="allFiles"
+      [isReloading]="isReloading"
+    >
     </app-list-explorer>
   </ng-template>
 </ion-content>

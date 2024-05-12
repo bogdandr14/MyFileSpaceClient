@@ -26,6 +26,9 @@
 </ion-header>
 
 <ion-content class="content" *ngIf="binPseudoDirectory">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ng-container *ngIf="viewHierarchy; else listView">
     <ion-breadcrumbs *ngIf="binPseudoDirectory">
       <ion-breadcrumb>
@@ -46,6 +49,7 @@
     <app-list-explorer
       [allDirectories]="deletedDirectories"
       [allFiles]="deletedFiles"
+      [isReloading]="isReloading"
     >
     </app-list-explorer>
   </ng-template>

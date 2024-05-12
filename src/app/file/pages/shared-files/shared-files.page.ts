@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
-import { iif, of, switchMap, take } from 'rxjs';
+import { iif, of, switchMap, take, tap } from 'rxjs';
 import { UiHelperService } from 'src/app/core/services/ui-helper.service';
 import { CurrentUserModel } from 'src/app/user/models/current-user.model';
 import { UserService } from 'src/app/user/user.service';
@@ -24,6 +24,7 @@ export class SharedFilesPage implements OnInit {
   public currentUser: CurrentUserModel;
   public currentDirectoryDetails: DirectoryDetailsModel;
   public viewHierarchy = true;
+  public isReloading = false;
 
   constructor(
     private directoryService: DirectoryService,
@@ -33,15 +34,19 @@ export class SharedFilesPage implements OnInit {
     public uiHelper: UiHelperService
   ) {}
 
-  ngOnInit() {
-    this.route.queryParams
+  private initialLoadObservable(internalRefresh: boolean) {
+    return this.route.queryParams
       .pipe(
         switchMap((params) =>
           iif<DirectoryDetailsModel, DirectoryDetailsModel>(
             () => !!params['id'],
-            this.directoryService.getDirectoryInfo(this.getGuid(params['id'])),
+            this.directoryService.getDirectoryInfo(
+              this.getGuid(params['id']),
+              null,
+              internalRefresh
+            ),
             this.userService
-              .getPersonalInfo()
+              .getPersonalInfo(internalRefresh)
               .pipe(
                 switchMap((currentUser) =>
                   of(this.createSharedDirectory(currentUser))
@@ -50,14 +55,16 @@ export class SharedFilesPage implements OnInit {
           )
         )
       )
-      .pipe(take(1))
-      .subscribe((directory) => {
-        this.currentDirectoryDetails = directory;
-        this.accessedDirectories.push(this.currentDirectoryDetails);
-      });
+      .pipe(
+        take(1),
+        tap((directory) => {
+          this.currentDirectoryDetails = directory;
+          this.accessedDirectories = [this.currentDirectoryDetails];
+        })
+      );
   }
 
-  createSharedDirectory(user: CurrentUserModel): DirectoryDetailsModel {
+  private createSharedDirectory(user: CurrentUserModel): DirectoryDetailsModel {
     this.currentUser = user;
     this.sharedDirectory.childDirectories = user.allowedDirectories
       .filter(
@@ -77,6 +84,18 @@ export class SharedFilesPage implements OnInit {
       });
 
     return this.sharedDirectory;
+  }
+
+  ngOnInit() {
+    this.initialLoadObservable(false).subscribe();
+  }
+
+  handleRefresh(event) {
+    this.isReloading = true;
+    this.initialLoadObservable(true).subscribe(() => {
+      this.isReloading = false;
+      event.target.complete();
+    });
   }
 
   loadSharedDirectory() {
