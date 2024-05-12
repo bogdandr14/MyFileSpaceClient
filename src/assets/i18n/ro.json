@@ -36,7 +36,8 @@
     "availableDirectories": "Foldere disponibile",
     "storedContent": "Conținut stocat",
     "collection": "Colecția lui {ownerName}",
-    "invalidLink": "Linkul pe care l-ați accesat este invalid"
+    "invalidLink": "Linkul pe care l-ați accesat este invalid",
+    "emailConfirmation":"Confirmare adresă necesară"
   },
   "_updates": {
     "markAsChecked": "Marchează ca văzut",

@@ -36,7 +36,8 @@
     "availableDirectories": "Available directories",
     "storedContent": "Stored content",
     "collection": "{ownerName}'s collection",
-    "invalidLink": "The link you have accessed is invalid"
+    "invalidLink": "The link you have accessed is invalid",
+    "emailConfirmation":"Address confirmation required"
   },
   "_updates": {
     "markAsChecked": "Mark as checked",
