@@ -1,9 +1,9 @@
 {
-  "name": "MyFileSpaceClient",
-  "version": "1.0.1",
-  "description": "An Ionic - Angular project",
+  "name": "MyFileSpace",
+  "version": "1.0.2",
+  "description": "Web application for storing and sharing files - Dissertation project",
   "author": "Draghici Bogdan",
-  "homepage": "https://ionicframework.com/",
+  "homepage": "https://myfilespaceclient.azurewebsites.net/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
