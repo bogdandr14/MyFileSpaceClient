@@ -25,7 +25,7 @@ import { UserService } from '../user.service';
   ],
 })
 export class EmailCheckDirective implements AsyncValidator {
-  private readonly pattern: string = '^[a-z0-9]+@[a-z]+.[a-z]{2,3}$';
+  private readonly pattern: string = '^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$';
 
   constructor(private userService: UserService) { }
 
