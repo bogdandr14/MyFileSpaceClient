@@ -212,7 +212,6 @@ export class MyFilesPage implements OnInit {
         this.directoryDetails.files.splice(index, 1);
       }
     } else if (fileChange.action == ActionType.Move) {
-      this.directoryDetails.files.push(file);
       for (const accessedDirectory of this.accessedDirectories) {
         const subObjectIndexToRemove = accessedDirectory.files.findIndex(
           (obj) => obj.id === file.id
@@ -222,6 +221,7 @@ export class MyFilesPage implements OnInit {
           break; // Stop the loop after removing the sub-object
         }
       }
+      this.directoryDetails.files.push(file);
     }
     this.updateAccessedDirectory();
   }
@@ -300,15 +300,15 @@ export class MyFilesPage implements OnInit {
           );
       }
 
-      directory.parentDirectoryId = this.directoryDetails.id;
-      this.directoryDetails.childDirectories.push(directory);
-      this.updateAccessedDirectory();
+      directory.parentDirectoryId = this.directoryDetails.id;   
       this.accessedDirectories = this.accessedDirectories.filter(
         (mainObj) =>
           !mainObj.pathParentDirectories.some(
             (subObj) => subObj.id === directory.id
           ) && mainObj.id !== directory.id
       );
+      this.directoryDetails.childDirectories.push(directory);
+      this.updateAccessedDirectory();
     }
   }
 
