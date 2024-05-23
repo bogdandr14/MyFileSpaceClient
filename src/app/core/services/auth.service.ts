@@ -40,7 +40,6 @@ export class AuthService extends BaseService {
       }
     });
   }
-
   public login(userCredentials: LoginModel): Observable<TokenModel> {
     return super.add<TokenModel>(userCredentials, 'login').pipe(
       tap((response) => {
@@ -51,19 +50,15 @@ export class AuthService extends BaseService {
       })
     );
   }
-
   public register(registerDetails: RegisterModel): Observable<void> {
     return super.add<void>(registerDetails, 'register');
   }
-
   public changePassword(changePassword: ChangePasswordModel) {
     return super.update<void>(changePassword, 'changePassword');
   }
-
   public confirmEmail(key: string) {
     return super.update(key, 'confirmMail');
   }
-
   public logout(): void {
     this.timerSubscription.unsubscribe();
     this.dataService.removeToken();
@@ -71,7 +66,6 @@ export class AuthService extends BaseService {
     this.isLoggedIn.next(false);
     this.router.navigate(['user', 'login']);
   }
-
   private setUserInfo(token: string) {
     const tokenInfo = JSON.parse(atob(token.split('.')[1]));
     this.dataService.setCurrentUser({
@@ -81,7 +75,6 @@ export class AuthService extends BaseService {
       tagName: tokenInfo.unique_name,
     });
   }
-
   private setExpirationCounter(token: string) {
     const expiration = <number>JSON.parse(atob(token.split('.')[1])).exp * 1000; //expiration in milliseconds
     if (expiration < Date.now()) {
