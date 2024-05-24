@@ -34,7 +34,7 @@ export class FavoritePage implements OnInit {
 
   private initialLoadObservable(internalRefresh: boolean) {
     return this.fileService
-      .getAllFiles(null, internalRefresh)
+      .getAllFavorites(internalRefresh)
       .pipe(tap((files) => this.createFavoriteDirectory(files)));
   }
 

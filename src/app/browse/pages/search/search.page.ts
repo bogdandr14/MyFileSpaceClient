@@ -51,7 +51,7 @@ export class SearchPage implements AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.calculateFixedCardHeight();
-    }, 500);
+    }, 1000);
   }
 
   calculateFixedCardHeight() {

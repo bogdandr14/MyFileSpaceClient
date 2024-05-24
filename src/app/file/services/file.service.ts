@@ -38,6 +38,14 @@ export class FileService extends BaseService {
     );
   }
 
+  public getAllFavorites(internalRefresh: boolean = false) {
+    return super.getMany<FileModel>(
+      'favorite',
+      null,
+      internalRefresh ? BaseService.noLoadingConfig : null
+    );
+  }
+
   public getFileInfo(
     fileId: Guid,
     accessKey?: string,
