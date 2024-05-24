@@ -1,0 +1,105 @@
+<ion-chip class="container" id="{{ file.name }}-trigger">
+  <ion-icon
+    button
+    *ngIf="isFavorite"
+    name="heart"
+    size="large"
+    class="favorite"
+    color="danger"
+    (click)="fileSystemHelper.removeFavorite(file)"
+  ></ion-icon>
+  <div class="chip-content">
+    <ion-icon
+      size="large"
+      class="file-icon"
+      [name]="uiHelper.objectIcon(file)"
+      [color]="uiHelper.accessibilityColor(file.accessLevel)"
+    ></ion-icon>
+    <div class="details">
+      <ion-label text-wrap class="file-name">
+        {{ file.name }}
+      </ion-label>
+
+      <ion-label class="file-size">
+        {{ uiHelper.computeSize(file.sizeInBytes) }}
+      </ion-label>
+    </div>
+  </div>
+</ion-chip>
+
+<ion-popover
+  trigger="{{ file.name }}-trigger"
+  triggerAction="context-menu"
+  [dismissOnSelect]="true"
+>
+  <ng-template>
+    <ion-content>
+      <ion-list class="options">
+        <ion-item
+          button
+          *ngIf="!file.isDeleted"
+          (click)="fileSystemHelper.downloadFile(file)"
+        >
+          <ion-label class="success">
+            {{ "_file.download" | translate }}
+          </ion-label>
+        </ion-item>
+        <ion-item
+          button
+          *ngIf="!isFavorite && (authService.isLoggedIn$ | async)"
+          (click)="fileSystemHelper.addFavorite(file)"
+        >
+          <ion-label class="danger">
+            {{ "_file.addFavorite" | translate }}
+          </ion-label>
+        </ion-item>
+        <ion-item button (click)="showDetails.emit()">
+          <ion-label class="primary">
+            {{ "_common.details" | translate }}
+          </ion-label>
+        </ion-item>
+        <ng-container *ngIf="!file.isDeleted; else deletedOptions">
+          <ng-container *ngIf="isOwner">
+            <ion-item button (click)="fileSystemHelper.openFileEdit(file)">
+              <ion-label class="secondary">
+                {{ "_common.edit" | translate }}
+              </ion-label>
+            </ion-item>
+            <ion-item button (click)="fileSystemHelper.openFileUpload(file.id)">
+              <ion-label class="tertiary">
+                {{ "_file.reUpload" | translate }}
+              </ion-label>
+            </ion-item>
+            <ion-item button (click)="fileSystemHelper.addFileCut(file)">
+              <ion-label class="warning">
+                {{ "_common.cut" | translate }}
+              </ion-label>
+            </ion-item>
+            <ion-item button (click)="fileSystemHelper.confirmDeleteFile(file)">
+              <ion-label class="danger">
+                {{ "_common.delete" | translate }}
+              </ion-label>
+            </ion-item>
+          </ng-container>
+        </ng-container>
+        <ng-template #deletedOptions>
+          <ng-container *ngIf="isOwner">
+            <ion-item button (click)="fileSystemHelper.restoreFile(file)">
+              <ion-label class="secondary">
+                {{ "_common.restore" | translate }}
+              </ion-label>
+            </ion-item>
+            <ion-item
+              button
+              (click)="fileSystemHelper.confirmPermanentDeleteFile(file)"
+            >
+              <ion-label class="danger">
+                {{ "_common.permanentDelete" | translate }}
+              </ion-label>
+            </ion-item>
+          </ng-container>
+        </ng-template>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-popover>

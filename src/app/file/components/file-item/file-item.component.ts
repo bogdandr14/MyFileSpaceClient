@@ -4,6 +4,8 @@ import { MenuController } from '@ionic/angular';
 import { UserService } from '../../../user/user.service';
 import { FileSystemHelperService } from '../../services/file-system-helper.service';
 import { UiHelperService } from 'src/app/core/services/ui-helper.service';
+import { FileService } from '../../services/file.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-file-item',
@@ -17,12 +19,19 @@ export class FileItemComponent {
   get isOwner() {
     return this.userService.isCurrentUser(this.file.ownerId);
   }
+  get isFavorite() {
+    return this.file.watchingUsers.some(
+      (wu) => wu == this.userService.getUserId()
+    );
+  }
 
   constructor(
     private menuCtrl: MenuController,
     private userService: UserService,
     public uiHelper: UiHelperService,
-    public fileSystemHelper: FileSystemHelperService
+    public fileSystemHelper: FileSystemHelperService,
+    public fileService: FileService,
+    public authService: AuthService
   ) {}
 
   openDetailsMenu() {

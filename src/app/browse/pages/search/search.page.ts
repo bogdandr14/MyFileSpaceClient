@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { IonInfiniteScroll, MenuController } from '@ionic/angular';
+import { IonInfiniteScroll, IonSearchbar, MenuController } from '@ionic/angular';
 import { Guid } from 'guid-typescript';
 import { take } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -23,11 +23,12 @@ import { UserService } from 'src/app/user/user.service';
 })
 export class SearchPage implements AfterViewInit {
   @ViewChild('infiniteScroll') infiniteScroll: IonInfiniteScroll;
+  @ViewChild('searchBar') searchBar: IonSearchbar;
 
   private filter: InfiniteScrollFilter;
   private searchText: string;
   private lastTaken: number;
-  public searchType = 1;
+  public searchFiles = true;
 
   public includeOwn: boolean = false;
   public files: FileModel[];
@@ -50,7 +51,7 @@ export class SearchPage implements AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.calculateFixedCardHeight();
-    }, 500);
+    }, 1000);
   }
 
   calculateFixedCardHeight() {
@@ -61,8 +62,16 @@ export class SearchPage implements AfterViewInit {
     }
   }
 
+  handleRefresh(event) {
+    this.files = null;
+    this.users = null;
+    this.searchBar.value = null;
+    this.searchText = null;
+    event.target.complete();
+  }
+
   toggleSearchType($event) {
-    this.searchType = $event.detail.value as number;
+    this.searchFiles = $event.detail.value == '1';
     if (!!this.searchText) {
       this.findFirst();
     }
@@ -87,7 +96,7 @@ export class SearchPage implements AfterViewInit {
 
   private findFirst() {
     this.resetFilter();
-    if (this.searchType == 1) {
+    if (this.searchFiles) {
       this.fileService
         .findFiles(this.filter)
         .pipe(take(1))
@@ -117,7 +126,7 @@ export class SearchPage implements AfterViewInit {
 
   loadMore() {
     this.filter.skip += this.lastTaken;
-    if (this.searchType == 1) {
+    if (this.searchFiles) {
       this.fileService
         .findFiles(this.filter)
         .pipe(take(1))

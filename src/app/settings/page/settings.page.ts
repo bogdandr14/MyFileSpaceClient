@@ -7,8 +7,7 @@ import { DataService } from '../../core/services/data.service';
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
 })
-export class SettingsPage  {
-  public openModal = false;
+export class SettingsPage {
   constructor(
     public authService: AuthService,
     public dataService: DataService

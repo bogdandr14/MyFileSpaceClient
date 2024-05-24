@@ -1,0 +1,91 @@
+<ion-card id="fixed-search-card" class="search-input">
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-md="8" size-sm="10" size-xs="12">
+        <ion-searchbar
+          placeholder="{{ '_common.search' | translate }}"
+          [debounce]="100"
+          animated
+          #searchBar
+          (ionInput)="filterItems($event)"
+        ></ion-searchbar>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-item class="ion-align-items-center current-user-check">
+          <ion-checkbox
+            color="tertiary"
+            slot="start"
+            aria-label="Include directories"
+            [(ngModel)]="showDirectories"
+          ></ion-checkbox>
+          <ion-label text-wrap>
+            {{ "_search.includeDirectories" | translate }}
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-card>
+
+<ion-grid
+  *ngIf="allFiles || allDirectories"
+  id="file-explorer-content"
+  [style.margin-top.px]="fixedCardHeight"
+>
+  <ion-row>
+    <ng-container *ngIf="showDirectories">
+      <ion-col
+        size-xl="3"
+        size-lg="4"
+        size-md="6"
+        size-sm="6"
+        size-xs="12"
+        *ngFor="let folder of filteredDirectories"
+      >
+        <app-directory-list-item
+          (directoryChange)="directoryChange.emit($event)"
+          [directory]="folder"
+          (showDetails)="openDirectoryDetailsMenu(folder.id)"
+        >
+        </app-directory-list-item>
+      </ion-col>
+    </ng-container>
+
+    <ion-col
+      size-xl="3"
+      size-lg="4"
+      size-md="6"
+      size-sm="6"
+      size-xs="12"
+      *ngFor="let file of filteredFiles"
+    >
+      <app-file-list-item
+        [file]="file"
+        (showDetails)="openFileDetailsMenu(file.id)"
+      ></app-file-list-item>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<ion-menu
+  id="object-details-menu"
+  side="end"
+  menuId="details-menu"
+  contentId="file-explorer-content"
+>
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title
+        >{{
+          (isFileDetails ? "_details.file" : "_details.directory") | translate
+        }}
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <app-object-details
+      [objectDetails]="detailsMenuObject"
+      [isFile]="isFileDetails"
+    ></app-object-details>
+  </ion-content>
+</ion-menu>

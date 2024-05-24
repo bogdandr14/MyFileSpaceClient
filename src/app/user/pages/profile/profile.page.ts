@@ -9,6 +9,7 @@ import { UiHelperService } from 'src/app/core/services/ui-helper.service';
 import { CurrentUserModel } from '../../models/current-user.model';
 import { UserDetailsModel } from '../../models/user-details.model';
 import { UserService } from '../../user.service';
+import { ManagementService } from 'src/app/management/management.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +17,8 @@ import { UserService } from '../../user.service';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  public readonly maxStorage = 4294967296; //4GB
+  private readonly bytesInGB = 1073741824;
+  public maxStorage = 4294967296; //4GB
   public userInfo: CurrentUserModel | UserDetailsModel;
 
   get isAdmin() {
@@ -56,23 +58,39 @@ export class ProfilePage implements OnInit {
     private clipboardService: ClipboardService,
     private alertService: AlertService,
     public localeService: LocaleService,
+    public managementService: ManagementService,
     public uiHelper: UiHelperService
   ) {}
 
+  private initialLoadObservable(internalRefresh: boolean) {
+    return this.route.paramMap.pipe(
+      switchMap((params) => {
+        return iif<UserDetailsModel, CurrentUserModel>(
+          () => !!params.get('id'),
+          this.userService.getUser(
+            this.getGuid(params.get('id')),
+            internalRefresh
+          ),
+          this.userService.getPersonalInfo(internalRefresh)
+        );
+      }),
+      tap((res) => (this.userInfo = res)),
+      take(1)
+    );
+  }
+
   ngOnInit() {
-    this.route.paramMap
-      .pipe(
-        switchMap((params) => {
-          return iif<UserDetailsModel, CurrentUserModel>(
-            () => !!params.get('id'),
-            this.userService.getUser(this.getGuid(params.get('id'))),
-            this.userService.getPersonalInfo()
-          );
-        }),
-        tap((res) => (this.userInfo = res)),
-        take(1)
-      )
-      .subscribe();
+    this.managementService
+      .getAllowedStorage()
+      .pipe(take(1))
+      .subscribe((storage) => (this.maxStorage = storage.size * 1073741824));
+    this.initialLoadObservable(false).subscribe();
+  }
+
+  handleRefresh(event) {
+    this.initialLoadObservable(true).subscribe(() => {
+      event.target.complete();
+    });
   }
 
   isDirectoryEmpty(directoryId: Guid) {
@@ -82,6 +100,7 @@ export class ProfilePage implements OnInit {
       ) || this.userInfo.files.some((f) => f.directoryId === directoryId)
     );
   }
+
   copyTagNameToClipboard(tagName: string) {
     this.clipboardService.copy(tagName);
     this.alertService.showInfo('_message._information.tagNameCopied');

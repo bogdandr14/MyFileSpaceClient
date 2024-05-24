@@ -13,12 +13,30 @@ export class ManagementService extends BaseService {
     super(httpClient, 'api/management', environment.baseApiUrl);
   }
 
-  public getStatistics(): Observable<StatisticsModel> {
-    return super.getOneByPath<StatisticsModel>('statistics');
+  public getAllowedStorage(): Observable<MemoryUsedModel> {
+    return super.getOneByPath<MemoryUsedModel>(
+      'allowedStorage',
+      null,
+      BaseService.noLoadingConfig
+    );
+  }
+
+  public getStatistics(
+    internalRefresh: boolean = false
+  ): Observable<StatisticsModel> {
+    return super.getOneByPath<StatisticsModel>(
+      'statistics',
+      null,
+      internalRefresh ? BaseService.noLoadingConfig : null
+    );
   }
 
   public getCacheUsage(): Observable<MemoryUsedModel> {
-    return super.getOneByPath<MemoryUsedModel>('cacheUsage', null, BaseService.noLoadingConfig);
+    return super.getOneByPath<MemoryUsedModel>(
+      'cacheUsage',
+      null,
+      BaseService.noLoadingConfig
+    );
   }
   public clearCache() {
     const path = `${this.url}/cacheClear`;

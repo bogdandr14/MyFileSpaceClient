@@ -42,7 +42,6 @@ export abstract class BaseService {
     }
     return urlFilter;
   }
-
   private getOne<T>(
     url: string,
     params?: { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean> },
@@ -55,7 +54,6 @@ export abstract class BaseService {
     };
     return this.http.get<T>(url, options);
   }
-
   public getOneById<T>(
     id: number | Guid | string,
     path?: string,
@@ -66,7 +64,6 @@ export abstract class BaseService {
     const url = path ? `${this.url}/${path}/${id}` : `${this.url}/${id}`;
     return this.getOne<T>(url, params, config, headers);
   }
-
   public getOneByPath<T>(
     path: string,
     params?: { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean> },
@@ -75,7 +72,6 @@ export abstract class BaseService {
     const url = `${this.url}/${path}`;
     return this.getOne<T>(url, params, config, headers);
   }
-
   public getMany<T>(
     path?: string,
     params?: { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean> },
@@ -90,14 +86,12 @@ export abstract class BaseService {
 
     return this.http.get<T[]>(url, options);
   }
-
   public getAll<T>(
     params?: { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean> },
     config?: HttpInterceptorConfig,
     headers?: HttpHeaders | { [header: string]: string | string[] }): Observable<T[]> {
     return this.getMany<T>('', params, config, headers);
   }
-
   public update<T>(
     data: any,
     path?: string,
@@ -113,7 +107,6 @@ export abstract class BaseService {
     };
     return this.http.put<T>(url, body, options);
   }
-
   public updateById<T>(
     id: number | Guid,
     data: any,
@@ -125,24 +118,6 @@ export abstract class BaseService {
     const url = path ? `${path}/${id}` : `${id}`;
     return this.update<T>(data, url, params, config, headers);
   }
-
-  public updateMultiple<T>(
-    array: any[],
-    path?: string,
-    params?: { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean> },
-    config?: HttpInterceptorConfig,
-    headers?: HttpHeaders | { [header: string]: string | string[] }
-  ): Observable<T> {
-    const body = JSON.stringify(array);
-    const url = path ? `${this.url}/${path}` : `${this.url}`;
-    const options = {
-      params: new HttpInterceptorParams(config, params),
-      headers
-    };
-
-    return this.http.put<T>(url, body, options);
-  }
-
   public add<T>(
     data: any,
     path?: string,
@@ -159,7 +134,6 @@ export abstract class BaseService {
 
     return this.http.post<T>(url, body, options);
   }
-
   public remove(
     id: number | Guid,
     path?: string,
@@ -174,24 +148,6 @@ export abstract class BaseService {
     };
     return this.http.delete<any>(url, options);
   }
-
-  public removeMultiple(
-    ids: number[],
-    path?: string,
-    params?: { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean> },
-    config?: HttpInterceptorConfig,
-    headers?: HttpHeaders | { [header: string]: string | string[] }
-  ): Observable<any> {
-    const body = JSON.stringify(ids);
-    const url = path ? `${this.url}/${path}` : `${this.url}`;
-    const options = {
-      params: new HttpInterceptorParams(config, params),
-      headers,
-      body
-    };
-    return this.http.delete<any>(url, options);
-  }
-
   public getPaginated<T>(
     pageIndex: number,
     itemsNumber: number,

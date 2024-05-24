@@ -45,6 +45,14 @@ export class ObjectDetailsComponent {
     return this.userService.isCurrentUser(this.objectDetails.ownerId);
   }
 
+  get isFavorite() {
+    return (
+      this.isFile &&
+      this.objectDetails.watchingUsers.some(
+        (wu) => wu == this.userService.getUserId()
+      )
+    );
+  }
   constructor(
     private userService: UserService,
     private accessService: AccessService,
@@ -68,7 +76,6 @@ export class ObjectDetailsComponent {
     }?id=${this.objectDetails.id}&type=${
       this.isFile ? ObjectType.File : ObjectType.Directory
     }&accessKey=${this.objectDetails.accessKey.key}`;
-    debugger;
     this.clipboardService.copy(link);
     this.alertService.showInfo('_message._information.accessKeyCopied');
   }

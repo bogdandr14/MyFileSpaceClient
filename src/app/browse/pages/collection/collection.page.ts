@@ -1,15 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
-import {
-  combineLatest,
-  iif,
-  mergeMap,
-  of,
-  switchMap,
-  take,
-  tap,
-} from 'rxjs';
+import { combineLatest, iif, mergeMap, of, switchMap, take } from 'rxjs';
 import { ObjectType } from 'src/app/core/models/object-type.enum';
 import { UiHelperService } from 'src/app/core/services/ui-helper.service';
 import { DirectoryDetailsModel } from 'src/app/file/models/directory-details.model';
@@ -25,7 +17,6 @@ import { UserService } from 'src/app/user/user.service';
   styleUrls: ['./collection.page.scss'],
 })
 export class CollectionPage implements OnInit {
-  private collectionOwner: UserDetailsModel;
   private readonly collectionDirectory = {
     id: Guid.createEmpty(),
     name: '$COLLECTION_ROOT',
@@ -35,13 +26,15 @@ export class CollectionPage implements OnInit {
   } as DirectoryDetailsModel;
   private accessedDirectories: DirectoryDetailsModel[];
   private objectType = ObjectType.Directory;
+  public collectionOwner: UserDetailsModel;
   public currentDirectoryDetails: DirectoryDetailsModel;
   public accessKey: string;
+  public viewHierarchy = true;
 
   public get isFile() {
     return this.objectType == ObjectType.File;
   }
-  
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -51,11 +44,12 @@ export class CollectionPage implements OnInit {
     public uiHelper: UiHelperService
   ) {}
 
-  ngOnInit() {
-    combineLatest([this.route.queryParams, this.route.paramMap])
-      .pipe(
-        switchMap(([queryParams, paramMap]) => {
-          return this.userService.getUser(paramMap.get('id')).pipe(
+  private initialLoadObservable(internalRefresh: boolean) {
+    return combineLatest([this.route.queryParams, this.route.paramMap]).pipe(
+      switchMap(([queryParams, paramMap]) => {
+        return this.userService
+          .getUser(paramMap.get('id'), internalRefresh)
+          .pipe(
             mergeMap((user) => {
               const objectId = queryParams['id'];
               this.accessKey = queryParams['accessKey'];
@@ -67,7 +61,7 @@ export class CollectionPage implements OnInit {
                 iif<DirectoryDetailsModel, DirectoryDetailsModel>(
                   () => this.objectType == ObjectType.File,
                   this.fileService
-                    .getFileInfo(objectId, this.accessKey)
+                    .getFileInfo(objectId, this.accessKey, internalRefresh)
                     .pipe(
                       switchMap((file) =>
                         of(this.createFilePseudoDirectory(file))
@@ -75,30 +69,19 @@ export class CollectionPage implements OnInit {
                     ),
                   this.directoryService.getDirectoryInfo(
                     objectId,
-                    this.accessKey
+                    this.accessKey,
+                    internalRefresh
                   )
                 )
               );
             })
           );
-        }),
-        take(1)
-      )
-      .subscribe((directory) => {
-        this.currentDirectoryDetails = directory;
-        this.accessedDirectories = [directory];
-      });
+      }),
+      take(1)
+    );
   }
 
-  createFilePseudoDirectory(file: FileDetailsModel) {
-    const filePseudoDirectory = this.collectionDirectory;
-    filePseudoDirectory.name = '-';
-    filePseudoDirectory.files = [file];
-    filePseudoDirectory.childDirectories = [];
-    return filePseudoDirectory;
-  }
-
-  createCollectionDirectory(user: UserDetailsModel) {
+  private createCollectionDirectory(user: UserDetailsModel) {
     this.collectionOwner = user;
     this.collectionDirectory.ownerId = user.userId;
     this.collectionDirectory.ownerTagName = user.tagName;
@@ -117,13 +100,38 @@ export class CollectionPage implements OnInit {
     return this.collectionDirectory;
   }
 
-  loadCollectionDirectory() {
+  ngOnInit() {
+    this.initialLoadObservable(false).subscribe((directory) => {
+      this.currentDirectoryDetails = directory;
+      this.accessedDirectories = [directory];
+    });
+  }
+
+  handleRefresh(event) {
+    this.initialLoadObservable(true).subscribe((directory) => {
+      this.currentDirectoryDetails = directory;
+      this.accessedDirectories = [directory];
+      event.target.complete();
+    });
+  }
+
+  createFilePseudoDirectory(file: FileDetailsModel) {
+    const filePseudoDirectory = this.collectionDirectory;
+    filePseudoDirectory.name = '-';
+    filePseudoDirectory.files = [file];
+    filePseudoDirectory.childDirectories = [];
+    return filePseudoDirectory;
+  }
+
+  public loadCollectionDirectory() {
     this.currentDirectoryDetails = this.collectionDirectory;
   }
-  loadDirectory(directoryId: Guid) {
+
+  public loadDirectory(directoryId: Guid) {
     const accessedDirectory = this.accessedDirectories.find(
       (x) => x.id == directoryId
     );
+    this.viewHierarchy = true;
     if (accessedDirectory) {
       this.router.navigate(
         ['browse/collection/', this.collectionOwner.userId],
@@ -149,7 +157,7 @@ export class CollectionPage implements OnInit {
       });
   }
 
-  getGuid(id) {
-    return id ? Guid.parse(id) : Guid.createEmpty();
+  public toggleViewType($event) {
+    this.viewHierarchy = $event.detail.value == '1';
   }
 }

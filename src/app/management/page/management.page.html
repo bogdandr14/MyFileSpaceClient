@@ -8,6 +8,9 @@
 </ion-header>
 
 <ion-content class="ion-padding-top ion-text-center" *ngIf="statistics">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-grid class="custom-margin-bottom">
     <ion-card>
       <ion-card-header class="ion-text-center">
@@ -35,7 +38,7 @@
               <ion-item>
                 <ion-label text-wrap>
                   {{ "_management.pastRetention" | translate }}:
-                  {{statistics.sizeMbPastRetentionTime}}
+                  {{statistics.sizeMbPastRetentionTime.toFixed(2)}} MB
                 </ion-label>
               </ion-item>
               <ion-button color="danger" (click)="deleteFilesPastRetention()">

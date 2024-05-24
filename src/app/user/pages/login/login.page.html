@@ -7,86 +7,115 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="content">
-  <ion-grid>
-    <ion-row class="absolute-center custom-margin-bottom">
-      <ion-col size-sm="6" offset-sm="3">
-        <ion-card>
-          <ion-card-content>
-            <ion-row>
-              <ion-col size-md="10" offset-sm="1">
-                <form #form="ngForm" (ngSubmit)="onLogin()">
-                  <ion-item-group id="email">
-                    <ion-item color="transparent">
-                      <ion-label for="email" position="floating">
-                        <b>
-                          {{ "_user.email" | translate }}
-                          <span class="required"> *</span>
-                        </b>
-                      </ion-label>
-                      <ion-input
-                        type="text"
-                        name="email"
-                        #email="ngModel"
-                        [(ngModel)]="loginModel.email"
-                        required
-                      ></ion-input>
-                    </ion-item>
-                    <app-validation-errors
-                      [model]="email"
-                    ></app-validation-errors>
-                  </ion-item-group>
+<ion-content>
+  <div class="centered-card">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-card>
+            <ion-card-content>
+              <ion-row>
+                <ion-col size-sm="10" offset-sm="1">
+                  <form #form="ngForm" (ngSubmit)="onLogin()">
+                    <ion-item-group id="email">
+                      <ion-item color="transparent">
+                        <ion-label for="email" position="floating">
+                          <b>
+                            {{ "_user.email" | translate }}
+                            <span class="required"> *</span>
+                          </b>
+                        </ion-label>
+                        <ion-input
+                          type="text"
+                          name="email"
+                          #email="ngModel"
+                          [(ngModel)]="loginModel.email"
+                          aria-label="Email"
+                          required
+                        ></ion-input>
+                      </ion-item>
+                      <app-validation-errors
+                        [model]="email"
+                      ></app-validation-errors>
+                    </ion-item-group>
 
-                  <ion-item-group id="password">
-                    <ion-item color="transparent">
-                      <ion-label for="psw" position="floating">
-                        <b>
-                          {{ "password" | translate }}
-                          <span class="required"> *</span>
-                        </b>
-                      </ion-label>
-                      <ion-input
-                        type="password"
-                        name="psw"
-                        #psw="ngModel"
-                        [(ngModel)]="loginModel.password"
-                        minlength="8"
-                        required
-                      ></ion-input>
-                    </ion-item>
-                    <app-validation-errors
-                      [model]="psw"
-                      [number]="8"
-                    ></app-validation-errors>
-                  </ion-item-group>
+                    <ion-item-group id="password">
+                      <ion-item color="transparent">
+                        <ion-label for="psw" position="floating">
+                          <b>
+                            {{ "password" | translate }}
+                            <span class="required"> *</span>
+                          </b>
+                        </ion-label>
+                        <ion-input
+                          type="password"
+                          name="psw"
+                          #psw="ngModel"
+                          [(ngModel)]="loginModel.password"
+                          minlength="8"
+                          aria-label="Password"
+                          required
+                        ></ion-input>
+                      </ion-item>
+                      <app-validation-errors
+                        [model]="psw"
+                        [number]="8"
+                      ></app-validation-errors>
+                    </ion-item-group>
+                    &nbsp;
+                    <ion-button
+                      type="submit"
+                      class="submit-button"
+                      color="primary"
+                      expand="block"
+                      [disabled]="form.invalid || form.pristine"
+                    >
+                      {{ "login" | translate }}
+                    </ion-button>
+                  </form>
                   &nbsp;
                   <ion-button
-                    type="submit"
-                    class="submit-button"
-                    color="primary"
+                    type="button"
+                    color="secondary"
+                    fill="clear"
                     expand="block"
-                    [disabled]="form.invalid || form.pristine"
+                    [routerLink]="['/user/register']"
+                    routerLinkActive="selected"
+                    routerDirection="root"
                   >
-                    {{ "login" | translate }}
+                    {{ "_links.registerHere" | translate }}
                   </ion-button>
-                </form>
-                &nbsp;
-                <ion-button
-                  type="button"
-                  color="secondary"
-                  fill="clear"
-                  expand="block"
-                  [routerLink]="['/user/register']"
-                  routerLinkActive="selected"
-                  routerDirection="root"
-                >
-                  {{ "_links.registerHere" | translate }}
-                </ion-button>
-              </ion-col>
-            </ion-row>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+
+                  <ion-button
+                    type="button"
+                    color="secondary"
+                    fill="clear"
+                    expand="block"
+                    [routerLink]="['/user/sendmail']"
+                    [queryParams]="{ type: 'confirmation' }"
+                    routerLinkActive="selected"
+                    routerDirection="root"
+                  >
+                    {{ "_links.confirmEmail" | translate }}
+                  </ion-button>
+                  <ion-button
+                    type="button"
+                    color="secondary"
+                    fill="clear"
+                    expand="block"
+                    [routerLink]="['/user/sendmail']"
+                    [queryParams]="{ type: 'resetpassword' }"
+                    routerLinkActive="selected"
+                    routerDirection="root"
+                  >
+                    {{ "_links.resetPassword" | translate }}
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>

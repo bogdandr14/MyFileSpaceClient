@@ -13,6 +13,10 @@ ion-chip {
   justify-content: center;
   max-width: 100%;
   overflow: hidden;
+  ion-label {
+    padding-bottom: 10px;
+    padding-top: 10px;
+  }
 }
 
 ion-icon {
@@ -25,6 +29,4 @@ ion-label {
   white-space: nowrap;
   overflow: hidden;
   text-align: center;
-  padding-bottom: 10px;
-  padding-top: 10px;
 }

@@ -18,6 +18,7 @@ import { FileDetailsModel } from '../models/file-details.model';
 import { FileModel } from '../models/file.model';
 import { DirectoryService } from './directory.service';
 import { FileService } from './file.service';
+import { UserService } from 'src/app/user/user.service';
 
 @Injectable({ providedIn: 'root' })
 export class FileSystemHelperService {
@@ -28,8 +29,35 @@ export class FileSystemHelperService {
     private directoryService: DirectoryService,
     private dataService: DataService,
     private modalCtrl: ModalController,
+    private userService: UserService,
     private route: ActivatedRoute
   ) {}
+
+  addFavorite(file: FileModel | FileDetailsModel) {
+    this.fileService
+      .addFavorite(file.id)
+      .pipe(take(1))
+      .subscribe(() => {
+        file.watchingUsers.push(this.userService.getUserId());
+        this.dataService.triggerObjectChange(
+          new ObjectChangeModel(ObjectType.File, ActionType.Edit, file)
+        );
+      });
+  }
+
+  removeFavorite(file: FileModel | FileDetailsModel) {
+    this.fileService
+      .removeFavorite(file.id)
+      .pipe(take(1))
+      .subscribe(() => {
+        file.watchingUsers = file.watchingUsers.filter(
+          (wu) => wu != this.userService.getUserId()
+        );
+        this.dataService.triggerObjectChange(
+          new ObjectChangeModel(ObjectType.File, ActionType.Edit, file)
+        );
+      });
+  }
 
   async openDirectoryEdit(directory: DirectoryModel) {
     const directoryEditModal = await this.modalCtrl.create({
@@ -182,7 +210,7 @@ export class FileSystemHelperService {
     this.fileService
       .deleteFile(file.id, true)
       .pipe(take(1))
-      .subscribe((file) => {
+      .subscribe(() => {
         this.dataService.triggerObjectChange(
           new ObjectChangeModel(ObjectType.File, ActionType.Delete, file)
         );

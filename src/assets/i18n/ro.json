@@ -35,7 +35,9 @@
     "availableFiles": "Fișiere disponibile",
     "availableDirectories": "Foldere disponibile",
     "storedContent": "Conținut stocat",
-    "collection": "Colecția lui {ownerName}"
+    "collection": "Colecția lui {ownerName}",
+    "invalidLink": "Linkul pe care l-ați accesat este invalid",
+    "emailConfirmation":"Confirmare adresă necesară"
   },
   "_updates": {
     "markAsChecked": "Marchează ca văzut",
@@ -58,7 +60,13 @@
     "login": "Logare",
     "register": "Înregistrare",
     "collection": "Coleție utilzator",
-    "management": "Administrare"
+    "management": "Administrare",
+    "favorites": "Fişiere favorite",
+    "sendConfirmation": "Retrimite confirmare email",
+    "sendResetPassword": "Trimite link de resetare parolă",
+    "sendMail": "Trimite e-mail",
+    "confirmMail": "Confirmare e-mail",
+    "resetPassword":"Resetare parolă"
   },
   "_management": {
     "statistics": "Statistici",
@@ -73,7 +81,10 @@
   },
   "_links": {
     "backToLogin": "Înapoi la autentificare",
-    "registerHere": "Înregistrează-te aici"
+    "registerHere": "Înregistrează-te aici",
+    "confirmEmail": "Retrimite confirmare email",
+    "resetPassword": "Ai auitat parola?",
+    "sendResetPassword": "Trimite link resetare"
   },
   "_common": {
     "you": "Tu",
@@ -115,13 +126,17 @@
     "binSize": "Coșul conține în prezent { size }.",
     "empty": "Gol",
     "collection": "Colecție",
-    "options": "Opțiuni"
+    "options": "Opțiuni",
+    "favoriteSize": "În prezent ai { size } la favorite"
   },
   "_search": {
     "files": "Fișiere",
     "users": "Utilizatori",
     "noResultsFound": "Niciun rezultat găsit",
-    "includeSelf": "Inclusiv eu"
+    "includeSelf": "Inclusiv eu",
+    "hierarchy": "Ierarhie în foldere",
+    "list": "Listă cu toate",
+    "includeDirectories": "Inclusiv foldere"
   },
   "_accessLevel": {
     "name": "Nivel acces",
@@ -138,7 +153,7 @@
     "copyLink": "Copiază link acces",
     "keyNoExpiry": "Link-ul nu expiră",
     "expiresAt": "Link-ul expiră la",
-    "deleteKey": "Delete access link",
+    "deleteKey": "Şterge link acces",
     "noKey": "Nu există link de acces",
     "addKey": "Creați link de acces",
     "expirationDate": "Data expirării",
@@ -182,7 +197,10 @@
     "choose": "Alege fişierul",
     "change": "Schimbă fişierul",
     "usedStorage": "Ați folosit { currentUsage } din cei { maxUsage } disponibili",
-    "storageUsage": "Utilizare stocare fișiere"
+    "storageUsage": "Utilizare stocare fișiere",
+    "addFavorite": "Adaugă la favorite",
+    "removeFavorite": "Şterge de la favorite",
+    "likedBy": "Numărul de aprecieri"
   },
   "_directory": {
     "properties": "Proprietăţi folder",
@@ -220,7 +238,8 @@
       "directoryDeleted": "Folderul și tot conținutul lui a fost mutat în coșul de gunoi",
       "directoryPermanentDeleted": "Directorul și tot conținutul său au fost șterse definitiv.",
       "directoryRestored": "Directorul și tot conținutul său au fost restaurate",
-      "accessKeyDeleted": "Link-ul de acces a fost șters"
+      "accessKeyDeleted": "Link-ul de acces a fost șters",
+      "mailSent": "Cererea a fost trimisă. Verificaţi căsuţa de e-mail"
     },
     "success": "Succes",
     "_success": {
@@ -230,11 +249,14 @@
       "directoryAdd": "Folderul a fost creat cu succes",
       "directoryEdit": "Folderul a fost actualizat cu succes",
       "directoryMove": "Folderul a fost mutat cu succes",
+      "addAccessKey":"Link de acces generat cu succes",
       "userAccessEdit": "Accesul utilizatorilor a fost editat cu succes",
-      "register": "Contul a fost creat cu success! Logează-te pentru a accesa contul",
+      "register": "Contul a fost creat! Vă rugăm să verificați căsuţa de e-mail pentru validarea contului",
       "login": "Bine ai revenit!",
       "changePassword": "Parola a fost schimbată cu succes!",
-      "preferencesSaved": "Preferințele au fost salvate cu succes!"
+      "preferencesSaved": "Preferințele au fost salvate cu succes!",
+      "emailConfirmed": "Adresa de E-mail a fost confirmată. Acum vă puteți conecta!",
+      "resetPassword": "Parola a fost resetată. Logează-te pentru a accesa contul"
     },
     "warning": "Avertisment",
     "_warning": {

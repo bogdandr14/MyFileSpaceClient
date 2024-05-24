@@ -1,0 +1,48 @@
+ion-chip {
+  height: 9em;
+  width: 98%;
+}
+
+.file-icon {
+  width: 3em;
+  height: 3em;
+}
+
+.chip-content {
+  display: flex;
+  align-items: center;
+}
+
+.file-icon {
+  flex-shrink: 0;
+}
+
+.details {
+  margin-left: 5px;
+  max-width: calc(100% - 90px);
+}
+
+.file-name {
+  display: block;
+  font-weight: bold;
+  margin: 10px 0px;
+  font-size: 16px;
+}
+
+.file-size {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+ion-popover.transparent-popover {
+  opacity: 0.6;
+  --backdrop-opacity: 0;
+}
+
+.favorite {
+  position: absolute;
+  top: 8%;
+  right: 2%;
+  z-index: 200;
+}

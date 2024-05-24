@@ -31,7 +31,7 @@ export class TagnameCheckDirective implements AsyncValidator {
     control: AbstractControl
   ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
     if (!control.value || control.value.length <= 5) {
-      return new Promise(null);
+      return of(<ValidationErrors>{ invalidTagname: true });
     }
     const obs = this.userService.checkTagnameTaken(control.value).pipe(
       debounceTime(1000),

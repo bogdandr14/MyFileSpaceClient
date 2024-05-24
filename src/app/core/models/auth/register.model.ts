@@ -3,4 +3,5 @@ export class RegisterModel {
   tagName: string;
   password: string;
   confirmPassword: string;
+  language: string;
 }

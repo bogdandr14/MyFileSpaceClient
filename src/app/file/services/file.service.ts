@@ -17,26 +17,48 @@ export class FileService extends BaseService {
     super(httpClient, 'api/storedfile', environment.baseApiUrl);
   }
 
-  public getAllFiles(deleted?: boolean): Observable<FileModel[]> {
+  public getAllFiles(
+    deleted?: boolean,
+    internalRefresh: boolean = false
+  ): Observable<FileModel[]> {
     const params = !!deleted
       ? {
           deleted,
         }
       : {};
-    return super.getAll<FileModel>(params);
+    return super.getAll<FileModel>(
+      params,
+      internalRefresh ? BaseService.noLoadingConfig : null
+    );
   }
 
   public findFiles(filter: InfiniteScrollFilter) {
-    return super.getOneByPath<FoundFilesModel>(`search/${this.turnFilterIntoUrl(filter)}`);
+    return super.getOneByPath<FoundFilesModel>(
+      `search/${this.turnFilterIntoUrl(filter)}`
+    );
+  }
+
+  public getAllFavorites(internalRefresh: boolean = false) {
+    return super.getMany<FileModel>(
+      'favorite',
+      null,
+      internalRefresh ? BaseService.noLoadingConfig : null
+    );
   }
 
   public getFileInfo(
     fileId: Guid,
-    accessKey?: string
+    accessKey?: string,
+    internalRefresh: boolean = false
   ): Observable<FileDetailsModel> {
-    return super.getOneById<FileDetailsModel>(fileId, null, {
-      accessKey: accessKey,
-    });
+    return super.getOneById<FileDetailsModel>(
+      fileId,
+      null,
+      {
+        accessKey: accessKey,
+      },
+      internalRefresh ? BaseService.noLoadingConfig : null
+    );
   }
 
   public uploadFile(
@@ -78,6 +100,19 @@ export class FileService extends BaseService {
     return super.update(null, `move/${fileId.toString()}`, {
       directoryId: directoryId.toString(),
     });
+  }
+
+  public addFavorite(fileId: Guid) {
+    return super.add(
+      null,
+      `favorite/${fileId.toString()}`,
+      null,
+      BaseService.noLoadingConfig
+    );
+  }
+
+  public removeFavorite(fileId: Guid) {
+    return super.remove(fileId, `favorite`, null, BaseService.noLoadingConfig);
   }
 
   public restoreFile(fileId: Guid, directoryId?: Guid) {

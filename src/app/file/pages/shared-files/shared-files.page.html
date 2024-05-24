@@ -5,47 +5,78 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
-  <ion-breadcrumbs *ngIf="!!currentDirectoryDetails">
-    <ion-breadcrumb *ngIf="currentDirectoryDetails.name==='$SHARED_ROOT'">
-      <ion-chip>
-        <ion-icon name="share"></ion-icon>
-        <ion-label> {{'_pages.sharedFiles'| translate}} </ion-label>
-      </ion-chip>
-    </ion-breadcrumb>
-    <ng-container *ngIf="currentDirectoryDetails.name !=='$SHARED_ROOT'">
-      <ion-breadcrumb>
-        <ion-chip button color="tertiary" (click)="loadSharedDirectory()">
-          <ion-icon name="share"></ion-icon>
-          <ion-label> {{'_pages.sharedFiles'| translate}} </ion-label>
-        </ion-chip>
-        <ion-icon
-          *ngIf="!!currentDirectoryDetails.pathParentDirectories.length"
-          slot="separator"
-          name="chevron-forward"
-        ></ion-icon>
-      </ion-breadcrumb>
-      <ion-breadcrumb
-        *ngFor="let parentDirectory of currentDirectoryDetails.pathParentDirectories"
-      >
-        <ion-chip
-          button
-          [color]="uiHelper.accessibilityColor(parentDirectory.accessLevel)"
-          (click)="loadDirectory(parentDirectory.id)"
-        >
-          <ion-label> {{ parentDirectory.name}} </ion-label>
-        </ion-chip>
-        <ion-icon slot="separator" name="chevron-forward"></ion-icon>
-      </ion-breadcrumb>
-      <ion-breadcrumb>
-        <ion-chip> {{currentDirectoryDetails.name}} </ion-chip>
-      </ion-breadcrumb>
-    </ng-container>
-  </ion-breadcrumbs>
+  <ion-segment value="1" color="tertiary" (ionChange)="toggleViewType($event)">
+    <ion-segment-button layout="icon-start" value="1">
+      <ion-icon name="folder-open"></ion-icon>
+      <ion-label class="hide-mobile">
+        {{ "_search.hierarchy" | translate }}
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button
+      layout="icon-start"
+      value="2"
+      backgroundcolor="secondary"
+    >
+      <ion-icon name="list"></ion-icon>
+      <ion-label class="hide-mobile">
+        {{ "_search.list" | translate }}
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
 </ion-header>
 
 <ion-content class="content" *ngIf="currentDirectoryDetails">
-  <app-file-explorer
-    [directoryDetails]="currentDirectoryDetails"
-    (directoryChange)="loadDirectory($event)"
-  ></app-file-explorer>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ng-container *ngIf="viewHierarchy; else listView">
+    <ion-breadcrumbs *ngIf="!!currentDirectoryDetails">
+      <ion-breadcrumb *ngIf="currentDirectoryDetails.name==='$SHARED_ROOT'">
+        <ion-chip>
+          <ion-icon name="share"></ion-icon>
+          <ion-label> {{'_pages.sharedFiles'| translate}} </ion-label>
+        </ion-chip>
+      </ion-breadcrumb>
+      <ng-container *ngIf="currentDirectoryDetails.name !=='$SHARED_ROOT'">
+        <ion-breadcrumb>
+          <ion-chip button color="tertiary" (click)="loadSharedDirectory()">
+            <ion-icon name="share"></ion-icon>
+            <ion-label> {{'_pages.sharedFiles'| translate}} </ion-label>
+          </ion-chip>
+          <ion-icon
+            *ngIf="!!currentDirectoryDetails.pathParentDirectories.length"
+            slot="separator"
+            name="chevron-forward"
+          ></ion-icon>
+        </ion-breadcrumb>
+        <ion-breadcrumb
+          *ngFor="let parentDirectory of currentDirectoryDetails.pathParentDirectories"
+        >
+          <ion-chip
+            button
+            [color]="uiHelper.accessibilityColor(parentDirectory.accessLevel)"
+            (click)="loadDirectory(parentDirectory.id)"
+          >
+            <ion-label> {{ parentDirectory.name}} </ion-label>
+          </ion-chip>
+          <ion-icon slot="separator" name="chevron-forward"></ion-icon>
+        </ion-breadcrumb>
+        <ion-breadcrumb>
+          <ion-chip> {{currentDirectoryDetails.name}} </ion-chip>
+        </ion-breadcrumb>
+      </ng-container>
+    </ion-breadcrumbs>
+    <app-file-explorer
+      [directoryDetails]="currentDirectoryDetails"
+      (directoryChange)="loadDirectory($event)"
+    ></app-file-explorer>
+  </ng-container>
+  <ng-template #listView>
+    <app-list-explorer
+      [allDirectories]="currentUser.allowedDirectories"
+      [allFiles]="currentUser.allowedFiles"
+      [isReloading]="isReloading"
+    >
+    </app-list-explorer>
+  </ng-template>
 </ion-content>

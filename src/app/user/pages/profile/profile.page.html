@@ -11,6 +11,9 @@
 </ion-header>
 
 <ion-content class="ion-padding-top ion-text-center" *ngIf="userInfo">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-card *ngIf="isCurrentUser">
     <ion-card-header class="ion-text-center">
       <ion-card-title text-wrap>
@@ -98,6 +101,16 @@
         </ion-row>
       </ion-list>
     </ion-card-content>
+    <ion-modal trigger="open-edit-user">
+      <ng-template>
+        <app-user-edit [tagName]="userInfo.tagName"> </app-user-edit>
+      </ng-template>
+    </ion-modal>
+    <ion-modal trigger="open-change-password">
+      <ng-template>
+        <app-change-password></app-change-password>
+      </ng-template>
+    </ion-modal>
   </ion-card>
 
   <ion-card>
@@ -175,14 +188,5 @@
       </ion-grid>
     </ion-card-content>
   </ion-card>
-  <ion-modal trigger="open-edit-user">
-    <ng-template>
-      <app-user-edit [tagName]="userInfo.tagName"> </app-user-edit>
-    </ng-template>
-  </ion-modal>
-  <ion-modal trigger="open-change-password">
-    <ng-template>
-      <app-change-password></app-change-password>
-    </ng-template>
-  </ion-modal>
+
 </ion-content>

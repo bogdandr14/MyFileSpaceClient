@@ -9,7 +9,6 @@ import { filter, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { combineLatest } from 'rxjs';
 import { RouteDescriptor } from '../core/models/route-descriptor';
-import { UserService } from '../user/user.service';
 
 export const DEFAULT_TITLE = 'MyFileSpace';
 
@@ -20,13 +19,13 @@ export const DEFAULT_TITLE = 'MyFileSpace';
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit {
-  public labels; // = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
   fontSize = 'font-size-5';
 
   public connectedUserLinks: Array<RouteDescriptor> = [
     { title: '_pages.profile', path: '/user/profile', icon: 'person' },
     { title: '_pages.myFiles', path: '/file/mine', icon: 'folder' },
+    { title: '_pages.favorites', path: '/file/favorite', icon: 'heart' },
     { title: '_pages.sharedFiles', path: '/file/shared', icon: 'share' },
     { title: '_pages.bin', path: '/file/bin', icon: 'trash' },
   ];

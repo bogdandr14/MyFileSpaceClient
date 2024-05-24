@@ -35,7 +35,9 @@
     "availableFiles": "Available files",
     "availableDirectories": "Available directories",
     "storedContent": "Stored content",
-    "collection": "{ownerName}'s collection"
+    "collection": "{ownerName}'s collection",
+    "invalidLink": "The link you have accessed is invalid",
+    "emailConfirmation":"Address confirmation required"
   },
   "_updates": {
     "markAsChecked": "Mark as checked",
@@ -58,7 +60,13 @@
     "login": "Login",
     "register": "Register",
     "collection": "User collection",
-    "management": "Administration"
+    "management": "Administration",
+    "favorites": "Favorite files",
+    "sendConfirmation": "Resend confirmation email",
+    "sendResetPassword": "Send reset password link",
+    "sendMail": "Send e-mail",
+    "confirmMail": "E-mail confirmation",
+    "resetPassword": "Reset password"
   },
   "_management": {
     "statistics": "Statistics",
@@ -66,14 +74,17 @@
     "deleteCache": "Delete cache",
     "pastRetention": "Storage space used for files that have exceeded their retention period",
     "deletePastRetention": "Delete content past the retention period",
-    "count":"Total number of files",
-    "count30Days":"Files added in the last 30 days",
-    "storageUsage":"Total storage space utilization",
-    "storageUsage30Days":"Increase in space used since the last 30 days"
+    "count": "Total number of files",
+    "count30Days": "Files added in the last 30 days",
+    "storageUsage": "Total storage space utilization",
+    "storageUsage30Days": "Increase in space used since the last 30 days"
   },
   "_links": {
     "backToLogin": "Back to Login",
-    "registerHere": "Register here"
+    "registerHere": "Register here",
+    "confirmEmail": "Resend confirmation email",
+    "resetPassword": "Forgot your password?",
+    "sendResetPassword": "Send reset link"
   },
   "_common": {
     "you": "You",
@@ -115,13 +126,17 @@
     "binSize": "The bin currently contains { size }.",
     "empty": "Empty",
     "collection": "Collection",
-    "options": "Options"
+    "options": "Options",
+    "favoriteSize": "You have { size } to your favorites"
   },
   "_search": {
     "files": "Files",
     "users": "Users",
     "noResultsFound": "No results found",
-    "includeSelf": "Myself included"
+    "includeSelf": "Myself included",
+    "hierarchy": "Directory hierarchy",
+    "list": "List with all",
+    "includeDirectories": "Directories included"
   },
   "_accessLevel": {
     "name": "Access level",
@@ -138,7 +153,7 @@
     "copyLink": "Copy access link",
     "keyNoExpiry": "Link does not expire",
     "expiresAt": "The link expires at",
-    "deleteKey": "Șterge link acces",
+    "deleteKey": "Delete access link",
     "noKey": "No access link",
     "addKey": "Create access link",
     "expirationDate": "Expiration date",
@@ -182,7 +197,10 @@
     "choose": "Choose file",
     "change": "Change file",
     "usedStorage": "You have used { currentUsage } of the { maxUsage } available",
-    "storageUsage": "File storage usage"
+    "storageUsage": "File storage usage",
+    "addFavorite": "Add to favorites",
+    "removeFavorite": "Remove from favorites",
+    "likedBy": "Number of ratings"
   },
   "_directory": {
     "properties": "Directory properties",
@@ -220,7 +238,8 @@
       "directoryDeleted": "The directory and all its contents was moved to trash bin",
       "directoryPermanentDeleted": "The directory and all its contents have been permanently deleted",
       "directoryRestored": "The directory and all its contents have been restored",
-      "accessKeyDeleted": "The access link was deleted"
+      "accessKeyDeleted": "The access link was deleted",
+      "mailSent": "The request has been sent. Check your mailbox"
     },
     "success": "Success",
     "_success": {
@@ -230,11 +249,14 @@
       "directoryAdd": "Directory was successfully added",
       "directoryEdit": "Directory was successfully updated",
       "directoryMove": "Directory was successfully moved",
+      "addAccessKey":"Access link successfully generated",
       "userAccessEdit": "The user access was edited successfully",
-      "register": "The account was successfuly created! Please login to enter the account",
+      "register": "The account has been created! Please check your mailbox for account validation",
       "login": "Welcome back!",
       "changePassword": "Password changed successfuly!",
-      "preferencesSaved": "Preferences saved successfully!"
+      "preferencesSaved": "Preferences saved successfully!",
+      "emailConfirmed": "Your email address has been confirmed. Now you can log in!",
+      "resetPassword": "The password has been reset. Log in to access your account"
     },
     "warning": "Warning",
     "_warning": {

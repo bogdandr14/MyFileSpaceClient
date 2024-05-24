@@ -15,18 +15,25 @@ export class DirectoryService extends BaseService {
     super(httpClient, 'api/directory', environment.baseApiUrl);
   }
 
-  public getAllDirectories(deleted?: boolean): Observable<DirectoryModel[]> {
+  public getAllDirectories(
+    deleted?: boolean,
+    internalRefresh: boolean = false
+  ): Observable<DirectoryModel[]> {
     const params = !!deleted
       ? {
           deleted,
         }
       : {};
-    return super.getAll<DirectoryModel>(params);
+    return super.getAll<DirectoryModel>(
+      params,
+      internalRefresh ? BaseService.noLoadingConfig : null
+    );
   }
 
   public getDirectoryInfo(
     directoryId: Guid,
-    accessKey?: string
+    accessKey?: string,
+    internalRefresh: boolean = false
   ): Observable<DirectoryDetailsModel> {
     return super.getOneById<DirectoryDetailsModel>(
       directoryId,
@@ -35,7 +42,8 @@ export class DirectoryService extends BaseService {
         ? {
             accessKey,
           }
-        : {}
+        : {},
+      internalRefresh ? BaseService.noLoadingConfig : null
     );
   }
 

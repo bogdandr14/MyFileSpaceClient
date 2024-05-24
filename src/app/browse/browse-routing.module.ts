@@ -12,6 +12,7 @@ const routes: Routes = [
   {
     path: 'collection/:id',
     component: CollectionPage,
+    data: { title: '_pages.collection' },
   },
 ];
 

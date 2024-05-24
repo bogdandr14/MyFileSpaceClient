@@ -27,7 +27,10 @@
         </ion-item>
         <ng-container *ngIf="isOwner">
           <ng-container *ngIf="!directory.isDeleted; else deletedOptions">
-            <ion-item button (click)="fileSystemHelper.openDirectoryEdit(directory)">
+            <ion-item
+              button
+              (click)="fileSystemHelper.openDirectoryEdit(directory)"
+            >
               <ion-label class="secondary">
                 {{ "_common.edit" | translate }}
               </ion-label>

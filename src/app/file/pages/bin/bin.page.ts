@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Guid } from 'guid-typescript';
-import { forkJoin } from 'rxjs';
+import { forkJoin, tap } from 'rxjs';
 import { ActionType } from 'src/app/core/models/action-type.enum';
 import { ObjectChangeModel } from 'src/app/core/models/object-change.model';
 import { ObjectType } from 'src/app/core/models/object-type.enum';
@@ -20,16 +20,17 @@ import { AccessLevel } from 'src/app/shared/models/access-level.enum';
 })
 export class BinPage implements OnInit {
   static sizes: Array<string> = ['B', 'KB', 'MB', 'GB', 'TB'];
-
-  private deletedFiles: FileModel[];
-  private deletedDirectories: DirectoryModel[];
+  public isReloading = false;
+  public deletedFiles: FileModel[];
+  public deletedDirectories: DirectoryModel[];
   public binPseudoDirectory: DirectoryDetailsModel;
   public directorySizes: { id: Guid; size: number }[] = [];
+  public viewHierarchy = true;
   constructor(
     private fileService: FileService,
     private directoryService: DirectoryService,
     private dataService: DataService,
-    private uiHelper:UiHelperService
+    private uiHelper: UiHelperService
   ) {}
 
   get totalSize() {
@@ -37,22 +38,21 @@ export class BinPage implements OnInit {
     return this.uiHelper.computeSize(size);
   }
 
-  ngOnInit() {
-    forkJoin([
-      this.fileService.getAllFiles(true),
-      this.directoryService.getAllDirectories(true),
-    ]).subscribe(([files, directories]) => {
-      this.deletedFiles = files;
-      this.deletedDirectories = directories;
-      this.createBinDirectory();
-      this.computeDirectorySize();
-    });
-    this.dataService.objectChange$.subscribe((objectChange) => {
-      this.handleObjectChange(objectChange);
-    });
+  private initialLoadObservable(internalRefresh: boolean) {
+    return forkJoin([
+      this.fileService.getAllFiles(true, internalRefresh),
+      this.directoryService.getAllDirectories(true, internalRefresh),
+    ]).pipe(
+      tap(([files, directories]) => {
+        this.deletedFiles = files;
+        this.deletedDirectories = directories;
+        this.createBinDirectory();
+        this.computeDirectorySize();
+      })
+    );
   }
 
-  createBinDirectory() {
+  private createBinDirectory() {
     this.binPseudoDirectory = new DirectoryDetailsModel();
     this.binPseudoDirectory.isDeleted = true;
     this.binPseudoDirectory.accessLevel = AccessLevel.Private;
@@ -64,7 +64,7 @@ export class BinPage implements OnInit {
     );
   }
 
-  computeDirectorySize() {
+  private computeDirectorySize() {
     const filesInDirectories = this.deletedFiles.filter(
       (x) => !this.binPseudoDirectory.files.some((y) => y.id === x.id)
     );
@@ -98,7 +98,23 @@ export class BinPage implements OnInit {
     }
   }
 
-  handleObjectChange(objectChange: ObjectChangeModel) {
+  ngOnInit() {
+    this.initialLoadObservable(false).subscribe();
+    this.dataService.objectChange$.subscribe((objectChange) => {
+      this.handleObjectChange(objectChange);
+    });
+  }
+
+  handleRefresh(event) {
+    this.isReloading = true;
+    this.directorySizes = [];
+    this.initialLoadObservable(true).subscribe(() => {
+      this.isReloading = false;
+      event.target.complete();
+    });
+  }
+
+  private handleObjectChange(objectChange: ObjectChangeModel) {
     if (objectChange.type == ObjectType.Directory) {
       this.handleDirectoryChange(objectChange);
     }
@@ -108,12 +124,15 @@ export class BinPage implements OnInit {
     }
   }
 
-  handleDirectoryChange(directoryChange: ObjectChangeModel) {
+  private handleDirectoryChange(directoryChange: ObjectChangeModel) {
     const directory = directoryChange.changedObject as DirectoryModel;
     if (
       directoryChange.action == ActionType.Delete ||
       directoryChange.action == ActionType.Restore
     ) {
+      this.deletedDirectories = this.deletedDirectories.filter(
+        (x) => x.id !== directory.id
+      );
       this.binPseudoDirectory.childDirectories =
         this.binPseudoDirectory.childDirectories.filter(
           (obj) => obj.id !== directory.id
@@ -124,17 +143,22 @@ export class BinPage implements OnInit {
     }
   }
 
-  handleFileChange(fileChange: ObjectChangeModel) {
-    ;
+  private handleFileChange(fileChange: ObjectChangeModel) {
     const file = fileChange.changedObject as FileModel;
     if (
       fileChange.action == ActionType.Delete ||
       fileChange.action == ActionType.Restore
     ) {
+      this.deletedFiles = this.deletedFiles.filter((x) => x.id !== file.id);
+
       this.binPseudoDirectory.files = this.binPseudoDirectory.files.filter(
         (obj) => obj.id !== file.id
       );
       this.deletedFiles = this.deletedFiles.filter((obj) => obj.id !== file.id);
     }
+  }
+
+  toggleViewType($event) {
+    this.viewHierarchy = $event.detail.value == '1';
   }
 }
