@@ -33,15 +33,17 @@ export class UserService extends BaseService {
   }
 
   public getUserId() {
-    return this.userState.value.userId;
+    return this.userState.value
+      ? this.userState.value.userId
+      : Guid.createEmpty();
   }
 
   public getUserEmail() {
-    return this.userState.value.email;
+    return this.userState.value ? this.userState.value.email : '';
   }
 
   public getUserTagName() {
-    return this.userState.value.tagName;
+    return this.userState.value ? this.userState.value.tagName : '';
   }
 
   public checkTagnameTaken(tagName: string): Observable<boolean> {
