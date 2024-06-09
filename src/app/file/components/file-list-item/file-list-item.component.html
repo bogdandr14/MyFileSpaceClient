@@ -1,7 +1,7 @@
 <ion-chip class="container" id="{{ file.name }}-trigger">
   <ion-icon
     button
-    *ngIf="isFavorite"
+    *ngIf="(authService.isLoggedIn$ | async) && isFavorite"
     name="heart"
     size="large"
     class="favorite"
@@ -46,7 +46,7 @@
         </ion-item>
         <ion-item
           button
-          *ngIf="!isFavorite && (authService.isLoggedIn$ | async)"
+          *ngIf="(authService.isLoggedIn$ | async) && !isFavorite"
           (click)="fileSystemHelper.addFavorite(file)"
         >
           <ion-label class="danger">
