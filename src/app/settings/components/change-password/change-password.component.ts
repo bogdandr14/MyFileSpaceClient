@@ -20,9 +20,7 @@ export class ChangePasswordComponent  {
   ) {}
 
   async confirmChangePassword() {
-    this.changePassword.email = (
-      await this.dataService.getAuthUser().toPromise()
-    ).email;
+    this.changePassword.email = '';
     this.authService.changePassword(this.changePassword).subscribe(() => {
       this.alertService.showSuccess('_message._success.changePassword');
       this.dismiss();
